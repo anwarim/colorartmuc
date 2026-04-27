@@ -121,6 +121,29 @@ nav {
   transition: all 0.3s;
 }
 
+/* ─── About teaser (homepage) ────────────────────────────── */
+.about-teaser {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  padding: 0 80px;
+}
+
+.about-teaser-image {
+  position: relative;
+  height: 420px;
+  overflow: hidden;
+}
+
+.about-teaser-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* ─── Page wrapper ───────────────────────────────────────── */
 main { padding-top: var(--nav-height); min-height: 100vh; }
 
@@ -742,7 +765,7 @@ footer {
 
   .hero { grid-template-columns: 1fr; height: auto; }
   .hero-text { padding: 60px 24px; order: 2; }
-  .hero-image { height: 50vw; order: 1; }
+  .hero-image { height: 60vw; order: 1; }
 
   .featured-grid {
     grid-template-columns: 1fr 1fr;
@@ -752,9 +775,50 @@ footer {
 
   .about-layout,
   .contact-layout { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
-  .about-image-stack { height: 320px; }
+  .about-image-stack { height: 260px; }
 
-  .gallery-grid { padding: 0 16px 60px; }
+  /* Fix about teaser section on mobile */
+  section > div[style*="grid-template-columns:1fr 1fr"],
+  div[style*="grid-template-columns:1fr 1fr"] {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 24px !important;
+    gap: 32px !important;
+  }
+
+  div[style*="grid-template-columns:1fr 1fr"] > div[style*="height:420px"] {
+    height: 260px !important;
+    width: 100% !important;
+  }
+
+  .about-teaser {
+    grid-template-columns: 1fr;
+    padding: 0 24px;
+    gap: 32px;
+  }
+
+  .about-teaser-image {
+    height: 260px;
+  }
+
+  /* Fix button text wrapping */
+  .hero-cta {
+    white-space: nowrap;
+    padding: 14px 20px;
+  }
+
+  /* Fix values strip on mobile */
+  div[style*="grid-template-columns: repeat(3, 1fr)"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 28px !important;
+    padding: 0 24px !important;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 16px 60px;
+  }
   .blog-grid { padding: 0 24px 60px; gap: 28px; }
 
   footer { padding: 48px 24px 32px; }
