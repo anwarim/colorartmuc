@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Color Art Munich — Abstrakte Acrylbilder</title>
+  <meta name="description" content="Handgemachte abstrakte Acrylbilder in lebendigen Farben. Jedes Bild ist ein einzigartiges Kunstwerk von Color Art Munich." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html" class="nav-logo">Color <span>Art</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero" style="padding:0; max-width:100%;">
+      <div class="hero-text">
+        <p class="hero-eyebrow">Munich · Handmade · Unique</p>
+        <h1 class="hero-title">
+          Colors of
+          <em>Inspiration</em>
+        </h1>
+        <p class="hero-subtitle">Abstrakte Acrylbilder — handgemalt mit Leidenschaft. Jedes Werk trägt die Energie des Augenblicks in sich.</p>
+        <a href="gallery.html" class="hero-cta">
+          Galerie entdecken
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+      <div class="hero-image">
+        <img src="images/paintings/383017_31e4980668924b158daed5dd5bfac62d~mv2.jpg" alt="Abstrakte Acrylmalerei — Color Art Munich" />
+      </div>
+    </section>
+
+    <!-- Featured Works -->
+    <section class="fade-in">
+      <div class="section-header">
+        <span class="section-label">Ausgewählte Werke</span>
+        <h2 class="section-title">Jüngste Arbeiten</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="featured-grid">
+        <div class="painting" onclick="window.location='gallery.html'">
+          <img src="images/paintings/383017_88c4d4ecb7c54963843500ecb347f1f3~mv2.jpg" alt="Abstraktes Acrylbild" loading="lazy" />
+          <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
+        </div>
+        <div class="painting" onclick="window.location='gallery.html'">
+          <img src="images/paintings/383017_e29db45ba1924b379720bb3ab6ec90c1~mv2.jpg" alt="Abstraktes Acrylbild" loading="lazy" />
+          <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
+        </div>
+        <div class="painting" onclick="window.location='gallery.html'">
+          <img src="images/paintings/383017_2b1f2e2b4b524dba82099557f5370ab5~mv2.jpg" alt="Abstraktes Acrylbild" loading="lazy" />
+          <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
+        </div>
+        <div class="painting" onclick="window.location='gallery.html'">
+          <img src="images/paintings/383017_89b1727d23774866b98ac05c1f462b52~mv2.jpg" alt="Abstraktes Acrylbild" loading="lazy" />
+          <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
+        </div>
+        <div class="painting" onclick="window.location='gallery.html'">
+          <img src="images/paintings/383017_802361afa80f44c8a42e0ced9cbc434c~mv2.jpg" alt="Abstraktes Acrylbild" loading="lazy" />
+          <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:48px;">
+        <a href="gallery.html" class="hero-cta">
+          Alle Werke ansehen
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- About teaser -->
+    <section style="background: var(--cream); max-width:100%; padding: 80px 0;">
+      <div style="max-width:var(--max-width); margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; padding:0 80px;" class="fade-in">
+        <div>
+          <span class="section-label" style="display:block;margin-bottom:16px;">Über die Künstlerin</span>
+          <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,3.5vw,3rem); font-weight:300; color:var(--umber); line-height:1.2; margin-bottom:24px;">
+            Kunst entsteht dort, <em style="font-style:italic;color:var(--terracotta);">wo Farbe spricht</em>
+          </h2>
+          <p style="color:var(--text-light); margin-bottom:32px; max-width:460px;">
+            Aus München heraus entstehen abstrakte Acrylbilder, die Energie, Bewegung und Farbe zu lebendigen Werken vereinen. Jedes Bild ist ein Original — handgemacht, einzigartig, unvergesslich.
+          </p>
+          <a href="about.html" class="hero-cta">Mehr erfahren
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+        <div style="position:relative; height:420px; overflow:hidden;">
+          <img src="images/paintings/383017_9a857f34f1af444e85c4c5d8404a2196~mv2.jpg"
+               alt="Color Art Munich Atelier"
+               style="width:100%;height:100%;object-fit:cover;" loading="lazy"/>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">Color <span>Art</span></a>
+        <p>Abstrakte Acrylmalerei aus München. Handgemachte Unikate mit Charakter und Tiefe.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Rechtliches</h4>
+        <ul>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Color Art Munich. Alle Rechte vorbehalten.</span>
+      <span>Made with ♥ in München</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

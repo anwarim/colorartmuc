@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Color Art Munich</title>
+  <meta name="description" content="Kontaktieren Sie Color Art Munich — Fragen, Anfragen und Nachrichten sind herzlich willkommen." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Color <span>Art</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <main>
+    <div class="contact-layout">
+
+      <div class="contact-info fade-in">
+        <span class="section-label">Kontakt</span>
+        <h1>Schreiben<br>Sie mir</h1>
+        <p>Haben Sie Fragen zu einem Bild oder möchten Sie mehr über meine Arbeit erfahren? Ich freue mich über jede Nachricht.</p>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2 4l6 5 6-5M2 4h12v9H2V4z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span>colorartmuc@gmail.com</span>
+        </div>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5S12.5 9.5 12.5 6c0-2.5-2-4.5-4.5-4.5zm0 6a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" stroke="currentColor" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <span>München, Deutschland</span>
+        </div>
+
+        <div style="margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--sand);">
+          <p style="font-size:0.78rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-light); margin-bottom:16px;">Antwortzeit</p>
+          <p style="color:var(--text-light); font-size:0.9rem;">Ich antworte in der Regel innerhalb von 2–3 Werktagen.</p>
+        </div>
+      </div>
+
+      <div class="fade-in">
+        <!-- 
+          TIP FOR DEPLOYMENT:
+          For a static GitHub Pages site, use a free form service like:
+          - https://formspree.io  (free tier: 50 submissions/month)
+          - https://web3forms.com (free tier: 250 submissions/month)
+
+          Replace the action URL below with your Formspree or Web3Forms endpoint.
+          Example with Formspree: action="https://formspree.io/f/YOUR_FORM_ID"
+        -->
+        <form class="contact-form" id="contact-form"
+              action="https://formspree.io/f/YOUR_FORM_ID"
+              method="POST">
+
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Ihr Name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">E-Mail</label>
+            <input type="email" id="email" name="email" placeholder="ihre@email.de" required />
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Betreff</label>
+            <input type="text" id="subject" name="subject" placeholder="Worum geht es?" />
+          </div>
+
+          <div class="form-group">
+            <label for="message">Nachricht</label>
+            <textarea id="message" name="message" placeholder="Ihre Nachricht..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit">Nachricht senden</button>
+          <p class="form-success" id="form-success">Vielen Dank! Ich melde mich bald bei Ihnen.</p>
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">Color <span>Art</span></a>
+        <p>Abstrakte Acrylmalerei aus München. Handgemachte Unikate mit Charakter und Tiefe.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Rechtliches</h4>
+        <ul>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Color Art Munich. Alle Rechte vorbehalten.</span>
+      <span>Made with ♥ in München</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
