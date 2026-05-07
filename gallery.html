@@ -4,11 +4,53 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gallery — Color Art Munich</title>
-  <meta name="description" content="Entdecken Sie alle abstrakten Acrylbilder von Color Art Munich. Handgemachte Unikate in lebendigen Farben." />
+  <meta name="description" content="Entdecken Sie alle abstrakten Acrylbilder von Color Art Munich." />
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .painting-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(44,36,32,0.92) 0%, rgba(44,36,32,0.4) 60%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 18px;
+      gap: 4px;
+    }
+    .gallery-item:hover .painting-overlay,
+    .gallery-item.touched .painting-overlay { opacity: 1; }
+    .overlay-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .overlay-price { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; color: var(--terracotta); }
+    .overlay-price.sold { color: #e8a0a0; }
+    .overlay-meta { font-size: 0.7rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+    .sold-badge {
+      position: absolute; top: 12px; right: 12px;
+      background: rgba(180,60,60,0.85); color: white;
+      font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 4px 8px; backdrop-filter: blur(4px); z-index: 2;
+    }
+    .filter-bar {
+      display: flex; gap: 12px; justify-content: center;
+      padding: 0 40px 40px; flex-wrap: wrap;
+    }
+    .filter-btn {
+      font-family: 'Jost', sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 10px 20px; border: 1px solid var(--sand);
+      background: none; color: var(--text-light); cursor: pointer; transition: all 0.25s;
+    }
+    .filter-btn:hover, .filter-btn.active { background: var(--umber); color: var(--cream); border-color: var(--umber); }
+  </style>
 </head>
 <body>
-
   <nav>
     <a href="index.html" class="nav-logo">Color <span>Art</span></a>
     <ul class="nav-links" id="nav-links">
@@ -24,159 +66,19 @@
   </nav>
 
   <main>
-
     <div class="gallery-intro fade-in">
       <span class="section-label">Alle Werke</span>
       <h1 class="section-title">Visual Journey</h1>
-      <p>Jedes Bild ist ein Unikat — handgemalt mit Acryl auf Leinwand. Klicken Sie ein Bild an, um es in voller Größe zu sehen.</p>
+      <p>Jedes Bild ist ein Unikat — handgemalt mit Acryl auf Leinwand.<br>Hover oder tippen Sie ein Bild an für Details.</p>
     </div>
-
-    <div class="gallery-grid" id="gallery-grid">
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_0b345461d7d74e009436324cceb09839~mv2.jpg" alt="Abstraktes Acrylbild 1" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_c0bbb78f84c84df48344cedb4556c91e~mv2.jpg" alt="Abstraktes Acrylbild 2" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_db022a2fda48442ab52366f18b76642b~mv2.jpg" alt="Abstraktes Acrylbild 3" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_97ee610c52ab49258403b290f5607e77~mv2.jpg" alt="Abstraktes Acrylbild 4" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_54eaa9140a3f45379385b9757bc1c629~mv2.jpg" alt="Abstraktes Acrylbild 5" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_bd2b030022e04e098ddffca200bed8ba~mv2.jpg" alt="Abstraktes Acrylbild 6" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_73258f63556742eebe43ad3d039d5352~mv2.jpg" alt="Abstraktes Acrylbild 7" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_a5090761da51409fb96d982c0d9e5e87~mv2.jpg" alt="Abstraktes Acrylbild 8" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_54fc000702414f71b38f348aadadb843~mv2.jpg" alt="Abstraktes Acrylbild 9" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_2498ac4ee235452f99b65abab1414ae4~mv2.jpg" alt="Abstraktes Acrylbild 10" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_050479a2ee47483091de0ad2bfdf788f~mv2.jpg" alt="Abstraktes Acrylbild 11" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_83902ac4778142fbaf810cdf5f8a4dc7~mv2.jpg" alt="Abstraktes Acrylbild 12" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_2ece5ee882c34f9b89a6a9cc8440ce00~mv2.jpg" alt="Abstraktes Acrylbild 13" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_c93dc5173364414aa15b6ffcc746899c~mv2.jpg" alt="Abstraktes Acrylbild 14" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_b9ee9a324ff64bd88d6808e9c2e47986~mv2.jpg" alt="Abstraktes Acrylbild 15" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_14d86b6021974f678526f70391ddbc3b~mv2.jpg" alt="Abstraktes Acrylbild 16" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_2ac005581e1d466794ec366e2d5f4052~mv2.jpg" alt="Abstraktes Acrylbild 17" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_497c9efa87694ad499ff5aaeff45033d~mv2.jpg" alt="Abstraktes Acrylbild 18" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_e25845fa9cf048ebb833b5fbc5826527~mv2.jpg" alt="Abstraktes Acrylbild 19" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_f51ac8317ec4410f850f187e92fb4c25~mv2.jpg" alt="Abstraktes Acrylbild 20" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_2373821f6edb410e896c60420b8598bb~mv2.jpg" alt="Abstraktes Acrylbild 21" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_e50bbf186c3f4382a9b0a5b7eee1b636~mv2.jpg" alt="Abstraktes Acrylbild 22" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_58813d70dae94423bcc40a68f25503d9~mv2.jpg" alt="Abstraktes Acrylbild 23" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_8c88e08215e847629c55cb4b2bf9e2f4~mv2.jpg" alt="Abstraktes Acrylbild 24" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_88e3c5ae6c87415e8e801dabb6c591b1~mv2.jpg" alt="Abstraktes Acrylbild 25" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_88c4d4ecb7c54963843500ecb347f1f3~mv2.jpg" alt="Abstraktes Acrylbild 26" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_e29db45ba1924b379720bb3ab6ec90c1~mv2.jpg" alt="Abstraktes Acrylbild 27" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
-      <div class="gallery-item fade-in">
-        <img src="images/paintings/383017_9a857f34f1af444e85c4c5d8404a2196~mv2.jpg" alt="Abstraktes Acrylbild 28" loading="lazy" />
-        <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-      </div>
-
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">Alle</button>
+      <button class="filter-btn" data-filter="available">Verfügbar</button>
+      <button class="filter-btn" data-filter="sold">Verkauft</button>
     </div>
+    <div class="gallery-grid" id="gallery-grid"></div>
   </main>
 
-  <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lightbox-close">✕</button>
     <button class="lightbox-nav lightbox-prev" id="lightbox-prev">‹</button>
@@ -214,6 +116,79 @@
     </div>
   </footer>
 
+  <script src="js/paintings-data.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    const grid = document.getElementById('gallery-grid');
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 40);
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05 });
+
+    function initLightbox(list) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      let current = 0;
+      function open(i) {
+        current = i;
+        lightboxImg.src = 'images/paintings/' + list[i].img;
+        lightboxImg.alt = list[i].title;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function close() { lightbox.classList.remove('open'); document.body.style.overflow = ''; }
+      grid.querySelectorAll('.gallery-item img').forEach((img, i) => img.addEventListener('click', () => open(i)));
+      document.getElementById('lightbox-close').onclick = close;
+      document.getElementById('lightbox-next').onclick = (e) => { e.stopPropagation(); open((current + 1) % list.length); };
+      document.getElementById('lightbox-prev').onclick = (e) => { e.stopPropagation(); open((current - 1 + list.length) % list.length); };
+      lightbox.onclick = (e) => { if (e.target === lightbox) close(); };
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('open')) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowRight') open((current + 1) % list.length);
+        if (e.key === 'ArrowLeft') open((current - 1 + list.length) % list.length);
+      });
+    }
+
+    function buildGallery(list) {
+      grid.innerHTML = '';
+      list.forEach((p) => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item fade-in';
+        const priceHTML = p.sold
+          ? '<div class="overlay-price sold">Verkauft</div>'
+          : p.price > 0 ? '<div class="overlay-price">' + p.price.toLocaleString('de-DE') + ' \u20AC</div>'
+          : '<div class="overlay-price">Preis auf Anfrage</div>';
+        const sizeHTML = '<div class="overlay-meta">' + p.material + (p.size ? ' \u00B7 ' + p.size : '') + '</div>';
+        item.innerHTML = (p.sold ? '<div class="sold-badge">Verkauft</div>' : '')
+          + '<img src="images/paintings/' + p.img + '" alt="' + p.title + '" loading="lazy" />'
+          + '<div class="painting-overlay">'
+          + '<div class="overlay-title">' + p.title + '</div>'
+          + priceHTML + sizeHTML + '</div>';
+        item.addEventListener('touchstart', () => {
+          document.querySelectorAll('.gallery-item.touched').forEach(el => { if (el !== item) el.classList.remove('touched'); });
+          item.classList.toggle('touched');
+        }, { passive: true });
+        grid.appendChild(item);
+        fadeObserver.observe(item);
+      });
+      initLightbox(list);
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        buildGallery(f === 'sold' ? paintings.filter(p => p.sold) : f === 'available' ? paintings.filter(p => !p.sold) : paintings);
+      });
+    });
+
+    buildGallery(paintings);
+  </script>
 </body>
 </html>
