@@ -6,7 +6,7 @@
 // ============================================================
 
 const paintings = [
-  { img: "0001.jpg", title: "Horizon",                  price: 0,    sold: false, material: "Acryl, Leinwand", size: "160x60x1,5 cm" },
+  { img: "0001.jpg", title: "Horizon",                  price: 0,    sold: true, material: "Acryl, Leinwand", size: "160x60x1,5 cm" },
   { img: "0002.jpg", title: "The Blue Pearl",            price: 1050, sold: false, material: "Acryl, Leinwand", size: "" },
   { img: "0003.jpg", title: "Evening Green",             price: 999,  sold: false, material: "Acryl, Leinwand", size: "" },
   { img: "0004.jpg", title: "Dance of Words",            price: 750,  sold: false, material: "Acryl, Leinwand", size: "" },
