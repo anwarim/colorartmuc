@@ -163,6 +163,10 @@
       <div class="detail-divider"></div>
       <div class="detail-price" id="detail-price"></div>
       <div class="detail-material" id="detail-material"></div>
+      <button class="detail-ar-btn" id="detail-ar-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Auf Wand ansehen
+      </button>
       <a href="contact.html" class="detail-contact">
         Anfrage senden
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
@@ -204,6 +208,7 @@
   </footer>
 
   <script src="js/paintings-data.js"></script>
+  <script src="js/ar-viewer.js"></script>
   <script src="js/main.js"></script>
   <script>
     const grid        = document.getElementById('gallery-grid');
@@ -256,6 +261,12 @@
       let matText = p.material;
       if (p.size) matText += '\n' + p.size;
       detailMat.style.whiteSpace = 'pre-line';
+
+      // Wire AR button to current painting
+      const arBtn = document.getElementById('detail-ar-btn');
+      if (arBtn) {
+        arBtn.onclick = () => openArModal(currentList[currentIndex]);
+      }
       detailMat.textContent = matText;
     }
 
