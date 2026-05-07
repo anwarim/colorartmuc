@@ -64,7 +64,7 @@ const paintings = [
   { img: "0056.jpg", title: "Esgh",                      price: 800,  sold: true,  material: "Acryl, Leinwand", size: "" },
   { img: "0057.jpg", title: "Flight of Freedom",         price: 870,  sold: true,  material: "Acryl, Leinwand", size: "" },
   { img: "0058.jpg", title: "Mind's Mirage",             price: 850,  sold: true,  material: "Acryl, Leinwand", size: "" },
-  { img: "0059.jpg", title: "Zara Golden",               price: 760,  sold: true,  material: "Acryl, Leinwand", size: "" },
+  { img: "0059.jpg", title: "Zara Golden",               price: 760,  sold: false,  material: "Acryl, Leinwand", size: "" },
   { img: "0060.jpg", title: "Rainbow Dream",             price: 650,  sold: true,  material: "Acryl, Leinwand", size: "" },
   { img: "0061.jpg", title: "Mistress of the Grey",      price: 850,  sold: false, material: "Acryl, Leinwand", size: "" },
   { img: "0062.jpg", title: "Shimmering Gold Spots",     price: 650,  sold: true,  material: "Acryl, Leinwand", size: "" },
