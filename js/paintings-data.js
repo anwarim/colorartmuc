@@ -58,7 +58,7 @@ const paintings = [
   { img: "0050.jpg", title: "The Infinite Run",          price: 850,  sold: true,  material: "Acryl, Leinwand", size: "" },
   { img: "0051.jpg", title: "Hich: The Sacred Absence",  price: 850,  sold: true,  material: "Acryl, Leinwand", size: "" },
   { img: "0052.jpg", title: "Golden Silence",            price: 870,  sold: true,  material: "Acryl, Leinwand", size: "" },
-  { img: "0053.jpg", title: "Aquatic Dance of Time",     price: 1150, sold: false, material: "Acryl, Leinwand", size: "" },
+  { img: "0053.jpg", title: "Aquatic Dance of Time",     price: 1150, sold: true, material: "Acryl, Leinwand", size: "" },
   { img: "0054.jpg", title: "Between Night and Deep",    price: 850,  sold: true,  material: "Acryl, Leinwand", size: "" },
   { img: "0055.jpg", title: "Golden Bloom Inferno",      price: 850,  sold: true, material: "Acryl, Leinwand", size: "" },
   { img: "0056.jpg", title: "Esgh",                      price: 800,  sold: true,  material: "Acryl, Leinwand", size: "" },
