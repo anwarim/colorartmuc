@@ -7,27 +7,17 @@
   <meta name="description" content="Entdecken Sie alle abstrakten Acrylbilder von Color Art Munich." />
   <link rel="stylesheet" href="css/style.css" />
   <style>
+    /* ── Hover overlay on grid ── */
     .painting-overlay {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: linear-gradient(to top, rgba(44,36,32,0.92) 0%, rgba(44,36,32,0.4) 60%, transparent 100%);
-      opacity: 0;
-      transition: opacity 0.35s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 18px;
-      gap: 4px;
+      opacity: 0; transition: opacity 0.35s ease;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 18px; gap: 4px;
     }
     .gallery-item:hover .painting-overlay,
     .gallery-item.touched .painting-overlay { opacity: 1; }
-    .overlay-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.05rem;
-      font-style: italic;
-      color: #fff;
-      line-height: 1.2;
-    }
+    .overlay-title { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-style: italic; color: #fff; line-height: 1.2; }
     .overlay-price { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; color: var(--terracotta); }
     .overlay-price.sold { color: #e8a0a0; }
     .overlay-meta { font-size: 0.7rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
@@ -37,20 +27,99 @@
       font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
       padding: 4px 8px; backdrop-filter: blur(4px); z-index: 2;
     }
-    .filter-bar {
-      display: flex; gap: 12px; justify-content: center;
-      padding: 0 40px 40px; flex-wrap: wrap;
-    }
+
+    /* ── Filter bar ── */
+    .filter-bar { display: flex; gap: 12px; justify-content: center; padding: 0 40px 40px; flex-wrap: wrap; }
     .filter-btn {
-      font-family: 'Jost', sans-serif; font-size: 0.72rem;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      padding: 10px 20px; border: 1px solid var(--sand);
-      background: none; color: var(--text-light); cursor: pointer; transition: all 0.25s;
+      font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 10px 20px; border: 1px solid var(--sand); background: none; color: var(--text-light); cursor: pointer; transition: all 0.25s;
     }
     .filter-btn:hover, .filter-btn.active { background: var(--umber); color: var(--cream); border-color: var(--umber); }
+
+    /* ── Full-screen detail view ── */
+    .detail-view {
+      position: fixed; inset: 0;
+      background: var(--warm-white);
+      z-index: 1000;
+      display: flex;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .detail-view.open { opacity: 1; pointer-events: all; }
+
+    .detail-image-area {
+      flex: 1; position: relative;
+      background: var(--cream);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; min-height: 0;
+    }
+    .detail-image-area img {
+      max-width: 88%; max-height: 88%;
+      object-fit: contain;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+      transition: opacity 0.2s ease;
+    }
+    .detail-image-area img.fading { opacity: 0; }
+
+    .detail-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(250,247,242,0.92); border: 1px solid var(--sand); color: var(--umber);
+      width: 52px; height: 52px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1.5rem; transition: all 0.2s; backdrop-filter: blur(6px); z-index: 2;
+      font-family: serif;
+    }
+    .detail-nav:hover { background: var(--umber); color: var(--cream); border-color: var(--umber); }
+    .detail-prev { left: 20px; }
+    .detail-next { right: 20px; }
+
+    .detail-info {
+      width: 300px; flex-shrink: 0;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 60px 44px;
+      border-left: 1px solid var(--sand);
+      background: var(--warm-white);
+      overflow-y: auto;
+    }
+    .detail-counter { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-light); margin-bottom: 28px; }
+    .detail-title { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 300; font-style: italic; color: var(--umber); line-height: 1.2; margin-bottom: 20px; }
+    .detail-divider { width: 48px; height: 1px; background: var(--terracotta); margin-bottom: 22px; }
+    .detail-price { font-size: 1.25rem; font-weight: 400; color: var(--terracotta); margin-bottom: 10px; }
+    .detail-price.sold { color: #b44040; }
+    .detail-material { font-size: 0.82rem; color: var(--text-light); line-height: 2; letter-spacing: 0.04em; }
+    .detail-contact {
+      margin-top: 32px;
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--umber); border: 1px solid var(--umber);
+      padding: 12px 20px; transition: all 0.25s; text-decoration: none; width: fit-content;
+    }
+    .detail-contact:hover { background: var(--umber); color: var(--cream); }
+
+    .detail-close {
+      position: fixed; top: 20px; right: 20px;
+      width: 44px; height: 44px;
+      background: var(--warm-white); border: 1px solid var(--sand); color: var(--umber);
+      font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; z-index: 1001;
+    }
+    .detail-close:hover { background: var(--umber); color: var(--cream); }
+
+    @media (max-width: 768px) {
+      .detail-view { flex-direction: column; }
+      .detail-image-area { flex: 1; min-height: 52vh; }
+      .detail-info { width: 100%; padding: 24px 24px 36px; border-left: none; border-top: 1px solid var(--sand); flex-shrink: 0; justify-content: flex-start; }
+      .detail-nav { width: 38px; height: 38px; font-size: 1.1rem; }
+      .detail-prev { left: 10px; }
+      .detail-next { right: 10px; }
+      .detail-title { font-size: 1.4rem; margin-bottom: 10px; }
+      .detail-counter { margin-bottom: 12px; }
+      .detail-info { overflow-y: auto; }
+    }
   </style>
 </head>
 <body>
+
   <nav>
     <a href="index.html" class="nav-logo">Color <span>Art</span></a>
     <ul class="nav-links" id="nav-links">
@@ -69,22 +138,40 @@
     <div class="gallery-intro fade-in">
       <span class="section-label">Alle Werke</span>
       <h1 class="section-title">Visual Journey</h1>
-      <p>Jedes Bild ist ein Unikat — handgemalt mit Acryl auf Leinwand.<br>Hover oder tippen Sie ein Bild an für Details.</p>
+      <p>Jedes Bild ist ein Unikat — handgemalt mit Acryl auf Leinwand.<br>Klicken Sie ein Bild an für Details.</p>
     </div>
+
     <div class="filter-bar">
       <button class="filter-btn active" data-filter="all">Alle</button>
       <button class="filter-btn" data-filter="available">Verfügbar</button>
       <button class="filter-btn" data-filter="sold">Verkauft</button>
     </div>
+
     <div class="gallery-grid" id="gallery-grid"></div>
   </main>
 
-  <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lightbox-close">✕</button>
-    <button class="lightbox-nav lightbox-prev" id="lightbox-prev">‹</button>
-    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
-    <button class="lightbox-nav lightbox-next" id="lightbox-next">›</button>
+  <!-- Full-screen detail view -->
+  <div class="detail-view" id="detail-view">
+    <div class="detail-image-area">
+      <button class="detail-nav detail-prev" id="detail-prev">&#8249;</button>
+      <img id="detail-img" src="" alt="" />
+      <button class="detail-nav detail-next" id="detail-next">&#8250;</button>
+    </div>
+    <div class="detail-info">
+      <div class="detail-counter" id="detail-counter"></div>
+      <div class="detail-title" id="detail-title"></div>
+      <div class="detail-divider"></div>
+      <div class="detail-price" id="detail-price"></div>
+      <div class="detail-material" id="detail-material"></div>
+      <a href="contact.html" class="detail-contact">
+        Anfrage senden
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
   </div>
+  <button class="detail-close" id="detail-close">✕</button>
 
   <footer>
     <div class="footer-inner">
@@ -119,7 +206,94 @@
   <script src="js/paintings-data.js"></script>
   <script src="js/main.js"></script>
   <script>
-    const grid = document.getElementById('gallery-grid');
+    const grid        = document.getElementById('gallery-grid');
+    const detailView  = document.getElementById('detail-view');
+    const detailImg   = document.getElementById('detail-img');
+    const detailTitle = document.getElementById('detail-title');
+    const detailPrice = document.getElementById('detail-price');
+    const detailMat   = document.getElementById('detail-material');
+    const detailCount = document.getElementById('detail-counter');
+    const closeBtn    = document.getElementById('detail-close');
+    const prevBtn     = document.getElementById('detail-prev');
+    const nextBtn     = document.getElementById('detail-next');
+
+    let currentList = [];
+    let currentIndex = 0;
+
+    // ── Open detail view ──────────────────────────────────────
+    function openDetail(list, index) {
+      currentList  = list;
+      currentIndex = index;
+      showDetail(index);
+      detailView.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function showDetail(index) {
+      const p = currentList[index];
+      // Fade image
+      detailImg.classList.add('fading');
+      setTimeout(() => {
+        detailImg.src = 'images/paintings/' + p.img;
+        detailImg.alt = p.title;
+        detailImg.classList.remove('fading');
+      }, 180);
+
+      detailTitle.textContent = p.title;
+      detailCount.textContent = (index + 1) + ' / ' + currentList.length;
+
+      if (p.sold) {
+        detailPrice.textContent = 'Verkauft';
+        detailPrice.className = 'detail-price sold';
+      } else if (p.price > 0) {
+        detailPrice.textContent = p.price.toLocaleString('de-DE') + ' \u20AC';
+        detailPrice.className = 'detail-price';
+      } else {
+        detailPrice.textContent = 'Preis auf Anfrage';
+        detailPrice.className = 'detail-price';
+      }
+
+      let matText = p.material;
+      if (p.size) matText += '\n' + p.size;
+      detailMat.style.whiteSpace = 'pre-line';
+      detailMat.textContent = matText;
+    }
+
+    function closeDetail() {
+      detailView.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function showNext() {
+      currentIndex = (currentIndex + 1) % currentList.length;
+      showDetail(currentIndex);
+    }
+
+    function showPrev() {
+      currentIndex = (currentIndex - 1 + currentList.length) % currentList.length;
+      showDetail(currentIndex);
+    }
+
+    closeBtn.addEventListener('click', closeDetail);
+    nextBtn.addEventListener('click', showNext);
+    prevBtn.addEventListener('click', showPrev);
+
+    document.addEventListener('keydown', (e) => {
+      if (!detailView.classList.contains('open')) return;
+      if (e.key === 'Escape')     closeDetail();
+      if (e.key === 'ArrowRight') showNext();
+      if (e.key === 'ArrowLeft')  showPrev();
+    });
+
+    // Swipe support on mobile
+    let touchStartX = 0;
+    detailView.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    detailView.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 50) dx < 0 ? showNext() : showPrev();
+    });
+
+    // ── Fade observer ─────────────────────────────────────────
     const fadeObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
@@ -129,65 +303,58 @@
       });
     }, { threshold: 0.05 });
 
-    function initLightbox(list) {
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightbox-img');
-      let current = 0;
-      function open(i) {
-        current = i;
-        lightboxImg.src = 'images/paintings/' + list[i].img;
-        lightboxImg.alt = list[i].title;
-        lightbox.classList.add('open');
-        document.body.style.overflow = 'hidden';
-      }
-      function close() { lightbox.classList.remove('open'); document.body.style.overflow = ''; }
-      grid.querySelectorAll('.gallery-item img').forEach((img, i) => img.addEventListener('click', () => open(i)));
-      document.getElementById('lightbox-close').onclick = close;
-      document.getElementById('lightbox-next').onclick = (e) => { e.stopPropagation(); open((current + 1) % list.length); };
-      document.getElementById('lightbox-prev').onclick = (e) => { e.stopPropagation(); open((current - 1 + list.length) % list.length); };
-      lightbox.onclick = (e) => { if (e.target === lightbox) close(); };
-      document.addEventListener('keydown', (e) => {
-        if (!lightbox.classList.contains('open')) return;
-        if (e.key === 'Escape') close();
-        if (e.key === 'ArrowRight') open((current + 1) % list.length);
-        if (e.key === 'ArrowLeft') open((current - 1 + list.length) % list.length);
-      });
-    }
-
+    // ── Build gallery grid ────────────────────────────────────
     function buildGallery(list) {
       grid.innerHTML = '';
-      list.forEach((p) => {
+      list.forEach((p, i) => {
         const item = document.createElement('div');
         item.className = 'gallery-item fade-in';
+
         const priceHTML = p.sold
           ? '<div class="overlay-price sold">Verkauft</div>'
-          : p.price > 0 ? '<div class="overlay-price">' + p.price.toLocaleString('de-DE') + ' \u20AC</div>'
-          : '<div class="overlay-price">Preis auf Anfrage</div>';
+          : p.price > 0
+            ? '<div class="overlay-price">' + p.price.toLocaleString('de-DE') + ' \u20AC</div>'
+            : '<div class="overlay-price">Preis auf Anfrage</div>';
+
         const sizeHTML = '<div class="overlay-meta">' + p.material + (p.size ? ' \u00B7 ' + p.size : '') + '</div>';
+
         item.innerHTML = (p.sold ? '<div class="sold-badge">Verkauft</div>' : '')
           + '<img src="images/paintings/' + p.img + '" alt="' + p.title + '" loading="lazy" />'
           + '<div class="painting-overlay">'
           + '<div class="overlay-title">' + p.title + '</div>'
           + priceHTML + sizeHTML + '</div>';
+
+        // Click opens detail view
+        item.addEventListener('click', () => openDetail(list, i));
+
+        // Touch: first tap shows overlay, second tap opens detail
         item.addEventListener('touchstart', () => {
-          document.querySelectorAll('.gallery-item.touched').forEach(el => { if (el !== item) el.classList.remove('touched'); });
-          item.classList.toggle('touched');
+          const already = item.classList.contains('touched');
+          document.querySelectorAll('.gallery-item.touched').forEach(el => el.classList.remove('touched'));
+          if (!already) item.classList.add('touched');
+          else openDetail(list, i);
         }, { passive: true });
+
         grid.appendChild(item);
         fadeObserver.observe(item);
       });
-      initLightbox(list);
     }
 
+    // ── Filter buttons ────────────────────────────────────────
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const f = btn.dataset.filter;
-        buildGallery(f === 'sold' ? paintings.filter(p => p.sold) : f === 'available' ? paintings.filter(p => !p.sold) : paintings);
+        buildGallery(
+          f === 'sold'      ? paintings.filter(p => p.sold) :
+          f === 'available' ? paintings.filter(p => !p.sold) :
+          paintings
+        );
       });
     });
 
+    // ── Initial render ────────────────────────────────────────
     buildGallery(paintings);
   </script>
 </body>
