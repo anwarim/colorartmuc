@@ -230,8 +230,13 @@ function openArModal(painting) {
       ? painting.price.toLocaleString('de-DE') + ' \u20AC'
       : 'Preis auf Anfrage';
 
+  // GLB file URL (same name as image but in images/ar/ and .glb extension)
+  var glbName    = painting.img.replace(/\.(jpg|jpeg|png)$/i, '.glb');
+  var glbPath    = 'images/ar/' + glbName;
+  var glbUrl     = new URL(glbPath, window.location.href).href;
+
   var sceneViewerUrl = 'intent://arvr.google.com/scene-viewer/1.0'
-    + '?file=' + encodeURIComponent(absoluteUrl)
+    + '?file=' + encodeURIComponent(glbUrl)
     + '&mode=ar_preferred&resizable=false'
     + '&title=' + encodeURIComponent(painting.title)
     + '#Intent;scheme=https;package=com.google.android.googlequicksearchbox'
