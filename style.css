@@ -828,119 +828,92 @@ footer {
   section { padding: 60px 24px; }
 }
 
+
 /* ─── AR Modal ───────────────────────────────────────────── */
 #ar-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(44,36,32,0.7);
+  position: fixed; inset: 0;
+  background: rgba(44,36,32,0.75);
   z-index: 2000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
   transition: opacity 0.3s ease;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(6px);
 }
-#ar-modal.open {
-  opacity: 1;
-  pointer-events: all;
-}
+#ar-modal.open { opacity: 1; pointer-events: all; }
+
 .ar-modal-inner {
   background: var(--warm-white);
-  width: min(520px, 94vw);
-  height: min(640px, 90vh);
-  position: relative;
-  display: flex;
-  flex-direction: column;
+  width: min(460px, 94vw);
+  max-height: 90vh;
+  display: flex; flex-direction: column;
   overflow: hidden;
+  position: relative;
 }
+
 .ar-close {
-  position: absolute;
-  top: 16px; right: 16px;
-  width: 36px; height: 36px;
-  background: var(--cream);
-  border: 1px solid var(--sand);
-  color: var(--umber);
-  cursor: pointer;
+  position: absolute; top: 14px; right: 14px;
+  width: 34px; height: 34px;
+  background: var(--cream); border: 1px solid var(--sand);
+  color: var(--umber); cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  z-index: 10;
-  font-size: 0.85rem;
-  transition: all 0.2s;
+  font-size: 0.8rem; z-index: 10; transition: all 0.2s;
 }
 .ar-close:hover { background: var(--umber); color: var(--cream); }
 
 .ar-header {
-  padding: 24px 24px 12px;
+  padding: 20px 20px 14px;
   border-bottom: 1px solid var(--sand);
-  flex-shrink: 0;
 }
 .ar-label {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.3rem;
-  font-style: italic;
-  color: var(--umber);
-  display: block;
-  margin-bottom: 4px;
+  font-size: 1.4rem; font-style: italic;
+  color: var(--umber); display: block; margin-bottom: 4px;
 }
-.ar-hint {
-  font-size: 0.75rem;
-  color: var(--text-light);
-  letter-spacing: 0.03em;
+.ar-price-tag { font-size: 0.85rem; color: var(--terracotta); }
+
+.ar-preview {
+  flex: 1; min-height: 0;
+  background: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px; overflow: hidden;
+}
+.ar-preview img {
+  max-width: 100%; max-height: 100%;
+  object-fit: contain;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
 }
 
-#ar-model-viewer {
-  flex: 1;
-  min-height: 0;
+.ar-actions {
+  padding: 20px 24px 28px;
+  border-top: 1px solid var(--sand);
+  display: flex; flex-direction: column;
+  align-items: center; gap: 12px;
 }
 
 .ar-launch-btn {
-  position: absolute;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--umber);
-  color: var(--cream);
-  border: none;
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--umber); color: var(--cream);
   padding: 14px 28px;
   font-family: 'Jost', sans-serif;
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background 0.25s;
-  white-space: nowrap;
+  font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase;
+  text-decoration: none; transition: background 0.25s;
+  border: none; cursor: pointer;
 }
 .ar-launch-btn:hover { background: var(--terracotta); }
 
-.ar-desktop-hint {
-  text-align: center;
-  padding: 16px 24px 24px;
-  font-size: 0.82rem;
-  color: var(--text-light);
-  line-height: 1.8;
-  flex-shrink: 0;
+.ar-note {
+  font-size: 0.78rem; color: var(--text-light);
+  text-align: center; line-height: 1.7;
 }
 
-/* AR button in detail view */
+/* AR button in detail panel */
 .detail-ar-btn {
   margin-top: 12px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--terracotta);
-  border: 1px solid var(--terracotta);
-  padding: 12px 20px;
-  transition: all 0.25s;
-  background: none;
-  cursor: pointer;
-  font-family: 'Jost', sans-serif;
-  width: fit-content;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--terracotta); border: 1px solid var(--terracotta);
+  padding: 12px 20px; transition: all 0.25s;
+  background: none; cursor: pointer;
+  font-family: 'Jost', sans-serif; width: fit-content;
 }
 .detail-ar-btn:hover { background: var(--terracotta); color: var(--cream); }
