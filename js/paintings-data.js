@@ -1,12 +1,10 @@
 // ============================================================
 // Color Art Munich — Paintings Data
-// Edit this file to update painting details
-// sold: true = red dot, no price shown → shows "Verkauft"
-// price: 0 = price to be added later
+// sold: true = shows "Verkauft", price: 0 = "Preis auf Anfrage"
 // ============================================================
 
 const paintings = [
-  { img: "0001.jpg", title: "Horizon",                  price: 0,    sold: false, material: "Acryl, Leinwand", size: "160x60x1,5 cm" },
+  { img: "0001.jpg", title: "Horizon",                  price: 0,    sold: true,  material: "Acryl, Leinwand", size: "160x60x1,5 cm" },
   { img: "0002.jpg", title: "The Blue Pearl",            price: 1050, sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm" },
   { img: "0003.jpg", title: "Evening Green",             price: 999,  sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm" },
   { img: "0004.jpg", title: "Dance of Words",            price: 750,  sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm" },
@@ -53,20 +51,20 @@ const paintings = [
   { img: "0045.jpg", title: "Sky and Snow",              price: 850,  sold: false, material: "Acryl, Leinwand", size: "100x100x4 cm" },
   { img: "0046.jpg", title: "Twilight Grove",            price: 750,  sold: false, material: "Acryl, Leinwand", size: "70x100x1,5 cm" },
   { img: "0047.jpg", title: "Midnight Moss",             price: 650,  sold: false, material: "Acryl, Leinwand", size: "60x80x1,5 cm" },
-  { img: "0048.jpg", title: "Mango Bliss",               price: 600,  sold: false, material: "Acryl, Leinwand", size: "60x80x2 cm" },
+  { img: "0048.jpg", title: "Mango Bliss",               price: 600,  sold: true,  material: "Acryl, Leinwand", size: "60x80x2 cm" },
   { img: "0049.jpg", title: "House in Flame",            price: 900,  sold: true,  material: "Acryl, Leinwand", size: "120x90x1,5 cm" },
   { img: "0050.jpg", title: "The Infinite Run",          price: 850,  sold: true,  material: "Acryl, Leinwand", size: "90x120x1,5 cm" },
   { img: "0051.jpg", title: "Hich: The Sacred Absence",  price: 850,  sold: true,  material: "Acryl, Leinwand", size: "120x80x1,5 cm" },
   { img: "0052.jpg", title: "Golden Silence",            price: 870,  sold: true,  material: "Acryl, Leinwand", size: "100x100x1,5 cm" },
-  { img: "0053.jpg", title: "Aquatic Dance of Time",     price: 1150, sold: false, material: "Acryl, Leinwand", size: "180x60x1,5 cm" },
+  { img: "0053.jpg", title: "Aquatic Dance of Time",     price: 1150, sold: true,  material: "Acryl, Leinwand", size: "180x60x1,5 cm" },
   { img: "0054.jpg", title: "Between Night and Deep",    price: 850,  sold: true,  material: "Acryl, Leinwand", size: "100x100x1,5 cm" },
-  { img: "0055.jpg", title: "Golden Bloom Inferno",      price: 850,  sold: false, material: "Acryl, Leinwand", size: "120x80x1,5 cm" },
+  { img: "0055.jpg", title: "Golden Bloom Inferno",      price: 850,  sold: true,  material: "Acryl, Leinwand", size: "120x80x1,5 cm" },
   { img: "0056.jpg", title: "Esgh",                      price: 800,  sold: true,  material: "Acryl, Leinwand", size: "80x120x1,5 cm" },
   { img: "0057.jpg", title: "Flight of Freedom",         price: 870,  sold: true,  material: "Acryl, Leinwand", size: "70x100x1,5 cm" },
   { img: "0058.jpg", title: "Mind's Mirage",             price: 850,  sold: true,  material: "Acryl, Leinwand", size: "80x120x1,5 cm" },
-  { img: "0059.jpg", title: "Zara Golden",               price: 760,  sold: true,  material: "Acryl, Leinwand", size: "80x120x1,5 cm" },
+  { img: "0059.jpg", title: "Zara Golden",               price: 760,  sold: false, material: "Acryl, Leinwand", size: "80x120x1,5 cm" },
   { img: "0060.jpg", title: "Rainbow Dream",             price: 650,  sold: true,  material: "Acryl, Leinwand", size: "60x80x2 cm" },
-  { img: "0061.jpg", title: "Mistress of the Grey",      price: 850,  sold: false, material: "Acryl, Leinwand", size: "80x120x1,5 cm" },
+  { img: "0061.jpg", title: "Mistress of the Grey",      price: 850,  sold: true,  material: "Acryl, Leinwand", size: "80x120x1,5 cm" },
   { img: "0062.jpg", title: "Shimmering Gold Spots",     price: 650,  sold: true,  material: "Acryl, Leinwand", size: "80x100x2 cm" },
   { img: "0063.jpg", title: "Rose-Gold Blossoms",        price: 800,  sold: true,  material: "Acryl, Leinwand", size: "80x120x1,5 cm" },
   { img: "0064.jpg", title: "Forest Gold Dust",          price: 850,  sold: true,  material: "Acryl, Leinwand", size: "80x100x2 cm" },
@@ -80,14 +78,14 @@ const paintings = [
   { img: "0072.jpg", title: "Eshgh of the Sun",          price: 850,  sold: true,  material: "Acryl, Leinwand", size: "70x120x1,5 cm" },
   { img: "0073.jpg", title: "Blue Velvet Gleam",         price: 750,  sold: true,  material: "Acryl, Leinwand", size: "80x100x2 cm" },
   { img: "0074.jpg", title: "Golden Light Windows",      price: 850,  sold: true,  material: "Acryl, Leinwand", size: "80x120x1,5 cm" },
-  { img: "0075.jpg", title: "Lava Burst",                price: 950,  sold: false, material: "Acryl, Leinwand", size: "120x80x2 cm" },
+  { img: "0075.jpg", title: "Lava Burst",                price: 950,  sold: true,  material: "Acryl, Leinwand", size: "120x80x2 cm" },
   { img: "0076.jpg", title: "Striped Harmony",           price: 850,  sold: true,  material: "Acryl, Leinwand", size: "100x100x4 cm" },
-  { img: "0077.jpg", title: "Eshgh's Sapphire Dream",    price: 800,  sold: false, material: "Acryl, Leinwand", size: "80x120x1,5 cm" },
+  { img: "0077.jpg", title: "Eshgh's Sapphire Dream",    price: 800,  sold: true,  material: "Acryl, Leinwand", size: "80x120x1,5 cm" },
   { img: "0078.jpg", title: "Nature's Wave",             price: 650,  sold: true,  material: "Acryl, Leinwand", size: "60x80x2 cm" },
-  { img: "0079.jpg", title: "Colorful Orbs",             price: 700,  sold: false, material: "Acryl, Leinwand", size: "80x100x2 cm" },
-  { img: "0080.jpg", title: "Stained Glass Shadows",     price: 850,  sold: false, material: "Acryl, Leinwand", size: "80x100x1,5 cm" },
+  { img: "0079.jpg", title: "Colorful Orbs",             price: 700,  sold: true,  material: "Acryl, Leinwand", size: "80x100x2 cm" },
+  { img: "0080.jpg", title: "Stained Glass Shadows",     price: 850,  sold: true,  material: "Acryl, Leinwand", size: "80x100x1,5 cm" },
   { img: "0081.jpg", title: "Gold Leaf Surge",           price: 400,  sold: true,  material: "Acryl, Leinwand", size: "40x50x2 cm" },
-  { img: "0082.jpg", title: "Scarlet Steel",             price: 750,  sold: false, material: "Acryl, Leinwand", size: "80x100x2 cm" },
+  { img: "0082.jpg", title: "Scarlet Steel",             price: 750,  sold: true,  material: "Acryl, Leinwand", size: "80x100x2 cm" },
   { img: "0083.jpg", title: "Golden Sandstone",          price: 400,  sold: true,  material: "Acryl, Leinwand", size: "40x50x2 cm" },
   { img: "0084.jpg", title: "Scarlet Blossom",           price: 400,  sold: true,  material: "Acryl, Leinwand", size: "40x50x1,5 cm" },
 ];

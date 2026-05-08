@@ -458,15 +458,24 @@ window.openArModal = openArModal;
         btn.classList.add('active');
         const f = btn.dataset.filter;
         buildGallery(
-          f === 'sold'      ? paintings.filter(p => p.sold) :
-          f === 'available' ? paintings.filter(p => !p.sold) :
-          paintings
+          f === 'sold'      ? shuffle(paintings.filter(p => p.sold)) :
+          f === 'available' ? shuffle(paintings.filter(p => !p.sold)) :
+          shuffle(paintings)
         );
       });
     });
 
-    // ── Initial render ────────────────────────────────────────
-    buildGallery(paintings);
+    // ── Initial render (random order) ───────────────────────────
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+      }
+      return a;
+    }
+    var shuffled = shuffle(paintings);
+    buildGallery(shuffled);
   </script>
 </body>
 </html>
