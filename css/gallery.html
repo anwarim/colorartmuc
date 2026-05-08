@@ -219,10 +219,11 @@ function openArModal(painting) {
   var existing = document.getElementById('ar-modal');
   if (existing) existing.remove();
 
-  var imgPath    = 'images/paintings/' + painting.img;
-  var absoluteUrl = new URL(imgPath, window.location.href).href;
-  var isAndroid   = /android/i.test(navigator.userAgent);
-  var isIos       = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var glbName  = painting.img.replace(/\.(jpg|jpeg|png)$/i, '.glb');
+  var glbUrl   = new URL('images/ar/' + glbName, window.location.href).href;
+  var imgUrl   = new URL('images/paintings/' + painting.img, window.location.href).href;
+  var isIos    = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isMobile = /android|iphone|ipad|ipod/i.test(navigator.userAgent);
 
   var priceText = painting.sold
     ? 'Verkauft'
@@ -230,81 +231,74 @@ function openArModal(painting) {
       ? painting.price.toLocaleString('de-DE') + ' \u20AC'
       : 'Preis auf Anfrage';
 
-  // GLB file URL (same name as image but in images/ar/ and .glb extension)
-  var glbName    = painting.img.replace(/\.(jpg|jpeg|png)$/i, '.glb');
-  var glbPath    = 'images/ar/' + glbName;
-  var glbUrl     = new URL(glbPath, window.location.href).href;
-
-  var sceneViewerUrl = 'intent://arvr.google.com/scene-viewer/1.0'
-    + '?file=' + encodeURIComponent(glbUrl)
-    + '&mode=ar_preferred'
-    + '&resizable=true'
-    + '&vertical_placement=true'
-    + '&initial_scale=0.5'
-    + '&title=' + encodeURIComponent(painting.title)
-    + '#Intent;scheme=https;package=com.google.android.googlequicksearchbox'
-    + ';action=android.intent.action.VIEW'
-    + ';S.browser_fallback_url=' + encodeURIComponent('https://play.google.com/store/apps/details?id=com.google.ar.core')
-    + ';end;';
-
-  // Build action HTML based on platform
-  var actionHtml;
-  if (isAndroid) {
-    actionHtml = '<a class="ar-launch-btn" href="' + sceneViewerUrl + '">'
-      + '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">'
-      + '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>'
-      + 'Auf Wand ansehen (AR)'
-      + '</a>'
-      + '<p class="ar-note">Öffnet Google AR. Richten Sie die Kamera auf Ihre Wand.</p>';
-  } else if (isIos) {
-    actionHtml = '<p class="ar-note">Öffnen Sie diese Seite in <strong>Safari</strong> auf Ihrem iPhone.<br>Das AR-Symbol erscheint automatisch beim Bild.</p>';
-  } else {
-    actionHtml = '<p class="ar-note">📱 AR ist auf dem Smartphone verfügbar.<br>Öffnen Sie die Seite auf Ihrem Android oder iPhone.</p>';
-  }
-
-  // Build modal
   var modal = document.createElement('div');
   modal.id = 'ar-modal';
+  modal.className = 'open';
 
   var inner = document.createElement('div');
   inner.className = 'ar-modal-inner';
 
+  // Close button
   var closeBtn = document.createElement('button');
   closeBtn.className = 'ar-close';
-  closeBtn.id = 'ar-close-btn';
-  closeBtn.textContent = '\u2715';
+  closeBtn.innerHTML = '&#10005;';
+  closeBtn.onclick = function() { modal.remove(); document.body.style.overflow = ''; };
 
+  // Header
   var header = document.createElement('div');
   header.className = 'ar-header';
   header.innerHTML = '<span class="ar-label">' + painting.title + '</span>'
     + '<span class="ar-price-tag">' + priceText + '</span>';
 
-  var preview = document.createElement('div');
-  preview.className = 'ar-preview';
-  var img = document.createElement('img');
-  img.src = absoluteUrl;
-  img.alt = painting.title;
-  preview.appendChild(img);
+  // Model viewer container
+  var viewerWrap = document.createElement('div');
+  viewerWrap.className = 'ar-viewer-wrap';
 
-  var actions = document.createElement('div');
-  actions.className = 'ar-actions';
-  actions.innerHTML = actionHtml;
+  if (isMobile) {
+    // Load model-viewer script if not loaded yet
+    if (!window._mvLoaded) {
+      var s = document.createElement('script');
+      s.type = 'module';
+      s.src = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js';
+      document.head.appendChild(s);
+      window._mvLoaded = true;
+    }
+
+    var mv = document.createElement('model-viewer');
+    mv.setAttribute('src', glbUrl);
+    mv.setAttribute('ar', '');
+    mv.setAttribute('ar-modes', 'webxr scene-viewer');
+    mv.setAttribute('ar-placement', 'wall');
+    mv.setAttribute('ar-scale', 'fixed');
+    mv.setAttribute('camera-controls', '');
+    mv.setAttribute('touch-action', 'pan-y');
+    mv.setAttribute('shadow-intensity', '0');
+    mv.setAttribute('exposure', '1.2');
+    mv.setAttribute('style', 'width:100%;height:100%;background:#f5f0e8;');
+
+    // AR button slot
+    var arBtn = document.createElement('button');
+    arBtn.setAttribute('slot', 'ar-button');
+    arBtn.className = 'ar-launch-btn';
+    arBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Auf Wand ansehen';
+    mv.appendChild(arBtn);
+
+    viewerWrap.appendChild(mv);
+  } else {
+    // Desktop: show image + QR hint
+    viewerWrap.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:24px;gap:16px;">'
+      + '<img src="' + imgUrl + '" style="max-height:260px;max-width:100%;object-fit:contain;box-shadow:0 8px 32px rgba(0,0,0,0.12);" />'
+      + '<p class="ar-note" style="text-align:center;">\uD83D\uDCF1 AR funktioniert auf Android &amp; iPhone.<br>Öffnen Sie <strong>colorartmuc.com</strong> auf Ihrem Smartphone.</p>'
+      + '</div>';
+  }
 
   inner.appendChild(closeBtn);
   inner.appendChild(header);
-  inner.appendChild(preview);
-  inner.appendChild(actions);
+  inner.appendChild(viewerWrap);
   modal.appendChild(inner);
   document.body.appendChild(modal);
   document.body.style.overflow = 'hidden';
 
-  // Show modal immediately
-  modal.classList.add('open');
-
-  closeBtn.addEventListener('click', function() {
-    modal.remove();
-    document.body.style.overflow = '';
-  });
   modal.addEventListener('click', function(e) {
     if (e.target === modal) { modal.remove(); document.body.style.overflow = ''; }
   });
