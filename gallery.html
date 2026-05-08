@@ -237,7 +237,10 @@ function openArModal(painting) {
 
   var sceneViewerUrl = 'intent://arvr.google.com/scene-viewer/1.0'
     + '?file=' + encodeURIComponent(glbUrl)
-    + '&mode=ar_preferred&resizable=false'
+    + '&mode=ar_preferred'
+    + '&resizable=true'
+    + '&vertical_placement=true'
+    + '&initial_scale=0.5'
     + '&title=' + encodeURIComponent(painting.title)
     + '#Intent;scheme=https;package=com.google.android.googlequicksearchbox'
     + ';action=android.intent.action.VIEW'
