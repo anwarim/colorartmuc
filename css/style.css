@@ -402,7 +402,7 @@ section { padding: 100px 40px; max-width: var(--max-width); margin: 0 auto; }
   left: 50%;
   transform: translateX(-50%);
   width: 1px;
-  height: 150px;
+  height: 120px;
   background: rgba(44,36,32,0.18);
   z-index: 0;
 }
