@@ -48,20 +48,44 @@
     }
     .detail-view.open { opacity: 1; pointer-events: all; }
 
+    /* Image area — stacks vertically (painting + wall photos) */
     .detail-image-area {
       flex: 1; position: relative;
       background: var(--cream);
       display: flex; align-items: center; justify-content: center;
       overflow: hidden; min-height: 0;
     }
-    .detail-image-area img {
+
+    /* The image stack — slides up/down */
+    .detail-img-stack {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .detail-img-slot {
+      flex-shrink: 0;
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+
+    .detail-img-slot img {
       max-width: 88%; max-height: 88%;
       object-fit: contain;
       box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-      transition: opacity 0.2s ease;
+      transition: opacity 0.25s ease;
     }
-    .detail-image-area img.fading { opacity: 0; }
 
+    .detail-img-slot.wall-photo img {
+      max-width: 96%; max-height: 96%;
+      object-fit: cover;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    }
+
+    /* Left/right painting navigation */
     .detail-nav {
       position: absolute; top: 50%; transform: translateY(-50%);
       background: rgba(250,247,242,0.92); border: 1px solid var(--sand); color: var(--umber);
@@ -73,6 +97,44 @@
     .detail-prev { left: 20px; }
     .detail-next { right: 20px; }
 
+    /* Up/down wall photo navigation */
+    .detail-wall-nav {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      background: rgba(250,247,242,0.92); border: 1px solid var(--sand); color: var(--umber);
+      width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1.2rem; transition: all 0.2s; backdrop-filter: blur(6px); z-index: 2;
+      font-family: serif;
+    }
+    .detail-wall-nav:hover { background: var(--umber); color: var(--cream); border-color: var(--umber); }
+    .detail-wall-up   { top: 16px; }
+    .detail-wall-down { bottom: 16px; }
+    .detail-wall-nav.hidden { opacity: 0; pointer-events: none; }
+
+    /* Dot indicators for current photo position */
+    .detail-dots {
+      position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 6px; z-index: 2;
+    }
+    .detail-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(44,36,32,0.2);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .detail-dot.active {
+      background: var(--terracotta);
+      transform: scale(1.4);
+    }
+
+    /* Wall photo label */
+    .detail-wall-label {
+      position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(44,36,32,0.45); z-index: 2; white-space: nowrap;
+      background: rgba(250,247,242,0.7); padding: 4px 10px; backdrop-filter: blur(4px);
+    }
+
+    /* Info panel */
     .detail-info {
       width: 300px; flex-shrink: 0;
       display: flex; flex-direction: column; justify-content: center;
@@ -106,16 +168,28 @@
     }
     .detail-close:hover { background: var(--umber); color: var(--cream); }
 
+    /* Wall photos hint in info panel */
+    .detail-wall-hint {
+      margin-top: 20px;
+      font-size: 0.72rem; letter-spacing: 0.12em;
+      color: var(--text-light);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .detail-wall-hint svg { flex-shrink: 0; opacity: 0.5; }
+    .detail-wall-hint.hidden { display: none; }
+
     @media (max-width: 768px) {
       .detail-view { flex-direction: column; }
       .detail-image-area { flex: 1; min-height: 52vh; }
-      .detail-info { width: 100%; padding: 24px 24px 36px; border-left: none; border-top: 1px solid var(--sand); flex-shrink: 0; justify-content: flex-start; }
+      .detail-info { width: 100%; padding: 24px 24px 36px; border-left: none; border-top: 1px solid var(--sand); flex-shrink: 0; justify-content: flex-start; overflow-y: auto; }
       .detail-nav { width: 38px; height: 38px; font-size: 1.1rem; }
       .detail-prev { left: 10px; }
       .detail-next { right: 10px; }
       .detail-title { font-size: 1.4rem; margin-bottom: 10px; }
       .detail-counter { margin-bottom: 12px; }
-      .detail-info { overflow-y: auto; }
+      .detail-dots { right: 8px; }
+      .detail-wall-up { top: 8px; }
+      .detail-wall-down { bottom: 8px; }
     }
   </style>
 </head>
@@ -153,17 +227,40 @@
 
   <!-- Full-screen detail view -->
   <div class="detail-view" id="detail-view">
-    <div class="detail-image-area">
+    <div class="detail-image-area" id="detail-image-area">
+      <!-- Left/right painting nav -->
       <button class="detail-nav detail-prev" id="detail-prev">&#8249;</button>
-      <img id="detail-img" src="" alt="" />
       <button class="detail-nav detail-next" id="detail-next">&#8250;</button>
+
+      <!-- Up/down wall photo nav -->
+      <button class="detail-wall-nav detail-wall-up hidden" id="detail-wall-up">&#8963;</button>
+      <button class="detail-wall-nav detail-wall-down hidden" id="detail-wall-down">&#8964;</button>
+
+      <!-- Photo position dots -->
+      <div class="detail-dots" id="detail-dots"></div>
+
+      <!-- Wall photo label -->
+      <div class="detail-wall-label" id="detail-wall-label" style="display:none">Auf der Wand</div>
+
+      <!-- Sliding image stack -->
+      <div class="detail-img-stack" id="detail-img-stack"></div>
     </div>
+
     <div class="detail-info">
       <div class="detail-counter" id="detail-counter"></div>
       <div class="detail-title" id="detail-title"></div>
       <div class="detail-divider"></div>
       <div class="detail-price" id="detail-price"></div>
       <div class="detail-material" id="detail-material"></div>
+
+      <!-- Wall photos hint -->
+      <div class="detail-wall-hint hidden" id="detail-wall-hint">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 5v14M5 12l7-7 7 7"/>
+        </svg>
+        Scrollen für Raumansichten
+      </div>
+
       <button class="detail-ar-btn" id="detail-ar-btn">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         Auf Wand ansehen
@@ -210,108 +307,53 @@
 
   <script src="js/paintings-data.js"></script>
   <script>
-// ============================================================
-// Color Art Munich — AR Wall Viewer
-// Android: Google Scene Viewer intent
-// iOS/Desktop: instructions modal
-// ============================================================
-
-function openArModal(painting) {
-  var existing = document.getElementById('ar-modal');
-  if (existing) existing.remove();
-
-  var glbName  = painting.img.replace(/\.(jpg|jpeg|png)$/i, '.glb');
-  var glbUrl   = new URL('images/ar/' + glbName, window.location.href).href;
-  var imgUrl   = new URL('images/paintings/' + painting.img, window.location.href).href;
-  var isIos    = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  var isMobile = /android|iphone|ipad|ipod/i.test(navigator.userAgent);
-
-  var priceText = painting.sold
-    ? 'Verkauft'
-    : painting.price > 0
-      ? painting.price.toLocaleString('de-DE') + ' \u20AC'
-      : 'Preis auf Anfrage';
-
-  var modal = document.createElement('div');
-  modal.id = 'ar-modal';
-  modal.className = 'open';
-
-  var inner = document.createElement('div');
-  inner.className = 'ar-modal-inner';
-
-  // Close button
-  var closeBtn = document.createElement('button');
-  closeBtn.className = 'ar-close';
-  closeBtn.innerHTML = '&#10005;';
-  closeBtn.onclick = function() { modal.remove(); document.body.style.overflow = ''; };
-
-  // Header
-  var header = document.createElement('div');
-  header.className = 'ar-header';
-  header.innerHTML = '<span class="ar-label">' + painting.title + '</span>'
-    + '<span class="ar-price-tag">' + priceText + '</span>';
-
-  // Model viewer container
-  var viewerWrap = document.createElement('div');
-  viewerWrap.className = 'ar-viewer-wrap';
-
-  if (isMobile) {
-    // Load model-viewer script if not loaded yet
-    if (!window._mvLoaded) {
-      var s = document.createElement('script');
-      s.type = 'module';
-      s.src = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js';
-      document.head.appendChild(s);
-      window._mvLoaded = true;
+    // ── AR Modal (inline) ─────────────────────────────────────
+    function openArModal(painting) {
+      var existing = document.getElementById('ar-modal');
+      if (existing) existing.remove();
+      var imgPath     = 'images/paintings/' + painting.img;
+      var absoluteUrl = new URL(imgPath, window.location.href).href;
+      var isAndroid   = /android/i.test(navigator.userAgent);
+      var isIos       = /iphone|ipad|ipod/i.test(navigator.userAgent);
+      var priceText   = painting.sold ? 'Verkauft' : painting.price > 0 ? painting.price.toLocaleString('de-DE') + ' \u20AC' : 'Preis auf Anfrage';
+      var glbName     = painting.img.replace(/\.(jpg|jpeg|png)$/i, '.glb');
+      var glbUrl      = new URL('images/ar/' + glbName, window.location.href).href;
+      var sceneViewerUrl = 'intent://arvr.google.com/scene-viewer/1.0?file=' + encodeURIComponent(glbUrl) + '&mode=ar_preferred&resizable=true&vertical_placement=true&initial_scale=0.5&title=' + encodeURIComponent(painting.title) + '#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=' + encodeURIComponent('https://play.google.com/store/apps/details?id=com.google.ar.core') + ';end;';
+      if (!window._mvLoaded && isIos) {
+        var s = document.createElement('script'); s.type = 'module';
+        s.src = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js';
+        document.head.appendChild(s); window._mvLoaded = true;
+      }
+      var modal = document.createElement('div'); modal.id = 'ar-modal'; modal.className = 'open';
+      var inner = document.createElement('div'); inner.className = 'ar-modal-inner';
+      var closeBtn = document.createElement('button'); closeBtn.className = 'ar-close'; closeBtn.innerHTML = '&#10005;';
+      closeBtn.onclick = function() { modal.remove(); document.body.style.overflow = ''; };
+      var header = document.createElement('div'); header.className = 'ar-header';
+      header.innerHTML = '<span class="ar-label">' + painting.title + '</span><span class="ar-price-tag">' + priceText + '</span>';
+      var viewerWrap = document.createElement('div'); viewerWrap.className = 'ar-viewer-wrap';
+      if (isAndroid) {
+        viewerWrap.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:24px;gap:16px;"><img src="' + absoluteUrl + '" style="max-height:260px;max-width:100%;object-fit:contain;box-shadow:0 8px 32px rgba(0,0,0,0.12);" /><a class="ar-launch-btn" href="' + sceneViewerUrl + '"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>Auf Wand ansehen (AR)</a><p class="ar-note">Öffnet Google AR. Richten Sie die Kamera auf Ihre Wand.</p></div>';
+      } else if (isIos) {
+        var mv = document.createElement('model-viewer');
+        mv.setAttribute('src', glbUrl); mv.setAttribute('ar', ''); mv.setAttribute('ar-modes', 'webxr scene-viewer quick-look');
+        mv.setAttribute('ar-placement', 'wall'); mv.setAttribute('camera-controls', ''); mv.setAttribute('touch-action', 'pan-y');
+        mv.setAttribute('shadow-intensity', '0'); mv.setAttribute('style', 'width:100%;height:100%;background:#f5f0e8;');
+        var arBtn = document.createElement('button'); arBtn.setAttribute('slot', 'ar-button'); arBtn.className = 'ar-launch-btn';
+        arBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Auf Wand ansehen';
+        mv.appendChild(arBtn); viewerWrap.appendChild(mv);
+      } else {
+        viewerWrap.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:24px;gap:16px;"><img src="' + absoluteUrl + '" style="max-height:260px;max-width:100%;object-fit:contain;box-shadow:0 8px 32px rgba(0,0,0,0.12);" /><p class="ar-note">📱 AR ist auf dem Smartphone verfügbar.</p></div>';
+      }
+      inner.appendChild(closeBtn); inner.appendChild(header); inner.appendChild(viewerWrap);
+      modal.appendChild(inner); document.body.appendChild(modal);
+      modal.addEventListener('click', function(e) { if (e.target === modal) { modal.remove(); document.body.style.overflow = ''; } });
     }
-
-    var mv = document.createElement('model-viewer');
-    mv.setAttribute('src', glbUrl);
-    mv.setAttribute('ar', '');
-    mv.setAttribute('ar-modes', 'webxr scene-viewer');
-    mv.setAttribute('ar-placement', 'wall');
-    mv.setAttribute('ar-scale', 'fixed');
-    mv.setAttribute('camera-controls', '');
-    mv.setAttribute('touch-action', 'pan-y');
-    mv.setAttribute('shadow-intensity', '0');
-    mv.setAttribute('exposure', '1.2');
-    mv.setAttribute('style', 'width:100%;height:100%;background:#f5f0e8;');
-
-    // AR button slot
-    var arBtn = document.createElement('button');
-    arBtn.setAttribute('slot', 'ar-button');
-    arBtn.className = 'ar-launch-btn';
-    arBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Auf Wand ansehen';
-    mv.appendChild(arBtn);
-
-    viewerWrap.appendChild(mv);
-  } else {
-    // Desktop: show image + QR hint
-    viewerWrap.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:24px;gap:16px;">'
-      + '<img src="' + imgUrl + '" style="max-height:260px;max-width:100%;object-fit:contain;box-shadow:0 8px 32px rgba(0,0,0,0.12);" />'
-      + '<p class="ar-note" style="text-align:center;">\uD83D\uDCF1 AR funktioniert auf Android &amp; iPhone.<br>Öffnen Sie <strong>colorartmuc.com</strong> auf Ihrem Smartphone.</p>'
-      + '</div>';
-  }
-
-  inner.appendChild(closeBtn);
-  inner.appendChild(header);
-  inner.appendChild(viewerWrap);
-  modal.appendChild(inner);
-  document.body.appendChild(modal);
-  document.body.style.overflow = 'hidden';
-
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) { modal.remove(); document.body.style.overflow = ''; }
-  });
-}
-window.openArModal = openArModal;
-
+    window.openArModal = openArModal;
   </script>
   <script src="js/main.js"></script>
   <script>
     const grid        = document.getElementById('gallery-grid');
     const detailView  = document.getElementById('detail-view');
-    const detailImg   = document.getElementById('detail-img');
     const detailTitle = document.getElementById('detail-title');
     const detailPrice = document.getElementById('detail-price');
     const detailMat   = document.getElementById('detail-material');
@@ -319,11 +361,94 @@ window.openArModal = openArModal;
     const closeBtn    = document.getElementById('detail-close');
     const prevBtn     = document.getElementById('detail-prev');
     const nextBtn     = document.getElementById('detail-next');
+    const wallUpBtn   = document.getElementById('detail-wall-up');
+    const wallDownBtn = document.getElementById('detail-wall-down');
+    const imgStack    = document.getElementById('detail-img-stack');
+    const dotsEl      = document.getElementById('detail-dots');
+    const wallLabel   = document.getElementById('detail-wall-label');
+    const wallHint    = document.getElementById('detail-wall-hint');
 
-    let currentList = [];
+    let currentList  = [];
     let currentIndex = 0;
+    let photoIndex   = 0;   // 0 = painting, 1+ = wall photos
+    let currentPhotos = []; // all photos for current painting [painting, wall1, wall2, ...]
 
-    // ── Open detail view ──────────────────────────────────────
+    // ── Discover wall photos for a painting ──────────────────
+    function getWallPhotos(painting) {
+      // Wall photos named like: 0013_001.jpg, 0013_002.jpg
+      // We try to load them — if they 404 we stop
+      // Return array of src paths
+      var base = painting.img.replace(/\.[^.]+$/, ''); // e.g. "0013"
+      var photos = ['images/paintings/' + painting.img]; // first is always the painting
+      // We'll discover wall photos dynamically by trying to load them
+      // and resolve with whatever loads successfully
+      return new Promise(function(resolve) {
+        var i = 1;
+        function tryNext() {
+          var num = String(i).padStart(3, '0');
+          var src = 'images/paintings-walls/' + base + '_' + num + '.jpg';
+          var img = new Image();
+          img.onload = function() { photos.push(src); i++; tryNext(); };
+          img.onerror = function() { resolve(photos); }; // stop here
+          img.src = src;
+          if (i > 9) resolve(photos); // max 9 wall photos
+        }
+        tryNext();
+      });
+    }
+
+    // ── Build image stack ─────────────────────────────────────
+    function buildStack(photos) {
+      imgStack.innerHTML = '';
+      photos.forEach(function(src, i) {
+        var slot = document.createElement('div');
+        slot.className = 'detail-img-slot' + (i > 0 ? ' wall-photo' : '');
+        var img = document.createElement('img');
+        img.src = src;
+        img.alt = '';
+        if (i > 0) img.loading = 'lazy';
+        slot.appendChild(img);
+        imgStack.appendChild(slot);
+      });
+
+      // Build dots
+      dotsEl.innerHTML = '';
+      photos.forEach(function(_, i) {
+        var dot = document.createElement('div');
+        dot.className = 'detail-dot' + (i === 0 ? ' active' : '');
+        dotsEl.appendChild(dot);
+      });
+
+      // Show/hide dots and nav buttons
+      var hasWall = photos.length > 1;
+      dotsEl.style.display = hasWall ? 'flex' : 'none';
+      wallHint.classList.toggle('hidden', !hasWall);
+      updateWallNav();
+    }
+
+    function updateWallNav() {
+      wallUpBtn.classList.toggle('hidden', photoIndex === 0);
+      wallDownBtn.classList.toggle('hidden', photoIndex >= currentPhotos.length - 1);
+      wallLabel.style.display = photoIndex > 0 ? 'block' : 'none';
+
+      // Update dots
+      dotsEl.querySelectorAll('.detail-dot').forEach(function(d, i) {
+        d.classList.toggle('active', i === photoIndex);
+      });
+
+      // Slide stack
+      imgStack.style.transform = 'translateY(' + (-photoIndex * 100) + '%)';
+    }
+
+    function goWallUp() {
+      if (photoIndex > 0) { photoIndex--; updateWallNav(); }
+    }
+
+    function goWallDown() {
+      if (photoIndex < currentPhotos.length - 1) { photoIndex++; updateWallNav(); }
+    }
+
+    // ── Open / show detail ────────────────────────────────────
     function openDetail(list, index) {
       currentList  = list;
       currentIndex = index;
@@ -334,17 +459,11 @@ window.openArModal = openArModal;
 
     function showDetail(index) {
       const p = currentList[index];
-      // Fade image
-      detailImg.classList.add('fading');
-      setTimeout(() => {
-        detailImg.src = 'images/paintings/' + p.img;
-        detailImg.alt = p.title;
-        detailImg.classList.remove('fading');
-      }, 180);
+      photoIndex = 0;
 
+      // Update info panel
       detailTitle.textContent = p.title;
       detailCount.textContent = (index + 1) + ' / ' + currentList.length;
-
       if (p.sold) {
         detailPrice.textContent = 'Verkauft';
         detailPrice.className = 'detail-price sold';
@@ -355,20 +474,24 @@ window.openArModal = openArModal;
         detailPrice.textContent = 'Preis auf Anfrage';
         detailPrice.className = 'detail-price';
       }
-
       let matText = p.material;
       if (p.size) matText += '\n' + p.size;
       detailMat.style.whiteSpace = 'pre-line';
-
-      // Wire AR button to current painting
-      const arBtn = document.getElementById('detail-ar-btn');
-      if (arBtn) {
-        arBtn.onclick = () => {
-          console.log('AR button clicked, painting:', currentList[currentIndex]);
-          openArModal(currentList[currentIndex]);
-        };
-      }
       detailMat.textContent = matText;
+
+      // AR button
+      const arBtn = document.getElementById('detail-ar-btn');
+      if (arBtn) arBtn.onclick = () => openArModal(currentList[currentIndex]);
+
+      // Build stack with painting only first, then discover wall photos
+      currentPhotos = ['images/paintings/' + p.img];
+      buildStack(currentPhotos);
+
+      // Discover wall photos async
+      getWallPhotos(p).then(function(photos) {
+        currentPhotos = photos;
+        buildStack(photos);
+      });
     }
 
     function closeDetail() {
@@ -377,11 +500,13 @@ window.openArModal = openArModal;
     }
 
     function showNext() {
+      photoIndex = 0;
       currentIndex = (currentIndex + 1) % currentList.length;
       showDetail(currentIndex);
     }
 
     function showPrev() {
+      photoIndex = 0;
       currentIndex = (currentIndex - 1 + currentList.length) % currentList.length;
       showDetail(currentIndex);
     }
@@ -389,20 +514,32 @@ window.openArModal = openArModal;
     closeBtn.addEventListener('click', closeDetail);
     nextBtn.addEventListener('click', showNext);
     prevBtn.addEventListener('click', showPrev);
+    wallUpBtn.addEventListener('click', goWallUp);
+    wallDownBtn.addEventListener('click', goWallDown);
 
     document.addEventListener('keydown', (e) => {
       if (!detailView.classList.contains('open')) return;
       if (e.key === 'Escape')     closeDetail();
       if (e.key === 'ArrowRight') showNext();
       if (e.key === 'ArrowLeft')  showPrev();
+      if (e.key === 'ArrowDown')  goWallDown();
+      if (e.key === 'ArrowUp')    goWallUp();
     });
 
-    // Swipe support on mobile
-    let touchStartX = 0;
-    detailView.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    // Touch: horizontal = painting nav, vertical = wall photo nav
+    let touchStartX = 0, touchStartY = 0;
+    detailView.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
     detailView.addEventListener('touchend', (e) => {
       const dx = e.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(dx) > 50) dx < 0 ? showNext() : showPrev();
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+        dx < 0 ? showNext() : showPrev();
+      } else if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 50) {
+        dy < 0 ? goWallDown() : goWallUp();
+      }
     });
 
     // ── Fade observer ─────────────────────────────────────────
@@ -421,32 +558,24 @@ window.openArModal = openArModal;
       list.forEach((p, i) => {
         const item = document.createElement('div');
         item.className = 'gallery-item fade-in';
-
         const priceHTML = p.sold
           ? '<div class="overlay-price sold">Verkauft</div>'
           : p.price > 0
             ? '<div class="overlay-price">' + p.price.toLocaleString('de-DE') + ' \u20AC</div>'
             : '<div class="overlay-price">Preis auf Anfrage</div>';
-
         const sizeHTML = '<div class="overlay-meta">' + p.material + (p.size ? ' \u00B7 ' + p.size : '') + '</div>';
-
         item.innerHTML = (p.sold ? '<div class="sold-badge">Verkauft</div>' : '')
           + '<img src="images/paintings/' + p.img + '" alt="' + p.title + '" loading="lazy" />'
           + '<div class="painting-overlay">'
           + '<div class="overlay-title">' + p.title + '</div>'
           + priceHTML + sizeHTML + '</div>';
-
-        // Click opens detail view
         item.addEventListener('click', () => openDetail(list, i));
-
-        // Touch: first tap shows overlay, second tap opens detail
         item.addEventListener('touchstart', () => {
           const already = item.classList.contains('touched');
           document.querySelectorAll('.gallery-item.touched').forEach(el => el.classList.remove('touched'));
           if (!already) item.classList.add('touched');
           else openDetail(list, i);
         }, { passive: true });
-
         grid.appendChild(item);
         fadeObserver.observe(item);
       });
@@ -466,7 +595,6 @@ window.openArModal = openArModal;
       });
     });
 
-    // ── Initial render (random order) ───────────────────────────
     function shuffle(arr) {
       var a = arr.slice();
       for (var i = a.length - 1; i > 0; i--) {
@@ -475,8 +603,8 @@ window.openArModal = openArModal;
       }
       return a;
     }
-    var shuffled = shuffle(paintings);
-    buildGallery(shuffled);
+
+    buildGallery(shuffle(paintings));
   </script>
 </body>
 </html>
