@@ -4,12 +4,12 @@
 // ============================================================
 
 const paintings = [
-  { img: "0001.jpg", title: "Horizon",                  price: 0,    sold: true,  material: "Acryl, Leinwand", size: "160x60x1,5 cm" },
+  { img: "0001.jpg", title: "Horizon",                   price: 950,  sold: true,  material: "Acryl, Leinwand", size: "160x60x1,5 cm" },
   { img: "0002.jpg", title: "The Blue Pearl",            price: 1050, sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm" },
   { img: "0003.jpg", title: "Evening Green",             price: 999,  sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm" },
   { img: "0004.jpg", title: "Dance of Words",            price: 750,  sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm" },
   { img: "0005.jpg", title: "Echoes of Venice",          price: 950,  sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm" },
-  { img: "0006.jpg", title: "Ashes of Gold",             price: 850,  sold: false, material: "Acryl, Leinwand", size: "90x120x1,5 cm" },
+  { img: "0006.jpg", title: "Ashes of Gold",             price: 850,  sold: true, material: "Acryl, Leinwand", size: "90x120x1,5 cm" },
   { img: "0007.jpg", title: "Horizon Line",              price: 1100, sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm" },
   { img: "0008.jpg", title: "The Earth Dreams",          price: 800,  sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm" },
   { img: "0009.jpg", title: "Flame and Sky Tower",       price: 850,  sold: true,  material: "Acryl, Leinwand", size: "100x100x1,5 cm" },
@@ -89,6 +89,7 @@ const paintings = [
   { img: "0083.jpg", title: "Golden Sandstone",          price: 400,  sold: true,  material: "Acryl, Leinwand", size: "40x50x2 cm" },
   { img: "0084.jpg", title: "Scarlet Blossom",           price: 400,  sold: true,  material: "Acryl, Leinwand", size: "40x50x1,5 cm" },
   { img: "0085.jpg", title: "Dream Parade",           	 price: 950,  sold: false,  material: "Acryl, Leinwand", size: "160x60x1,5 cm" },
-  { img: "0086.jpg", title: "Between Worlds",            price: 750,  sold: false,  material: "Acryl, Leinwand", size: "120x90x1,5 cm" },
+  { img: "0086.jpg", title: "Between Worlds",            price: 750,  sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm" },
   { img: "0087.jpg", title: "Beneath the Surface",       price: 850,  sold: false,  material: "Acryl, Leinwand", size: "100x100x1,5 cm" },
+  { img: "0088.jpg", title: "The Origin",        		 price: 700,  sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm" },
 ];
