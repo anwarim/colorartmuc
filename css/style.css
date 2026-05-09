@@ -402,7 +402,7 @@ section { padding: 100px 40px; max-width: var(--max-width); margin: 0 auto; }
   left: 50%;
   transform: translateX(-50%);
   width: 1px;
-  height: 45%; /* scales with box size */
+  height: 50%; /* scales with box size, reaches painting top */
   background: rgba(44,36,32,0.18);
   z-index: 0;
 }
@@ -826,7 +826,15 @@ footer {
 
   .about-layout,
   .contact-layout { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
-  .about-image-stack { height: 260px; }
+  .about-image-stack { height: 320px; }
+
+  .about-image-stack img:first-child {
+    height: 260px;
+  }
+
+  .about-image-stack img:last-child {
+    height: 160px;
+  }
 
   /* Fix about teaser section on mobile */
   section > div[style*="grid-template-columns:1fr 1fr"],
