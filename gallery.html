@@ -10,10 +10,11 @@
     /* ── Hover overlay on grid ── */
     .painting-overlay {
       position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(44,36,32,0.92) 0%, rgba(44,36,32,0.4) 60%, transparent 100%);
+      background: linear-gradient(to top, rgba(44,36,32,0.88) 0%, rgba(44,36,32,0.3) 50%, transparent 100%);
       opacity: 0; transition: opacity 0.35s ease;
       display: flex; flex-direction: column; justify-content: flex-end;
       padding: 18px; gap: 4px;
+      z-index: 3;
     }
     .gallery-item:hover .painting-overlay,
     .gallery-item.touched .painting-overlay { opacity: 1; }
@@ -25,7 +26,7 @@
       position: absolute; top: 12px; right: 12px;
       background: rgba(180,60,60,0.85); color: white;
       font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
-      padding: 4px 8px; backdrop-filter: blur(4px); z-index: 2;
+      padding: 4px 8px; backdrop-filter: blur(4px); z-index: 4;
     }
 
     /* ── Filter bar ── */
@@ -152,8 +153,6 @@
 
   <!-- Full-screen detail view -->
   <div class="detail-view" id="detail-view">
-	<button class="detail-close" id="detail-close">✕</button>
-	
     <div class="detail-image-area">
       <button class="detail-nav detail-prev" id="detail-prev">&#8249;</button>
       <img id="detail-img" src="" alt="" />
@@ -177,6 +176,7 @@
       </a>
     </div>
   </div>
+  <button class="detail-close" id="detail-close">✕</button>
 
   <footer>
     <div class="footer-inner">
