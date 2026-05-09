@@ -88,4 +88,7 @@ const paintings = [
   { img: "0082.jpg", title: "Scarlet Steel",             price: 750,  sold: true,  material: "Acryl, Leinwand", size: "80x100x2 cm" },
   { img: "0083.jpg", title: "Golden Sandstone",          price: 400,  sold: true,  material: "Acryl, Leinwand", size: "40x50x2 cm" },
   { img: "0084.jpg", title: "Scarlet Blossom",           price: 400,  sold: true,  material: "Acryl, Leinwand", size: "40x50x1,5 cm" },
+  { img: "0085.jpg", title: "TODO",           price: 950,  sold: true,  material: "Acryl, Leinwand", size: "160x60x1,5 cm" },
+  { img: "0086.jpg", title: "TODO",           price: 800,  sold: true,  material: "Acryl, Leinwand", size: "120x90x1,5 cm" },
+  { img: "0087.jpg", title: "TODO",           price: 900,  sold: true,  material: "Acryl, Leinwand", size: "100x100x1,5 cm" },
 ];

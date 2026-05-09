@@ -9,7 +9,7 @@
 import struct, json, os, io
 from PIL import Image
 
-PAINTINGS_DIR = 'images/paintings'
+PAINTINGS_DIR = 'images/paintings-to-ar'
 GLB_DIR       = 'images/ar'
 MAX_DIM_PX    = 1024
 JPEG_QUALITY  = 82
@@ -115,6 +115,14 @@ if __name__ == '__main__':
         size = create_painting_glb(os.path.join(PAINTINGS_DIR, fname), glb_path)
         if size:
             print(f"OK {size//1024}KB")
+
+            # delete source image after successful GLB creation
+            try:
+                os.remove(os.path.join(PAINTINGS_DIR, fname))
+                print(f"   Deleted source: {fname}")
+            except Exception as e:
+                print(f"   Could not delete source: {e}")
+
             ok += 1
         else:
             print("FAILED")
