@@ -653,6 +653,19 @@ window.openArModal = openArModal;
     }
 
     buildGallery(shuffle(paintings));
+
+    // ── Open painting from URL param (e.g. gallery.html?painting=0088) ──
+    var urlParams = new URLSearchParams(window.location.search);
+    var paintingParam = urlParams.get('painting');
+    if (paintingParam) {
+      // Find the painting in the data
+      var targetImg = paintingParam + '.jpg';
+      var targetIdx = paintings.findIndex(function(p) { return p.img === targetImg; });
+      if (targetIdx !== -1) {
+        // Open detail with full paintings list (unshuffled so index is correct)
+        openDetail(paintings, targetIdx);
+      }
+    }
   </script>
 </body>
 </html>
