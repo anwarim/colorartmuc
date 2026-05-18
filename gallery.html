@@ -290,10 +290,10 @@
     </div>
 
     <!-- ── Filter Panel ── -->
-    <div style="padding:0 40px 32px; max-width:var(--max-width); margin:0 auto;">
+    <div style="padding:0 15px 32px; max-width:var(--max-width); margin:0 auto;">
 
-      <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin-bottom:14px;">
-        <span style="font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--text-light); width:48px; flex-shrink:0;">Status</span>
+      <div style="display:flex; align-items:center; gap:15px; flex-wrap:wrap; margin-bottom:14px;">
+        <span style="font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--text-light); width:40px; flex-shrink:0;">Status</span>
         <div style="display:flex; gap:8px; flex-wrap:wrap;">
           <button class="filter-btn active" data-filter="all">Alle</button>
           <button class="filter-btn" data-filter="available">Verfügbar</button>
@@ -301,9 +301,10 @@
         </div>
       </div>
 
-      <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin-bottom:14px;">
-        <span style="font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--text-light); width:48px; flex-shrink:0;">Farbe</span>
-        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <div style="display:flex;align-items:flex-start;gap:15px;margin-bottom:14px;">
+        <span style="font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-light);padding-top:10px;white-space:nowrap;">Farbe</span>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap;flex:1;">
           <button class="color-btn active" data-color="all"><span class="color-swatch" style="background:linear-gradient(135deg,#e8a06a,#4a90b8,#6b8f5e,#2c2420)"></span>Alle</button>
           <button class="color-btn" data-color="blue"><span class="color-swatch" style="background:#4a7fb5"></span>Blau</button>
           <button class="color-btn" data-color="green"><span class="color-swatch" style="background:#5a8a5a"></span>Grün</button>
@@ -314,8 +315,8 @@
         </div>
       </div>
 
-      <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin-bottom:8px;">
-        <span style="font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--text-light); width:48px; flex-shrink:0;">Preis</span>
+      <div style="display:flex; align-items:center; gap:15px; flex-wrap:wrap; margin-bottom:8px;">
+        <span style="font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--text-light); width:40px; flex-shrink:0;">Preis</span>
         <div class="filter-price">
           <div class="price-range-wrap">
             <div class="price-range-track-bg"></div>
