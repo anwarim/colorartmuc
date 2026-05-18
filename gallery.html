@@ -68,12 +68,47 @@
     }
 
     /* ── Filter bar ── */
-    .filter-bar { display: flex; gap: 12px; justify-content: center; padding: 0 40px 40px; flex-wrap: wrap; }
     .filter-btn {
       font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
-      padding: 10px 20px; border: 1px solid var(--sand); background: none; color: var(--text-light); cursor: pointer; transition: all 0.25s;
+      padding: 8px 18px; border: 1px solid var(--sand); background: none; color: var(--text-light); cursor: pointer; transition: all 0.25s;
     }
     .filter-btn:hover, .filter-btn.active { background: var(--umber); color: var(--cream); border-color: var(--umber); }
+    .color-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.12em;
+      padding: 7px 14px; border: 1px solid var(--sand);
+      background: none; color: var(--text-light); cursor: pointer; transition: all 0.25s;
+    }
+    .color-btn:hover { border-color: var(--terracotta); color: var(--text); }
+    .color-btn.active { border-color: var(--umber); background: var(--cream); color: var(--umber); font-weight: 500; }
+    .color-swatch { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.1); }
+    .filter-price { display: flex; align-items: center; gap: 16px; flex: 1; max-width: 400px; }
+    .price-range-wrap { flex: 1; position: relative; height: 24px; display: flex; align-items: center; }
+    .price-range-track-bg {
+      position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%);
+      height: 2px; background: var(--sand);
+    }
+    .price-range-track {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      height: 2px; background: var(--terracotta); pointer-events: none;
+    }
+    .price-range-wrap input[type="range"] {
+      -webkit-appearance: none; position: absolute; width: 100%; height: 2px;
+      background: transparent; outline: none; pointer-events: none; cursor: pointer;
+    }
+    .price-range-wrap input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
+      background: var(--umber); cursor: pointer; pointer-events: all;
+      border: 2px solid var(--warm-white); box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    .price-range-wrap input[type="range"]::-webkit-slider-thumb:hover { background: var(--terracotta); }
+    .price-range-wrap input[type="range"]::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%; background: var(--umber);
+      cursor: pointer; border: 2px solid var(--warm-white); pointer-events: all;
+    }
+    .price-value { font-size: 0.82rem; color: var(--text-light); white-space: nowrap; min-width: 120px; }
+    .price-value strong { color: var(--umber); }
+    .filter-count { font-size: 0.75rem; letter-spacing: 0.12em; color: var(--terracotta); display: none; padding-left: 68px; }
 
     /* ── Full-screen detail view ── */
     .detail-view {
@@ -255,67 +290,46 @@
     </div>
 
     <!-- ── Filter Panel ── -->
-    <div class="filter-panel">
+    <div style="padding:0 40px 32px; max-width:var(--max-width); margin:0 auto;">
 
-      <!-- Availability row -->
-      <div class="filter-row">
-        <span class="filter-label">Status</span>
-        <div class="filter-group">
+      <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin-bottom:14px;">
+        <span style="font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--text-light); width:48px; flex-shrink:0;">Status</span>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
           <button class="filter-btn active" data-filter="all">Alle</button>
           <button class="filter-btn" data-filter="available">Verfügbar</button>
           <button class="filter-btn" data-filter="sold">Verkauft</button>
         </div>
       </div>
 
-      <!-- Color row -->
-      <div class="filter-row">
-        <span class="filter-label">Farbe</span>
-        <div class="filter-group" id="color-filters">
-          <button class="color-btn active" data-color="all">
-            <span class="color-swatch" style="background: linear-gradient(135deg, #e8a06a, #4a90b8, #6b8f5e, #2c2420)"></span>
-            Alle
-          </button>
-          <button class="color-btn" data-color="blue">
-            <span class="color-swatch" style="background:#4a7fb5"></span>
-            Blau
-          </button>
-          <button class="color-btn" data-color="green">
-            <span class="color-swatch" style="background:#5a8a5a"></span>
-            Grün
-          </button>
-          <button class="color-btn" data-color="red">
-            <span class="color-swatch" style="background:#b85450"></span>
-            Rot
-          </button>
-          <button class="color-btn" data-color="gold">
-            <span class="color-swatch" style="background:#c9a84c"></span>
-            Gold
-          </button>
-          <button class="color-btn" data-color="dark">
-            <span class="color-swatch" style="background:#2c2420"></span>
-            Dunkel
-          </button>
-          <button class="color-btn" data-color="bright">
-            <span class="color-swatch" style="background: linear-gradient(135deg,#e85d8a,#f5c842,#4ab8c8)"></span>
-            Bunt
-          </button>
+      <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin-bottom:14px;">
+        <span style="font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--text-light); width:48px; flex-shrink:0;">Farbe</span>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="color-btn active" data-color="all"><span class="color-swatch" style="background:linear-gradient(135deg,#e8a06a,#4a90b8,#6b8f5e,#2c2420)"></span>Alle</button>
+          <button class="color-btn" data-color="blue"><span class="color-swatch" style="background:#4a7fb5"></span>Blau</button>
+          <button class="color-btn" data-color="green"><span class="color-swatch" style="background:#5a8a5a"></span>Grün</button>
+          <button class="color-btn" data-color="red"><span class="color-swatch" style="background:#b85450"></span>Rot</button>
+          <button class="color-btn" data-color="gold"><span class="color-swatch" style="background:#c9a84c"></span>Gold</button>
+          <button class="color-btn" data-color="dark"><span class="color-swatch" style="background:#2c2420"></span>Dunkel</button>
+          <button class="color-btn" data-color="bright"><span class="color-swatch" style="background:linear-gradient(135deg,#e85d8a,#f5c842,#4ab8c8)"></span>Bunt</button>
         </div>
       </div>
 
-      <!-- Price slider row -->
-      <div class="filter-row">
-        <span class="filter-label">Preis</span>
+      <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin-bottom:8px;">
+        <span style="font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--text-light); width:48px; flex-shrink:0;">Preis</span>
         <div class="filter-price">
-          <div class="price-slider-wrap">
-            <input type="range" id="price-slider" min="350" max="1500" value="1500" step="50" />
-            <div class="price-slider-track" id="price-track"></div>
+          <div class="price-range-wrap">
+            <div class="price-range-track-bg"></div>
+            <div class="price-range-track" id="price-range-track"></div>
+            <input type="range" id="price-min" min="350" max="1500" value="350" step="50" />
+            <input type="range" id="price-max" min="350" max="1500" value="1500" step="50" />
           </div>
-          <span class="price-value">bis <strong id="price-display">1.500 €</strong></span>
+          <span class="price-value">
+            <strong id="price-min-display">350 €</strong>&nbsp;–&nbsp;<strong id="price-max-display">1.500 €</strong>
+          </span>
         </div>
       </div>
 
-      <!-- Result count -->
-      <div class="filter-count" id="filter-count"></div>
+      <div class="filter-count" id="filter-count" style="padding-left:68px;"></div>
     </div>
 
     <div class="gallery-grid" id="gallery-grid"></div>
@@ -396,7 +410,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Color Art Munich. Alle Rechte vorbehalten.</span>
+      <span>© 2024 Color Art Munich. Alle Rechte vorbehalten.</span>
       <span>Made with ♥ in München</span>
     </div>
   </footer>
@@ -725,26 +739,45 @@ window.openArModal = openArModal;
       });
     }
 
-    // ── Filter state ──────────────────────────────────────────
+    // ── Filter buttons ────────────────────────────────────────
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        buildGallery(
+          f === 'sold'      ? shuffle(paintings.filter(p => p.sold)) :
+          f === 'available' ? shuffle(paintings.filter(p => !p.sold)) :
+          shuffle(paintings)
+        );
+      });
+    });
+
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+      }
+      return a;
+    }
+
+    buildGallery(shuffle(paintings));
+    // ── Filter state ─────────────────────────────────────────
     var activeStatus = 'all';
     var activeColor  = 'all';
+    var minPrice     = 350;
     var maxPrice     = 1500;
 
     function applyFilters() {
       var result = paintings.filter(function(p) {
-        // Status filter
         if (activeStatus === 'available' && p.sold) return false;
         if (activeStatus === 'sold' && !p.sold) return false;
-        // Color filter
         if (activeColor !== 'all' && (!p.colors || !p.colors.includes(activeColor))) return false;
-        // Price filter (only for available)
-        if (!p.sold && p.price > 0 && p.price > maxPrice) return false;
+        if (!p.sold && p.price > 0 && (p.price < minPrice || p.price > maxPrice)) return false;
         return true;
       });
-
       buildGallery(shuffle(result));
-
-      // Update count
       var countEl = document.getElementById('filter-count');
       if (countEl) {
         var total = result.length;
@@ -773,21 +806,34 @@ window.openArModal = openArModal;
       });
     });
 
-    // Price slider
-    var slider = document.getElementById('price-slider');
-    var priceDisplay = document.getElementById('price-display');
-    var priceTrack = document.getElementById('price-track');
+    // Dual price range slider
+    var sliderMin  = document.getElementById('price-min');
+    var sliderMax  = document.getElementById('price-max');
+    var dispMin    = document.getElementById('price-min-display');
+    var dispMax    = document.getElementById('price-max-display');
+    var rangeTrack = document.getElementById('price-range-track');
 
-    function updateSlider() {
-      var pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
-      priceTrack.style.width = pct + '%';
-      priceDisplay.textContent = parseInt(slider.value).toLocaleString('de-DE') + ' €';
-      maxPrice = parseInt(slider.value);
+    function updateRangeSlider(changed) {
+      var vMin = parseInt(sliderMin.value);
+      var vMax = parseInt(sliderMax.value);
+      if (vMin > vMax - 50) {
+        if (changed === 'min') { vMin = vMax - 50; sliderMin.value = vMin; }
+        else                   { vMax = vMin + 50; sliderMax.value = vMax; }
+      }
+      minPrice = vMin;
+      maxPrice = vMax;
+      var pctMin = ((vMin - 350) / (1150)) * 100;
+      var pctMax = ((vMax - 350) / (1150)) * 100;
+      rangeTrack.style.left  = pctMin + '%';
+      rangeTrack.style.width = (pctMax - pctMin) + '%';
+      dispMin.textContent = vMin.toLocaleString('de-DE') + ' €';
+      dispMax.textContent = vMax.toLocaleString('de-DE') + ' €';
     }
 
-    if (slider) {
-      slider.addEventListener('input', function() { updateSlider(); applyFilters(); });
-      updateSlider();
+    if (sliderMin && sliderMax) {
+      sliderMin.addEventListener('input', function() { updateRangeSlider('min'); applyFilters(); });
+      sliderMax.addEventListener('input', function() { updateRangeSlider('max'); applyFilters(); });
+      updateRangeSlider('max');
     }
 
     function shuffle(arr) {
@@ -801,15 +847,13 @@ window.openArModal = openArModal;
 
     applyFilters();
 
-    // ── Open painting from URL param (e.g. gallery.html?painting=0088) ──
+    // ── Open painting from URL param ──────────────────────────
     var urlParams = new URLSearchParams(window.location.search);
     var paintingParam = urlParams.get('painting');
     if (paintingParam) {
       var targetImg = paintingParam + '.jpg';
       var targetIdx = paintings.findIndex(function(p) { return p.img === targetImg; });
-      if (targetIdx !== -1) {
-        openDetail(paintings, targetIdx);
-      }
+      if (targetIdx !== -1) openDetail(paintings, targetIdx);
     }
   </script>
 </body>
