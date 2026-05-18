@@ -329,7 +329,7 @@ section { padding: 100px 40px; max-width: var(--max-width); margin: 0 auto; }
 /* ─── Gallery Grid ───────────────────────────────────────── */
 .gallery-intro {
   text-align: center;
-  padding: 80px 40px 0;
+  padding: 20px 40px 0;
   max-width: var(--max-width);
   margin: 0 auto;
 }
