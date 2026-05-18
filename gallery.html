@@ -26,21 +26,24 @@
   <meta name="twitter:image" content="https://www.colorartmuc.com/images/paintings/0013.jpg" />
 
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "name": "Galerie — Color Art Munich",
-  "description": "Über 80 abstrakte Acrylbilder als Unikate direkt vom Künstler",
-  "url": "https://www.colorartmuc.com/gallery.html",
-  "isPartOf": {
-    "@type": "WebSite",
-    "name": "Color Art Munich",
-    "url": "https://www.colorartmuc.com"
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Galerie — Color Art Munich",
+    "description": "Über 80 abstrakte Acrylbilder als Unikate direkt vom Künstler",
+    "url": "https://www.colorartmuc.com/gallery.html",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Color Art Munich",
+      "url": "https://www.colorartmuc.com"
+    }
   }
-}
-</script>  
+  </script>
+
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="shortcut icon" href="images/favicon.png">
+  <link rel="apple-touch-icon" href="images/favicon.png">  
   <style>
     /* ── Hover overlay on grid ── */
     .painting-overlay {
@@ -251,10 +254,68 @@
       <p>Jedes Bild ist ein Unikat — handgemalt mit Acryl auf Leinwand.<br>Klicken Sie ein Bild an für Details.</p>
     </div>
 
-    <div class="filter-bar">
-      <button class="filter-btn active" data-filter="all">Alle</button>
-      <button class="filter-btn" data-filter="available">Verfügbar</button>
-      <button class="filter-btn" data-filter="sold">Verkauft</button>
+    <!-- ── Filter Panel ── -->
+    <div class="filter-panel">
+
+      <!-- Availability row -->
+      <div class="filter-row">
+        <span class="filter-label">Status</span>
+        <div class="filter-group">
+          <button class="filter-btn active" data-filter="all">Alle</button>
+          <button class="filter-btn" data-filter="available">Verfügbar</button>
+          <button class="filter-btn" data-filter="sold">Verkauft</button>
+        </div>
+      </div>
+
+      <!-- Color row -->
+      <div class="filter-row">
+        <span class="filter-label">Farbe</span>
+        <div class="filter-group" id="color-filters">
+          <button class="color-btn active" data-color="all">
+            <span class="color-swatch" style="background: linear-gradient(135deg, #e8a06a, #4a90b8, #6b8f5e, #2c2420)"></span>
+            Alle
+          </button>
+          <button class="color-btn" data-color="blue">
+            <span class="color-swatch" style="background:#4a7fb5"></span>
+            Blau
+          </button>
+          <button class="color-btn" data-color="green">
+            <span class="color-swatch" style="background:#5a8a5a"></span>
+            Grün
+          </button>
+          <button class="color-btn" data-color="red">
+            <span class="color-swatch" style="background:#b85450"></span>
+            Rot
+          </button>
+          <button class="color-btn" data-color="gold">
+            <span class="color-swatch" style="background:#c9a84c"></span>
+            Gold
+          </button>
+          <button class="color-btn" data-color="dark">
+            <span class="color-swatch" style="background:#2c2420"></span>
+            Dunkel
+          </button>
+          <button class="color-btn" data-color="bright">
+            <span class="color-swatch" style="background: linear-gradient(135deg,#e85d8a,#f5c842,#4ab8c8)"></span>
+            Bunt
+          </button>
+        </div>
+      </div>
+
+      <!-- Price slider row -->
+      <div class="filter-row">
+        <span class="filter-label">Preis</span>
+        <div class="filter-price">
+          <div class="price-slider-wrap">
+            <input type="range" id="price-slider" min="350" max="1500" value="1500" step="50" />
+            <div class="price-slider-track" id="price-track"></div>
+          </div>
+          <span class="price-value">bis <strong id="price-display">1.500 €</strong></span>
+        </div>
+      </div>
+
+      <!-- Result count -->
+      <div class="filter-count" id="filter-count"></div>
     </div>
 
     <div class="gallery-grid" id="gallery-grid"></div>
@@ -664,19 +725,70 @@ window.openArModal = openArModal;
       });
     }
 
-    // ── Filter buttons ────────────────────────────────────────
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    // ── Filter state ──────────────────────────────────────────
+    var activeStatus = 'all';
+    var activeColor  = 'all';
+    var maxPrice     = 1500;
+
+    function applyFilters() {
+      var result = paintings.filter(function(p) {
+        // Status filter
+        if (activeStatus === 'available' && p.sold) return false;
+        if (activeStatus === 'sold' && !p.sold) return false;
+        // Color filter
+        if (activeColor !== 'all' && (!p.colors || !p.colors.includes(activeColor))) return false;
+        // Price filter (only for available)
+        if (!p.sold && p.price > 0 && p.price > maxPrice) return false;
+        return true;
+      });
+
+      buildGallery(shuffle(result));
+
+      // Update count
+      var countEl = document.getElementById('filter-count');
+      if (countEl) {
+        var total = result.length;
+        countEl.textContent = total + ' Werk' + (total !== 1 ? 'e' : '') + ' gefunden';
+        countEl.style.display = total < paintings.length ? 'block' : 'none';
+      }
+    }
+
+    // Status buttons
+    document.querySelectorAll('.filter-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
         btn.classList.add('active');
-        const f = btn.dataset.filter;
-        buildGallery(
-          f === 'sold'      ? shuffle(paintings.filter(p => p.sold)) :
-          f === 'available' ? shuffle(paintings.filter(p => !p.sold)) :
-          shuffle(paintings)
-        );
+        activeStatus = btn.dataset.filter;
+        applyFilters();
       });
     });
+
+    // Color buttons
+    document.querySelectorAll('.color-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.color-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        activeColor = btn.dataset.color;
+        applyFilters();
+      });
+    });
+
+    // Price slider
+    var slider = document.getElementById('price-slider');
+    var priceDisplay = document.getElementById('price-display');
+    var priceTrack = document.getElementById('price-track');
+
+    function updateSlider() {
+      var pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+      priceTrack.style.width = pct + '%';
+      priceDisplay.textContent = parseInt(slider.value).toLocaleString('de-DE') + ' €';
+      maxPrice = parseInt(slider.value);
+    }
+
+    if (slider) {
+      slider.addEventListener('input', function() { updateSlider(); applyFilters(); });
+      updateSlider();
+    }
 
     function shuffle(arr) {
       var a = arr.slice();
@@ -687,17 +799,15 @@ window.openArModal = openArModal;
       return a;
     }
 
-    buildGallery(shuffle(paintings));
+    applyFilters();
 
     // ── Open painting from URL param (e.g. gallery.html?painting=0088) ──
     var urlParams = new URLSearchParams(window.location.search);
     var paintingParam = urlParams.get('painting');
     if (paintingParam) {
-      // Find the painting in the data
       var targetImg = paintingParam + '.jpg';
       var targetIdx = paintings.findIndex(function(p) { return p.img === targetImg; });
       if (targetIdx !== -1) {
-        // Open detail with full paintings list (unshuffled so index is correct)
         openDetail(paintings, targetIdx);
       }
     }
