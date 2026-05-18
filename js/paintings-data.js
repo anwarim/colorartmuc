@@ -93,4 +93,5 @@ const paintings = [
   { img: "0086.jpg", title: "Between Worlds",            price: 750,  sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm", colors: ["red", "blue", "green", "bright"] },
   { img: "0087.jpg", title: "Beneath the Surface",       price: 850,  sold: false,  material: "Acryl, Leinwand", size: "100x100x1,5 cm",colors: ["gold", "green"] },
   { img: "0088.jpg", title: "The Origin",        		     price: 700,  sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm", colors: ["gold", "dark"] },
+  { img: "0089.jpg", title: "Balance",        		       price: 750,  sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm", colors: ["blue", "gold", "dark"] },  
 ];
