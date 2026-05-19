@@ -527,58 +527,46 @@ window.openArModal = openArModal;
     const wallLabel   = document.getElementById('detail-wall-label');
     const wallHint    = document.getElementById('detail-wall-hint');
 
-    let currentList  = [];
-    let currentIndex = 0;
-    let photoIndex   = 0;   // 0 = painting, 1+ = wall photos
-    let currentPhotos = []; // all photos for current painting [painting, wall1, wall2, ...]
+    let currentList = [], currentIndex = 0, photoIndex = 0, currentPhotos = [];
 
-    // ── Discover wall photos for a painting ──────────────────
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length-1; i > 0; i--) { var j = Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+      return a;
+    }
+
     function getWallPhotos(painting) {
-      // Wall photos named like: 0013_001.jpg, 0013_002.jpg
-      // We try to load them — if they 404 we stop
-      // Return array of src paths
-      var base = painting.img.replace(/\.[^.]+$/, ''); // e.g. "0013"
-      var photos = ['images/paintings/' + painting.img]; // first is always the painting
-      // We'll discover wall photos dynamically by trying to load them
-      // and resolve with whatever loads successfully
+      var base = painting.img.replace(/\.[^.]+$/, '');
+      var photos = ['images/paintings/' + painting.img];
       return new Promise(function(resolve) {
         var i = 1;
         function tryNext() {
-          var num = String(i).padStart(3, '0');
-          var src = 'images/paintings-walls/' + base + '_' + num + '.jpg';
+          if (i > 9) { resolve(photos); return; }
+          var src = 'images/paintings-walls/' + base + '_' + String(i).padStart(3,'0') + '.jpg';
           var img = new Image();
-          img.onload = function() { photos.push(src); i++; tryNext(); };
-          img.onerror = function() { resolve(photos); }; // stop here
+          img.onload  = function() { photos.push(src); i++; tryNext(); };
+          img.onerror = function() { resolve(photos); };
           img.src = src;
-          if (i > 9) resolve(photos); // max 9 wall photos
         }
         tryNext();
       });
     }
 
-    // ── Build image stack ─────────────────────────────────────
     function buildStack(photos) {
       imgStack.innerHTML = '';
       photos.forEach(function(src, i) {
         var slot = document.createElement('div');
         slot.className = 'detail-img-slot' + (i > 0 ? ' wall-photo' : '');
         var img = document.createElement('img');
-        img.src = src;
-        img.alt = '';
-        if (i > 0) img.loading = 'lazy';
-        slot.appendChild(img);
-        imgStack.appendChild(slot);
+        img.src = src; img.alt = ''; if (i > 0) img.loading = 'lazy';
+        slot.appendChild(img); imgStack.appendChild(slot);
       });
-
-      // Build dots
       dotsEl.innerHTML = '';
       photos.forEach(function(_, i) {
         var dot = document.createElement('div');
         dot.className = 'detail-dot' + (i === 0 ? ' active' : '');
         dotsEl.appendChild(dot);
       });
-
-      // Show/hide dots and nav buttons
       var hasWall = photos.length > 1;
       dotsEl.style.display = hasWall ? 'flex' : 'none';
       wallHint.classList.toggle('hidden', !hasWall);
@@ -589,28 +577,15 @@ window.openArModal = openArModal;
       wallUpBtn.classList.toggle('hidden', photoIndex === 0);
       wallDownBtn.classList.toggle('hidden', photoIndex >= currentPhotos.length - 1);
       wallLabel.style.display = photoIndex > 0 ? 'block' : 'none';
-
-      // Update dots
-      dotsEl.querySelectorAll('.detail-dot').forEach(function(d, i) {
-        d.classList.toggle('active', i === photoIndex);
-      });
-
-      // Slide stack
+      dotsEl.querySelectorAll('.detail-dot').forEach(function(d,i) { d.classList.toggle('active', i===photoIndex); });
       imgStack.style.transform = 'translateY(' + (-photoIndex * 100) + '%)';
     }
 
-    function goWallUp() {
-      if (photoIndex > 0) { photoIndex--; updateWallNav(); }
-    }
+    function goWallUp()   { if (photoIndex > 0) { photoIndex--; updateWallNav(); } }
+    function goWallDown() { if (photoIndex < currentPhotos.length-1) { photoIndex++; updateWallNav(); } }
 
-    function goWallDown() {
-      if (photoIndex < currentPhotos.length - 1) { photoIndex++; updateWallNav(); }
-    }
-
-    // ── Open / show detail ────────────────────────────────────
     function openDetail(list, index) {
-      currentList  = list;
-      currentIndex = index;
+      currentList = list; currentIndex = index;
       showDetail(index);
       detailView.classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -619,56 +594,23 @@ window.openArModal = openArModal;
     function showDetail(index) {
       const p = currentList[index];
       photoIndex = 0;
-
-      // Update info panel
       detailTitle.textContent = p.title;
-      detailCount.textContent = (index + 1) + ' / ' + currentList.length;
-      if (p.sold) {
-        detailPrice.textContent = 'Verkauft';
-        detailPrice.className = 'detail-price sold';
-      } else if (p.price > 0) {
-        detailPrice.textContent = p.price.toLocaleString('de-DE') + ' \u20AC';
-        detailPrice.className = 'detail-price';
-      } else {
-        detailPrice.textContent = 'Preis auf Anfrage';
-        detailPrice.className = 'detail-price';
-      }
-      let matText = p.material;
-      if (p.size) matText += '\n' + p.size;
-      detailMat.style.whiteSpace = 'pre-line';
-      detailMat.textContent = matText;
-
-      // AR button
+      detailCount.textContent = (index+1) + ' / ' + currentList.length;
+      if (p.sold) { detailPrice.textContent = 'Verkauft'; detailPrice.className = 'detail-price sold'; }
+      else if (p.price > 0) { detailPrice.textContent = p.price.toLocaleString('de-DE') + ' €'; detailPrice.className = 'detail-price'; }
+      else { detailPrice.textContent = 'Preis auf Anfrage'; detailPrice.className = 'detail-price'; }
+      let matText = p.material; if (p.size) matText += '\n' + p.size;
+      detailMat.style.whiteSpace = 'pre-line'; detailMat.textContent = matText;
       const arBtn = document.getElementById('detail-ar-btn');
       if (arBtn) arBtn.onclick = () => openArModal(currentList[currentIndex]);
-
-      // Build stack with painting only first, then discover wall photos
       currentPhotos = ['images/paintings/' + p.img];
       buildStack(currentPhotos);
-
-      // Discover wall photos async
-      getWallPhotos(p).then(function(photos) {
-        currentPhotos = photos;
-        buildStack(photos);
-      });
+      getWallPhotos(p).then(function(photos) { currentPhotos = photos; buildStack(photos); });
     }
 
-    function closeDetail() {
-      detailView.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    function showNext() {
-      photoIndex = 0;
-      currentIndex = (currentIndex + 1) % currentList.length;
-      showDetail(currentIndex);
-    }
-
-    function showPrev() {
-      photoIndex = 0;
-      currentIndex = (currentIndex - 1 + currentList.length) % currentList.length;
-      showDetail(currentIndex);
-    }
+    function closeDetail() { detailView.classList.remove('open'); document.body.style.overflow = ''; }
+    function showNext() { photoIndex=0; currentIndex=(currentIndex+1)%currentList.length; showDetail(currentIndex); }
+    function showPrev() { photoIndex=0; currentIndex=(currentIndex-1+currentList.length)%currentList.length; showDetail(currentIndex); }
 
     closeBtn.addEventListener('click', closeDetail);
     nextBtn.addEventListener('click', showNext);
@@ -678,183 +620,121 @@ window.openArModal = openArModal;
 
     document.addEventListener('keydown', (e) => {
       if (!detailView.classList.contains('open')) return;
-      if (e.key === 'Escape')     closeDetail();
-      if (e.key === 'ArrowRight') showNext();
-      if (e.key === 'ArrowLeft')  showPrev();
-      if (e.key === 'ArrowDown')  goWallDown();
-      if (e.key === 'ArrowUp')    goWallUp();
+      if (e.key==='Escape') closeDetail();
+      if (e.key==='ArrowRight') showNext();
+      if (e.key==='ArrowLeft') showPrev();
+      if (e.key==='ArrowDown') goWallDown();
+      if (e.key==='ArrowUp') goWallUp();
     });
 
-    // Touch: horizontal = painting nav, vertical = wall photo nav
-    let touchStartX = 0, touchStartY = 0;
-    detailView.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-    }, { passive: true });
+    let touchStartX=0, touchStartY=0;
+    detailView.addEventListener('touchstart', (e) => { touchStartX=e.touches[0].clientX; touchStartY=e.touches[0].clientY; }, {passive:true});
     detailView.addEventListener('touchend', (e) => {
-      const dx = e.changedTouches[0].clientX - touchStartX;
-      const dy = e.changedTouches[0].clientY - touchStartY;
-      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
-        dx < 0 ? showNext() : showPrev();
-      } else if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 50) {
-        dy < 0 ? goWallDown() : goWallUp();
-      }
+      const dx=e.changedTouches[0].clientX-touchStartX, dy=e.changedTouches[0].clientY-touchStartY;
+      if (Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50) { dx<0?showNext():showPrev(); }
+      else if (Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>50) { dy<0?goWallDown():goWallUp(); }
     });
 
-    // ── Fade observer ─────────────────────────────────────────
     const fadeObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 40);
-          fadeObserver.unobserve(entry.target);
-        }
+      entries.forEach((entry,i) => {
+        if (entry.isIntersecting) { setTimeout(()=>entry.target.classList.add('visible'),i*40); fadeObserver.unobserve(entry.target); }
       });
-    }, { threshold: 0.05 });
+    }, {threshold:0.05});
 
-    // ── Build gallery grid ────────────────────────────────────
-    function buildGallery(list) {
+    // ── Gallery: build ONCE, filter by show/hide (instant) ────
+    var shuffledPaintings = shuffle(paintings);
+
+    function buildGallery() {
       grid.innerHTML = '';
-      list.forEach((p, i) => {
-        const item = document.createElement('div');
+      shuffledPaintings.forEach(function(p, i) {
+        var item = document.createElement('div');
         item.className = 'gallery-item fade-in';
-        const priceHTML = p.sold
-          ? '<div class="overlay-price sold">Verkauft</div>'
-          : p.price > 0
-            ? '<div class="overlay-price">' + p.price.toLocaleString('de-DE') + ' \u20AC</div>'
-            : '<div class="overlay-price">Preis auf Anfrage</div>';
-        const sizeHTML = '<div class="overlay-meta">' + p.material + (p.size ? ' \u00B7 ' + p.size : '') + '</div>';
-        item.innerHTML = (p.sold ? '<div class="sold-badge">Verkauft</div>' : '')
-          + '<img src="images/paintings/' + p.img + '" alt="' + p.title + '" loading="lazy" />'
-          + '<div class="painting-overlay">'
-          + '<div class="overlay-title">' + p.title + '</div>'
-          + priceHTML + sizeHTML + '</div>';
-        item.addEventListener('click', () => openDetail(list, i));
-        item.addEventListener('touchstart', () => {
-          const already = item.classList.contains('touched');
-          document.querySelectorAll('.gallery-item.touched').forEach(el => el.classList.remove('touched'));
-          if (!already) item.classList.add('touched');
-          else openDetail(list, i);
-        }, { passive: true });
+        item.dataset.sold   = p.sold ? 'true' : 'false';
+        item.dataset.colors = (p.colors||[]).join(',');
+        item.dataset.price  = p.price;
+        var priceHTML = p.sold ? '<div class="overlay-price sold">Verkauft</div>'
+          : p.price > 0 ? '<div class="overlay-price">'+p.price.toLocaleString('de-DE')+' €</div>'
+          : '<div class="overlay-price">Preis auf Anfrage</div>';
+        var sizeHTML = '<div class="overlay-meta">'+p.material+(p.size?' · '+p.size:'')+' </div>';
+        item.innerHTML = (p.sold?'<div class="sold-badge">Verkauft</div>':'')
+          +'<img src="images/paintings/'+p.img+'" alt="'+p.title+'" loading="lazy" />'
+          +'<div class="painting-overlay"><div class="overlay-title">'+p.title+'</div>'+priceHTML+sizeHTML+'</div>';
+        item.addEventListener('click', function() { openDetail(shuffledPaintings, i); });
+        item.addEventListener('touchstart', function() {
+          var already = item.classList.contains('touched');
+          document.querySelectorAll('.gallery-item.touched').forEach(function(el){el.classList.remove('touched');});
+          if (!already) item.classList.add('touched'); else openDetail(shuffledPaintings, i);
+        }, {passive:true});
         grid.appendChild(item);
         fadeObserver.observe(item);
       });
     }
 
-    // ── Filter buttons ────────────────────────────────────────
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const f = btn.dataset.filter;
-        buildGallery(
-          f === 'sold'      ? shuffle(paintings.filter(p => p.sold)) :
-          f === 'available' ? shuffle(paintings.filter(p => !p.sold)) :
-          shuffle(paintings)
-        );
-      });
-    });
-
-    function shuffle(arr) {
-      var a = arr.slice();
-      for (var i = a.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
-      }
-      return a;
-    }
-
-    buildGallery(shuffle(paintings));
-    // ── Filter state ─────────────────────────────────────────
-    var activeStatus = 'all';
-    var activeColor  = 'all';
-    var minPrice     = 350;
-    var maxPrice     = 1500;
+    // ── Filter state ──────────────────────────────────────────
+    var activeStatus='all', activeColor='all', minPrice=350, maxPrice=1500;
 
     function applyFilters() {
-      var result = paintings.filter(function(p) {
-        if (activeStatus === 'available' && p.sold) return false;
-        if (activeStatus === 'sold' && !p.sold) return false;
-        if (activeColor !== 'all' && (!p.colors || !p.colors.includes(activeColor))) return false;
-        if (!p.sold && p.price > 0 && (p.price < minPrice || p.price > maxPrice)) return false;
-        return true;
+      var visible = 0;
+      grid.querySelectorAll('.gallery-item').forEach(function(item) {
+        var sold   = item.dataset.sold === 'true';
+        var price  = parseInt(item.dataset.price)||0;
+        var colors = item.dataset.colors ? item.dataset.colors.split(',') : [];
+        var show   = true;
+        if (activeStatus==='available' && sold)  show=false;
+        if (activeStatus==='sold'      && !sold) show=false;
+        if (activeColor!=='all' && !colors.includes(activeColor)) show=false;
+        if (!sold && price>0 && (price<minPrice||price>maxPrice)) show=false;
+        item.style.display = show ? '' : 'none';
+        if (show) visible++;
       });
-      buildGallery(shuffle(result));
       var countEl = document.getElementById('filter-count');
       if (countEl) {
-        var total = result.length;
-        countEl.textContent = total + ' Werk' + (total !== 1 ? 'e' : '') + ' gefunden';
-        countEl.style.display = total < paintings.length ? 'block' : 'none';
+        countEl.textContent = visible+' Werk'+(visible!==1?'e':'')+' gefunden';
+        countEl.style.display = visible < paintings.length ? 'block' : 'none';
       }
     }
 
-    // Status buttons
     document.querySelectorAll('.filter-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
-        document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        activeStatus = btn.dataset.filter;
-        applyFilters();
+        document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+        btn.classList.add('active'); activeStatus=btn.dataset.filter; applyFilters();
       });
     });
 
-    // Color buttons
     document.querySelectorAll('.color-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
-        document.querySelectorAll('.color-btn').forEach(function(b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        activeColor = btn.dataset.color;
-        applyFilters();
+        document.querySelectorAll('.color-btn').forEach(function(b){b.classList.remove('active');});
+        btn.classList.add('active'); activeColor=btn.dataset.color; applyFilters();
       });
     });
 
-    // Dual price range slider
-    var sliderMin  = document.getElementById('price-min');
-    var sliderMax  = document.getElementById('price-max');
-    var dispMin    = document.getElementById('price-min-display');
-    var dispMax    = document.getElementById('price-max-display');
-    var rangeTrack = document.getElementById('price-range-track');
+    var sliderMin=document.getElementById('price-min'), sliderMax=document.getElementById('price-max');
+    var dispMin=document.getElementById('price-min-display'), dispMax=document.getElementById('price-max-display');
+    var rangeTrack=document.getElementById('price-range-track');
 
     function updateRangeSlider(changed) {
-      var vMin = parseInt(sliderMin.value);
-      var vMax = parseInt(sliderMax.value);
-      if (vMin > vMax - 50) {
-        if (changed === 'min') { vMin = vMax - 50; sliderMin.value = vMin; }
-        else                   { vMax = vMin + 50; sliderMax.value = vMax; }
-      }
-      minPrice = vMin;
-      maxPrice = vMax;
-      var pctMin = ((vMin - 350) / (1150)) * 100;
-      var pctMax = ((vMax - 350) / (1150)) * 100;
-      rangeTrack.style.left  = pctMin + '%';
-      rangeTrack.style.width = (pctMax - pctMin) + '%';
-      dispMin.textContent = vMin.toLocaleString('de-DE') + ' €';
-      dispMax.textContent = vMax.toLocaleString('de-DE') + ' €';
+      var vMin=parseInt(sliderMin.value), vMax=parseInt(sliderMax.value);
+      if (vMin>vMax-50) { if (changed==='min'){vMin=vMax-50;sliderMin.value=vMin;}else{vMax=vMin+50;sliderMax.value=vMax;} }
+      minPrice=vMin; maxPrice=vMax;
+      var pMin=((vMin-350)/1150)*100, pMax=((vMax-350)/1150)*100;
+      rangeTrack.style.left=pMin+'%'; rangeTrack.style.width=(pMax-pMin)+'%';
+      dispMin.textContent=vMin.toLocaleString('de-DE')+' €';
+      dispMax.textContent=vMax.toLocaleString('de-DE')+' €';
     }
 
-    if (sliderMin && sliderMax) {
-      sliderMin.addEventListener('input', function() { updateRangeSlider('min'); applyFilters(); });
-      sliderMax.addEventListener('input', function() { updateRangeSlider('max'); applyFilters(); });
+    if (sliderMin&&sliderMax) {
+      sliderMin.addEventListener('input',function(){updateRangeSlider('min');applyFilters();});
+      sliderMax.addEventListener('input',function(){updateRangeSlider('max');applyFilters();});
       updateRangeSlider('max');
     }
 
-    function shuffle(arr) {
-      var a = arr.slice();
-      for (var i = a.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
-      }
-      return a;
-    }
-
+    buildGallery();
     applyFilters();
 
-    // ── Open painting from URL param ──────────────────────────
-    var urlParams = new URLSearchParams(window.location.search);
-    var paintingParam = urlParams.get('painting');
+    var urlParams=new URLSearchParams(window.location.search), paintingParam=urlParams.get('painting');
     if (paintingParam) {
-      var targetImg = paintingParam + '.jpg';
-      var targetIdx = paintings.findIndex(function(p) { return p.img === targetImg; });
-      if (targetIdx !== -1) openDetail(paintings, targetIdx);
+      var targetIdx=paintings.findIndex(function(p){return p.img===paintingParam+'.jpg';});
+      if (targetIdx!==-1) openDetail(paintings,targetIdx);
     }
   </script>
 </body>
