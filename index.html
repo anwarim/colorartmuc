@@ -83,7 +83,7 @@
       </div>
     </section>
 
-    <!-- Featured Works -->
+    <!-- Featured Works (auto-populated from paintings-data.js) -->
     <section class="fade-in">
       <div class="section-header">
         <span class="section-label">Ausgewählte Werke</span>
@@ -91,28 +91,7 @@
         <div class="section-line"></div>
       </div>
 
-      <div class="featured-grid">
-        <div class="painting" onclick="window.location='gallery.html?painting=0089'">
-          <img src="images/paintings/0089.jpg" alt="Abstraktes Acrylbild" loading="lazy" />
-          <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-        </div>
-        <div class="painting" onclick="window.location='gallery.html?painting=0018'">
-          <img src="images/paintings/0018.jpg" alt="Abstraktes Acrylbild" loading="lazy" />
-          <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-        </div>
-        <div class="painting" onclick="window.location='gallery.html?painting=0087'">
-          <img src="images/paintings/0087.jpg" alt="Abstraktes Acrylbild" loading="lazy" />
-          <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-        </div>
-        <div class="painting" onclick="window.location='gallery.html?painting=0086'">
-          <img src="images/paintings/0086.jpg" alt="Abstraktes Acrylbild" loading="lazy" />
-          <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-        </div>
-        <div class="painting" onclick="window.location='gallery.html?painting=0085'">
-          <img src="images/paintings/0085.jpg" alt="Abstraktes Acrylbild" loading="lazy" />
-          <div class="painting-overlay"><span>Acrylic on Canvas</span></div>
-        </div>
-      </div>
+      <div class="featured-grid" id="featured-grid"></div>
 
       <div style="text-align:center; margin-top:48px;">
         <a href="gallery.html" class="hero-cta">
@@ -182,6 +161,23 @@
     </div>
   </footer>
 
+  <script src="js/paintings-data.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    (function() {
+      var grid = document.getElementById('featured-grid');
+      if (!grid || typeof paintings === 'undefined') return;
+      var latest = paintings.slice(-5).reverse();
+      latest.forEach(function(p) {
+        var id = p.img.replace('.jpg', '');
+        var div = document.createElement('div');
+        div.className = 'painting';
+        div.onclick = function() { window.location = 'gallery.html?painting=' + id; };
+        div.innerHTML = '<img src="images/paintings/' + p.img + '" alt="' + p.title + '" loading="lazy" />'
+          + '<div class="painting-overlay"><span>' + p.title + '</span></div>';
+        grid.appendChild(div);
+      });
+    })();
+  </script>
 </body>
 </html>

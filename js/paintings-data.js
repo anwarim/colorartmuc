@@ -17,7 +17,7 @@ const paintings = [
   { img: "0010.jpg", title: "Stillness Has a Name",      price: 800,  sold: false, material: "Acryl, Leinwand", size: "90x120x1,5 cm",  colors: ["dark", "gold"] },
   { img: "0011.jpg", title: "Scar of Silence",           price: 750,  sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm", colors: ["dark", "gold"] },
   { img: "0012.jpg", title: "The Gallop and the Glide",  price: 800,  sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm", colors: ["green", "red"] },
-  { img: "0013.jpg", title: "Ship of the Lost",          price: 900,  sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm", colors: ["gold", "dark"] },
+  { img: "0013.jpg", title: "The Origin",        		     price: 700,  sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm", colors: ["gold", "dark"] },  
   { img: "0014.jpg", title: "Earth & Sea Harmony",       price: 850,  sold: true,  material: "Acryl, Leinwand", size: "80x100x2 cm",    colors: ["blue", "red"] },
   { img: "0015.jpg", title: "Oxidized Reverie",          price: 900,  sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm", colors: ["gold", "dark"] },
   { img: "0016.jpg", title: "Midnight Gilded Dreams",    price: 850,  sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm", colors: ["dark", "gold", "blue"] },
@@ -92,6 +92,6 @@ const paintings = [
   { img: "0085.jpg", title: "Dream Parade",           	 price: 950,  sold: false,  material: "Acryl, Leinwand", size: "160x60x1,5 cm", colors: ["red", "gold", , "blue", "green", "bright"] },
   { img: "0086.jpg", title: "Between Worlds",            price: 750,  sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm", colors: ["red", "blue", "green", "bright"] },
   { img: "0087.jpg", title: "Beneath the Surface",       price: 850,  sold: false,  material: "Acryl, Leinwand", size: "100x100x1,5 cm",colors: ["gold", "green"] },
-  { img: "0088.jpg", title: "The Origin",        		     price: 700,  sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm", colors: ["gold", "dark"] },
+  { img: "0088.jpg", title: "Ship of the Lost",          price: 900,  sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm", colors: ["gold", "dark"] },
   { img: "0089.jpg", title: "Balance",        		       price: 750,  sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm", colors: ["blue", "gold", "dark"] },  
 ];
