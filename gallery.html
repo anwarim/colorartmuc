@@ -73,6 +73,9 @@
       padding: 8px 18px; border: 1px solid var(--sand); background: none; color: var(--text-light); cursor: pointer; transition: all 0.25s;
     }
     .filter-btn:hover, .filter-btn.active { background: var(--umber); color: var(--cream); border-color: var(--umber); }
+    @media (max-width: 600px) {
+      .filter-btn { font-size: 0.65rem; letter-spacing: 0.1em; padding: 6px 10px; }
+    }
     .color-btn {
       display: inline-flex; align-items: center; gap: 7px;
       font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.12em;
@@ -298,6 +301,7 @@
           <button class="filter-btn active" data-filter="all">Alle</button>
           <button class="filter-btn" data-filter="available">Verfügbar</button>
           <button class="filter-btn" data-filter="sold">Verkauft</button>
+          <button class="filter-btn" data-filter="new">✦ Neu</button>
         </div>
       </div>
 
@@ -652,6 +656,7 @@ window.openArModal = openArModal;
         item.dataset.sold   = p.sold ? 'true' : 'false';
         item.dataset.colors = (p.colors||[]).join(',');
         item.dataset.price  = p.price;
+        item.dataset.index  = paintings.indexOf(p);
         var priceHTML = p.sold ? '<div class="overlay-price sold">Verkauft</div>'
           : p.price > 0 ? '<div class="overlay-price">'+p.price.toLocaleString('de-DE')+' €</div>'
           : '<div class="overlay-price">Preis auf Anfrage</div>';
@@ -675,18 +680,46 @@ window.openArModal = openArModal;
 
     function applyFilters() {
       var visible = 0;
-      grid.querySelectorAll('.gallery-item').forEach(function(item) {
-        var sold   = item.dataset.sold === 'true';
-        var price  = parseInt(item.dataset.price)||0;
-        var colors = item.dataset.colors ? item.dataset.colors.split(',') : [];
-        var show   = true;
-        if (activeStatus==='available' && sold)  show=false;
-        if (activeStatus==='sold'      && !sold) show=false;
-        if (activeColor!=='all' && !colors.includes(activeColor)) show=false;
-        if (!sold && price>0 && (price<minPrice||price>maxPrice)) show=false;
-        item.style.display = show ? '' : 'none';
-        if (show) visible++;
-      });
+      var items = Array.from(grid.querySelectorAll('.gallery-item'));
+
+      if (activeStatus === 'new') {
+        // Sort by highest index (newest paintings) first, available only
+        items.sort(function(a, b) {
+          return parseInt(b.dataset.index) - parseInt(a.dataset.index);
+        });
+        items.forEach(function(item) { grid.appendChild(item); });
+        items.forEach(function(item) {
+          var sold   = item.dataset.sold === 'true';
+          var price  = parseInt(item.dataset.price)||0;
+          var colors = item.dataset.colors ? item.dataset.colors.split(',') : [];
+          var show   = !sold;
+          if (activeColor!=='all' && !colors.includes(activeColor)) show=false;
+          if (price>0 && (price<minPrice||price>maxPrice)) show=false;
+          item.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+      } else {
+        // Restore original shuffled order
+        items.sort(function(a, b) {
+          var ai = shuffledPaintings.findIndex(function(p) { return paintings.indexOf(p) === parseInt(a.dataset.index); });
+          var bi = shuffledPaintings.findIndex(function(p) { return paintings.indexOf(p) === parseInt(b.dataset.index); });
+          return ai - bi;
+        });
+        items.forEach(function(item) { grid.appendChild(item); });
+        items.forEach(function(item) {
+          var sold   = item.dataset.sold === 'true';
+          var price  = parseInt(item.dataset.price)||0;
+          var colors = item.dataset.colors ? item.dataset.colors.split(',') : [];
+          var show   = true;
+          if (activeStatus==='available' && sold)  show=false;
+          if (activeStatus==='sold'      && !sold) show=false;
+          if (activeColor!=='all' && !colors.includes(activeColor)) show=false;
+          if (!sold && price>0 && (price<minPrice||price>maxPrice)) show=false;
+          item.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+      }
+
       var countEl = document.getElementById('filter-count');
       if (countEl) {
         countEl.textContent = visible+' Werk'+(visible!==1?'e':'')+' gefunden';
