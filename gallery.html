@@ -652,6 +652,8 @@ window.openArModal = openArModal;
       detailMat.style.whiteSpace = 'pre-line'; detailMat.textContent = matText;
       const arBtn = document.getElementById('detail-ar-btn');
       if (arBtn) arBtn.onclick = () => openArModal(currentList[currentIndex]);
+      const contactBtn = document.querySelector('.detail-contact');
+      if (contactBtn) contactBtn.href = 'contact.html?painting=' + encodeURIComponent(p.title);
       currentPhotos = ['images/paintings/' + p.img];
       buildStack(currentPhotos);
       getWallPhotos(p).then(function(photos) { currentPhotos = photos; buildStack(photos); });
