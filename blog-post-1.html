@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wie ein abstraktes Bild entsteht — Color Art Munich</title>
+  <meta name="description" content="Kein Plan, kein Skizzenbuch — abstrakte Malerei beginnt für mich mit einem Gefühl. Ein ehrlicher Einblick in meinen Entstehungsprozess." />
+  <meta name="author" content="Color Art Munich" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.colorartmuc.com/blog-post-1.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Wie ein abstraktes Bild entsteht — Color Art Munich" />
+  <meta property="og:description" content="Kein Plan, kein Skizzenbuch — abstrakte Malerei beginnt für mich mit einem Gefühl." />
+  <meta property="og:url" content="https://www.colorartmuc.com/blog-post-1.html" />
+  <meta property="og:image" content="https://www.colorartmuc.com/images/paintings/0049.jpg" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <style>
+    .blog-post-hero {
+      width: 100%;
+      height: 420px;
+      overflow: hidden;
+      position: relative;
+    }
+    .blog-post-hero img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .blog-post-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 64px 32px 100px;
+    }
+    .blog-post-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Jost', sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-light); text-decoration: none;
+      margin-bottom: 48px;
+      transition: color 0.2s;
+    }
+    .blog-post-back:hover { color: var(--terracotta); }
+    .blog-post-meta {
+      font-family: 'Jost', sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--terracotta); margin-bottom: 16px;
+    }
+    .blog-post-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300; color: var(--umber);
+      line-height: 1.15; margin-bottom: 40px;
+    }
+    .blog-post-divider {
+      width: 48px; height: 1px;
+      background: var(--terracotta);
+      margin-bottom: 40px;
+    }
+    .blog-post-body {
+      font-family: 'Jost', sans-serif;
+      font-size: 1rem; line-height: 1.85;
+      color: var(--text);
+    }
+    .blog-post-body p { margin-bottom: 1.6em; }
+    .blog-post-body h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 300;
+      color: var(--umber); margin: 2.4em 0 0.8em;
+    }
+    .blog-post-body blockquote {
+      border-left: 2px solid var(--terracotta);
+      margin: 2em 0; padding: 0 0 0 24px;
+      font-style: italic; color: var(--text-light);
+      font-size: 1.05rem;
+    }
+    .lang-toggle {
+      display: flex; gap: 8px; margin-bottom: 48px;
+    }
+    .lang-btn {
+      font-family: 'Jost', sans-serif; font-size: 0.7rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 6px 14px; border: 1px solid var(--sand);
+      background: none; color: var(--text-light);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: var(--umber); color: var(--cream);
+      border-color: var(--umber);
+    }
+    .lang-content { display: none; }
+    .lang-content.active { display: block; }
+    .blog-post-footer {
+      margin-top: 64px; padding-top: 40px;
+      border-top: 1px solid var(--sand);
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+    .blog-post-footer a {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Jost', sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--umber); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .blog-post-footer a:hover { color: var(--terracotta); }
+    @media (max-width: 768px) {
+      .blog-post-hero { height: 260px; }
+      .blog-post-wrap { padding: 40px 24px 80px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Color <span>Art</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="blog-post-hero">
+    <img src="images/paintings/0049.jpg" alt="Wie ein abstraktes Bild entsteht" />
+  </div>
+
+  <main>
+    <div class="blog-post-wrap fade-in">
+
+      <a href="blog.html" class="blog-post-back">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Zurück zum Blog
+      </a>
+
+      <div class="blog-post-meta">April 2026 · Prozess</div>
+      <h1 class="blog-post-title">Wie ein abstraktes Bild entsteht</h1>
+      <div class="blog-post-divider"></div>
+
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="de" onclick="setLang('de')">DE</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      </div>
+
+      <!-- DEUTSCH -->
+      <div class="lang-content active" id="content-de">
+        <div class="blog-post-body">
+          <p>Es gibt kein Skizzenbuch. Keinen Plan. Keinen Moment, in dem ich vor einer leeren Leinwand sitze und weiß, was daraus werden soll.</p>
+
+          <p>Abstrakte Malerei beginnt für mich immer mit etwas Unsichtbarem — einer Stimmung, die sich nicht in Worte fassen lässt. Manchmal ist es die schwere Stille eines Morgens, manchmal ein Gefühl, das nach Tagen noch in mir nachhallt. Ich greife nicht zum Pinsel, weil ich etwas darstellen will. Ich greife zum Pinsel, weil ich etwas loswerden will.</p>
+
+          <h2>Die ersten Minuten</h2>
+          <p>Der Anfang ist immer der schwierigste Teil. Die Leinwand ist weiß und unbarmherzig. Ich beginne meistens mit einem großen Pinsel und einer Farbe, die sich in diesem Moment richtig anfühlt — nicht weil ich sie plane, sondern weil sie da ist. Manchmal ist es ein tiefes Dunkelblau. Manchmal ein warmes Ockergelb. Der erste Strich ist kein Kunstwerk. Er ist eine Geste.</p>
+
+          <blockquote>„Ich male nicht, was ich sehe. Ich male, was ich fühle."</blockquote>
+
+          <h2>Schicht für Schicht</h2>
+          <p>Acrylfarbe trocknet schnell — das ist ihr größter Vorteil und gleichzeitig ihre größte Herausforderung. Ich arbeite in Schichten. Die erste Schicht verschwindet fast vollständig unter der zweiten. Und die zweite unter der dritten. Manchmal kratze ich durch nasse Farbe hindurch und entdecke darunter etwas, das ich längst vergessen hatte. Diese Zufälle sind keine Fehler. Sie sind das Bild.</p>
+
+          <p>Der Entstehungsprozess eines einzigen Werkes kann Stunden dauern — oder Tage. Ich höre oft Musik dabei, ohne bewusst zuzuhören. Das Atelier verändert seinen Charakter je nach Tageszeit: morgens ist es ein Ort der Konzentration, nachmittags einer des Experiments, abends manchmal einer der Stille und Überprüfung.</p>
+
+          <h2>Wann ist ein Bild fertig?</h2>
+          <p>Das ist die Frage, die ich am schwersten beantworten kann. Ein Bild ist nicht fertig, wenn alle Flächen bedeckt sind. Es ist fertig, wenn es eine eigene Stimme hat — wenn es ohne mich existieren kann. Manchmal weiß ich das sofort. Manchmal hänge ich ein Bild an die Wand und schaue es tagelang an, bevor ich mich entscheide.</p>
+
+          <p>Was ich in all den Jahren gelernt habe: Kontrolle ist eine Illusion. Die besten Bilder entstehen in dem Moment, in dem ich aufgehört habe, das Ergebnis zu wollen.</p>
+        </div>
+      </div>
+
+      <!-- ENGLISH -->
+      <div class="lang-content" id="content-en">
+        <div class="blog-post-body">
+          <p>There is no sketchbook. No plan. No moment where I sit in front of a blank canvas knowing what it will become.</p>
+
+          <p>Abstract painting always begins for me with something invisible — a mood that cannot be put into words. Sometimes it's the heavy silence of a morning, sometimes a feeling that still echoes inside me days later. I don't reach for the brush because I want to depict something. I reach for the brush because I need to let something go.</p>
+
+          <h2>The first minutes</h2>
+          <p>The beginning is always the hardest part. The canvas is white and unforgiving. I usually start with a large brush and a colour that feels right in that moment — not because I planned it, but because it's there. Sometimes it's a deep dark blue. Sometimes a warm ochre yellow. The first stroke is not a work of art. It's a gesture.</p>
+
+          <blockquote>"I don't paint what I see. I paint what I feel."</blockquote>
+
+          <h2>Layer by layer</h2>
+          <p>Acrylic paint dries fast — that's its greatest advantage and its greatest challenge. I work in layers. The first layer almost completely disappears under the second. And the second under the third. Sometimes I scratch through wet paint and discover something beneath it I had long forgotten. These accidents are not mistakes. They are the painting.</p>
+
+          <p>The process of creating a single work can take hours — or days. I often listen to music without consciously hearing it. The studio changes its character depending on the time of day: in the morning it is a place of concentration, in the afternoon one of experimentation, in the evening sometimes one of stillness and reflection.</p>
+
+          <h2>When is a painting finished?</h2>
+          <p>That is the question I find hardest to answer. A painting is not finished when all surfaces are covered. It is finished when it has its own voice — when it can exist without me. Sometimes I know that immediately. Sometimes I hang a painting on the wall and look at it for days before I decide.</p>
+
+          <p>What I have learned over all these years: control is an illusion. The best paintings emerge in the moment I stopped wanting a particular result.</p>
+        </div>
+      </div>
+
+      <div class="blog-post-footer">
+        <a href="blog.html">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Alle Beiträge
+        </a>
+        <a href="blog-post-2.html">
+          Nächster Beitrag
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">Color <span>Art</span></a>
+        <p>Abstrakte Acrylmalerei aus München. Handgemachte Unikate mit Charakter und Tiefe.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Rechtliches</h4>
+        <ul>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Color Art Munich. Alle Rechte vorbehalten.</span>
+      <span>Made with ♥ in München</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('.lang-content').forEach(function(el) { el.classList.remove('active'); });
+      document.querySelectorAll('.lang-btn').forEach(function(el) { el.classList.remove('active'); });
+      document.getElementById('content-' + lang).classList.add('active');
+      document.querySelector('[data-lang="' + lang + '"]').classList.add('active');
+      localStorage.setItem('blog_lang', lang);
+    }
+    // Restore last language preference
+    (function() {
+      var saved = localStorage.getItem('blog_lang');
+      if (saved && saved !== 'de') setLang(saved);
+    })();
+  </script>
+
+  <a href="https://www.instagram.com/color_artmuc/" target="_blank" rel="noopener noreferrer" class="instagram-fab" aria-label="Instagram">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <circle cx="12" cy="12" r="4"/>
+      <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+    </svg>
+  </a>
+
+  <!-- Google Analytics (only loads after cookie consent) -->
+  <script>
+    function loadGA() {
+      if (document.getElementById("ga-script")) return;
+      var s = document.createElement("script");
+      s.id = "ga-script"; s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=G-1E3LKK0V5W";
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag; gtag("js", new Date()); gtag("config", "G-1E3LKK0V5W");
+    }
+    (function() {
+      var consent = localStorage.getItem("cookie_consent");
+      if (consent === "accepted") loadGA();
+      window.addEventListener("DOMContentLoaded", function() {
+        var banner = document.getElementById("cookie-banner");
+        if (!banner) return;
+        if (!consent) setTimeout(function() { banner.classList.add("visible"); }, 800);
+        document.getElementById("cookie-accept").addEventListener("click", function() {
+          localStorage.setItem("cookie_consent", "accepted");
+          banner.classList.remove("visible"); loadGA();
+        });
+        document.getElementById("cookie-decline").addEventListener("click", function() {
+          localStorage.setItem("cookie_consent", "declined");
+          banner.classList.remove("visible");
+        });
+      });
+    })();
+  </script>
+  <div class="cookie-banner" id="cookie-banner">
+    <p>Diese Website verwendet Cookies von Google Analytics, um die Nutzung zu analysieren. Mehr dazu in unserer <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+    <div class="cookie-actions">
+      <button class="cookie-btn cookie-btn-decline" id="cookie-decline">Ablehnen</button>
+      <button class="cookie-btn cookie-btn-accept" id="cookie-accept">Akzeptieren</button>
+    </div>
+  </div>
+
+</body>
+</html>
