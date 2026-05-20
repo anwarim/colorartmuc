@@ -974,3 +974,78 @@ footer {
   font-family: 'Jost', sans-serif; width: fit-content;
 }
 .detail-ar-btn:hover { background: var(--terracotta); color: var(--cream); }
+
+
+/* ============================================================
+   Instagram Floating Button
+   ============================================================ */
+.instagram-fab {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 999;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--charcoal);
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(44, 36, 32, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  cursor: pointer;
+}
+
+.instagram-fab svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.instagram-fab:hover {
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 0 8px 28px rgba(44, 36, 32, 0.45);
+  background: var(--rust);
+}
+
+.instagram-fab:hover svg {
+  transform: rotate(-8deg);
+}
+
+.instagram-fab::before {
+  content: 'Instagram';
+  position: absolute;
+  right: calc(100% + 12px);
+  background: var(--charcoal);
+  color: var(--cream);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.instagram-fab:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 768px) {
+  .instagram-fab {
+    bottom: 24px;
+    right: 20px;
+    width: 46px;
+    height: 46px;
+  }
+  .instagram-fab::before {
+    display: none;
+  }
+}
