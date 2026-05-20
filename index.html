@@ -187,5 +187,50 @@
     </svg>
   </a>
 
+  <!-- Google Analytics (only loads after cookie consent) -->
+  <script>
+    function loadGA() {
+      if (document.getElementById("ga-script")) return;
+      var s = document.createElement("script");
+      s.id = "ga-script";
+      s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=G-1E3LKK0V5W";
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag("js", new Date());
+      gtag("config", "G-1E3LKK0V5W");
+    }
+    (function() {
+      var consent = localStorage.getItem("cookie_consent");
+      if (consent === "accepted") loadGA();
+      window.addEventListener("DOMContentLoaded", function() {
+        var banner = document.getElementById("cookie-banner");
+        if (!banner) return;
+        if (!consent) {
+          setTimeout(function() { banner.classList.add("visible"); }, 800);
+        }
+        document.getElementById("cookie-accept").addEventListener("click", function() {
+          localStorage.setItem("cookie_consent", "accepted");
+          banner.classList.remove("visible");
+          loadGA();
+        });
+        document.getElementById("cookie-decline").addEventListener("click", function() {
+          localStorage.setItem("cookie_consent", "declined");
+          banner.classList.remove("visible");
+        });
+      });
+    })();
+  </script>
+
+  <div class="cookie-banner" id="cookie-banner">
+    <p>Diese Website verwendet Cookies von Google Analytics, um die Nutzung zu analysieren. Mehr dazu in unserer <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+    <div class="cookie-actions">
+      <button class="cookie-btn cookie-btn-decline" id="cookie-decline">Ablehnen</button>
+      <button class="cookie-btn cookie-btn-accept" id="cookie-accept">Akzeptieren</button>
+    </div>
+  </div>
+
 </body>
 </html>
