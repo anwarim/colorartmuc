@@ -254,6 +254,44 @@
     .detail-wall-hint svg { flex-shrink: 0; opacity: 0.5; }
     .detail-wall-hint.hidden { display: none; }
 
+    /* ── Zoom overlay ── */
+    .zoom-overlay {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(20,16,14,0.96);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+      cursor: zoom-out;
+    }
+    .zoom-overlay.open { opacity: 1; pointer-events: all; }
+    .zoom-overlay img {
+      max-width: 95vw; max-height: 95vh;
+      object-fit: contain;
+      transform-origin: center center;
+      transition: transform 0.08s ease;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .zoom-overlay img.dragging { cursor: grabbing; transition: none; }
+    .zoom-close {
+      position: fixed; top: 20px; right: 20px;
+      width: 44px; height: 44px;
+      background: rgba(250,247,242,0.12); border: 1px solid rgba(250,247,242,0.25);
+      color: var(--cream); font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s; z-index: 2001;
+    }
+    .zoom-close:hover { background: rgba(250,247,242,0.22); }
+    .zoom-hint {
+      position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+      font-family: 'Jost', sans-serif; font-size: 0.68rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: rgba(250,247,242,0.45);
+      pointer-events: none; white-space: nowrap;
+    }
+    /* Zoom cursor hint on painting image */
+    .detail-img-slot:not(.wall-photo) { cursor: zoom-in; }
+
     @media (max-width: 768px) {
       .detail-view { flex-direction: column; }
       .detail-image-area { flex: 1; min-height: 52vh; }
@@ -388,6 +426,13 @@
       </a>
     </div>
     <button class="detail-close" id="detail-close">✕</button>
+  </div>
+
+  <!-- Zoom overlay -->
+  <div class="zoom-overlay" id="zoom-overlay">
+    <img id="zoom-img" src="" alt="" draggable="false" />
+    <button class="zoom-close" id="zoom-close">✕</button>
+    <div class="zoom-hint" id="zoom-hint">Scrollen zum Zoomen · Ziehen zum Verschieben</div>
   </div>
 
   <footer>
@@ -611,6 +656,118 @@ window.openArModal = openArModal;
       buildStack(currentPhotos);
       getWallPhotos(p).then(function(photos) { currentPhotos = photos; buildStack(photos); });
     }
+
+    // ── Zoom overlay ─────────────────────────────────────────
+    (function() {
+      var overlay   = document.getElementById('zoom-overlay');
+      var zoomImg   = document.getElementById('zoom-img');
+      var zoomClose = document.getElementById('zoom-close');
+      var zoomHint  = document.getElementById('zoom-hint');
+      var scale = 1, minScale = 1, maxScale = 4;
+      var posX = 0, posY = 0;
+      var isDragging = false, startX, startY, lastPosX, lastPosY;
+      // pinch
+      var lastDist = 0, pinching = false;
+
+      function openZoom(src) {
+        zoomImg.src = src;
+        scale = 1; posX = 0; posY = 0;
+        applyTransform();
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        zoomHint.style.opacity = '1';
+        setTimeout(function(){ zoomHint.style.opacity = '0'; }, 2500);
+      }
+      function closeZoom() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = 'hidden'; // detail view still open
+      }
+      function applyTransform() {
+        zoomImg.style.transform = 'translate(' + posX + 'px,' + posY + 'px) scale(' + scale + ')';
+      }
+      function clampPos() {
+        var rect = zoomImg.getBoundingClientRect();
+        var vw = window.innerWidth, vh = window.innerHeight;
+        var maxX = Math.max(0, (rect.width  - vw)  / 2);
+        var maxY = Math.max(0, (rect.height - vh) / 2);
+        posX = Math.min(maxX, Math.max(-maxX, posX));
+        posY = Math.min(maxY, Math.max(-maxY, posY));
+      }
+
+      // Click on painting slot (not wall photos)
+      document.getElementById('detail-image-area').addEventListener('click', function(e) {
+        var slot = e.target.closest('.detail-img-slot');
+        if (!slot || slot.classList.contains('wall-photo')) return;
+        var img = slot.querySelector('img');
+        if (img) openZoom(img.src);
+      });
+
+      zoomClose.addEventListener('click', function(e) { e.stopPropagation(); closeZoom(); });
+      overlay.addEventListener('click', function(e) { if (e.target === overlay) closeZoom(); });
+
+      // Mouse wheel zoom
+      overlay.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        var delta = e.deltaY > 0 ? 0.85 : 1.18;
+        scale = Math.min(maxScale, Math.max(minScale, scale * delta));
+        clampPos(); applyTransform();
+      }, { passive: false });
+
+      // Mouse drag
+      zoomImg.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        isDragging = true; startX = e.clientX - posX; startY = e.clientY - posY;
+        zoomImg.classList.add('dragging');
+      });
+      window.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        posX = e.clientX - startX; posY = e.clientY - startY;
+        clampPos(); applyTransform();
+      });
+      window.addEventListener('mouseup', function() {
+        isDragging = false; zoomImg.classList.remove('dragging');
+      });
+
+      // Touch pinch + drag
+      overlay.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 2) {
+          pinching = true;
+          lastDist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+        } else if (e.touches.length === 1) {
+          isDragging = true;
+          startX = e.touches[0].clientX - posX;
+          startY = e.touches[0].clientY - posY;
+        }
+      }, { passive: true });
+      overlay.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+        if (pinching && e.touches.length === 2) {
+          var dist = Math.hypot(
+            e.touches[0].clientX - e.touches[1].clientX,
+            e.touches[0].clientY - e.touches[1].clientY
+          );
+          scale = Math.min(maxScale, Math.max(minScale, scale * (dist / lastDist)));
+          lastDist = dist;
+          clampPos(); applyTransform();
+        } else if (isDragging && e.touches.length === 1) {
+          posX = e.touches[0].clientX - startX;
+          posY = e.touches[0].clientY - startY;
+          clampPos(); applyTransform();
+        }
+      }, { passive: false });
+      overlay.addEventListener('touchend', function(e) {
+        if (e.touches.length < 2) pinching = false;
+        if (e.touches.length === 0) isDragging = false;
+      }, { passive: true });
+
+      // Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) closeZoom();
+      });
+    })();
 
     function closeDetail() { detailView.classList.remove('open'); document.body.style.overflow = ''; }
     function showNext() { photoIndex=0; currentIndex=(currentIndex+1)%currentList.length; showDetail(currentIndex); }
