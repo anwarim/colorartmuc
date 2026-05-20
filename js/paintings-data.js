@@ -89,7 +89,7 @@ const paintings = [
   { img: "0082.jpg", title: "Scarlet Steel",             price: 750,  sold: true,  material: "Acryl, Leinwand", size: "80x100x2 cm",    colors: ["red", "dark"] },
   { img: "0083.jpg", title: "Golden Sandstone",          price: 400,  sold: true,  material: "Acryl, Leinwand", size: "40x50x2 cm",     colors: ["gold", "dark"] },
   { img: "0084.jpg", title: "Scarlet Blossom",           price: 400,  sold: true,  material: "Acryl, Leinwand", size: "40x50x1,5 cm",   colors: ["red", "bright"] },
-  { img: "0085.jpg", title: "Dream Parade",           	 price: 950,  sold: false,  material: "Acryl, Leinwand", size: "160x60x1,5 cm", colors: ["red", "gold", , "blue", "green", "bright"] },
+  { img: "0085.jpg", title: "Dream Parade",           	 price: 950,  sold: false,  material: "Acryl, Leinwand", size: "160x60x1,5 cm", colors: ["red", "gold", "blue", "green", "bright"] },
   { img: "0086.jpg", title: "Between Worlds",            price: 750,  sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm", colors: ["red", "blue", "green", "bright"] },
   { img: "0087.jpg", title: "Beneath the Surface",       price: 850,  sold: false,  material: "Acryl, Leinwand", size: "100x100x1,5 cm",colors: ["gold", "green"] },
   { img: "0088.jpg", title: "Ship of the Lost",          price: 900,  sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm", colors: ["gold", "dark"] },
