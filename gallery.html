@@ -294,9 +294,9 @@
     .detail-img-slot:not(.wall-photo) { cursor: zoom-in; }
 
     @media (max-width: 768px) {
-      .detail-view { flex-direction: column; }
-      .detail-image-area { flex: 1; min-height: 52vh; }
-      .detail-info { width: 100%; padding: 24px 24px calc(36px + env(safe-area-inset-bottom, 20px)); border-left: none; border-top: 1px solid var(--sand); flex-shrink: 0; justify-content: flex-start; overflow-y: auto; }
+      .detail-view { flex-direction: column; overflow: hidden; }
+      .detail-image-area { flex: 0 0 auto; height: 44vh; min-height: 0; }
+      .detail-info { width: 100%; padding: 24px 24px 60px; border-left: none; border-top: 1px solid var(--sand); flex: 1; justify-content: flex-start; overflow-y: auto; -webkit-overflow-scrolling: touch; }
       .detail-nav { width: 38px; height: 38px; font-size: 1.1rem; }
       .detail-prev { left: 10px; }
       .detail-next { right: 10px; }
