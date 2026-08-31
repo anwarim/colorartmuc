@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GRENZENLOS — Ausstellung Oktober 2026 | Color Art Munich</title>
+  <meta name="description" content="Malerei trifft Skulptur: Alexandra Wedl (ColorArtMuc) und Andreas Heinrich (ARTty) zeigen gemeinsam im Pfarrstadl Weßling. Vernissage 30. Oktober 2026." />
+  <meta name="author" content="Color Art Munich" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.colorartmuc.com/blog/blog-post-4.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="GRENZENLOS — Ausstellung Oktober 2026 | Color Art Munich" />
+  <meta property="og:description" content="Malerei trifft Skulptur im Pfarrstadl Weßling. Vernissage 30. Oktober 2026, 18:30 Uhr." />
+  <meta property="og:url" content="https://www.colorartmuc.com/blog/blog-post-4.html" />
+  <meta property="og:image" content="https://www.colorartmuc.com/images/paintings/0087.jpg" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+  <style>
+    .blog-post-hero {
+      width: 100%;
+      height: 420px;
+      overflow: hidden;
+      position: relative;
+      background: var(--umber);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .blog-post-hero img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.75;
+    }
+    .blog-post-hero-overlay {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 24px;
+    }
+    .blog-post-hero-overlay .event-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      font-weight: 300; color: #fff;
+      letter-spacing: 0.06em;
+      line-height: 1;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+    .blog-post-hero-overlay .event-sub {
+      font-family: 'Jost', sans-serif;
+      font-size: clamp(0.75rem, 2vw, 0.95rem);
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+    }
+    .blog-post-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 64px 32px 100px;
+    }
+    .blog-post-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Jost', sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-light); text-decoration: none;
+      margin-bottom: 48px;
+      transition: color 0.2s;
+    }
+    .blog-post-back:hover { color: var(--terracotta); }
+    .blog-post-meta {
+      font-family: 'Jost', sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--terracotta); margin-bottom: 16px;
+    }
+    .blog-post-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300; color: var(--umber);
+      line-height: 1.15; margin-bottom: 40px;
+    }
+    .blog-post-divider {
+      width: 48px; height: 1px;
+      background: var(--terracotta);
+      margin-bottom: 40px;
+    }
+    .blog-post-body {
+      font-family: 'Jost', sans-serif;
+      font-size: 1rem; line-height: 1.85;
+      color: var(--text);
+    }
+    .blog-post-body p { margin-bottom: 1.6em; }
+    .blog-post-body h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 300;
+      color: var(--umber); margin: 2.4em 0 0.8em;
+    }
+    .blog-post-body blockquote {
+      border-left: 2px solid var(--terracotta);
+      margin: 2em 0; padding: 0 0 0 24px;
+      font-style: italic; color: var(--text-light);
+      font-size: 1.05rem;
+    }
+
+    /* Event info card */
+    .event-card {
+      background: var(--cream);
+      border: 1px solid var(--sand);
+      padding: 32px 36px;
+      margin: 40px 0;
+    }
+    .event-card-title {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--terracotta);
+      margin-bottom: 24px;
+    }
+    .event-dates {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .event-date-block {
+      text-align: center;
+      padding: 16px 8px;
+      border: 1px solid var(--sand);
+      background: #fff;
+    }
+    .event-date-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.62rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--terracotta);
+      margin-bottom: 6px;
+    }
+    .event-date-day {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 400;
+      color: var(--umber); line-height: 1.3;
+    }
+    .event-date-time {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem; color: var(--text-light);
+      margin-top: 4px;
+    }
+    .event-location {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.88rem; color: var(--text);
+      line-height: 1.5;
+    }
+    .event-location svg { flex-shrink: 0; margin-top: 2px; }
+    .event-location a {
+      color: var(--umber); text-decoration: underline;
+      text-decoration-color: var(--sand);
+      transition: color 0.2s;
+    }
+    .event-location a:hover { color: var(--terracotta); }
+
+    .lang-toggle {
+      display: flex; gap: 8px; margin-bottom: 48px;
+    }
+    .lang-btn {
+      font-family: 'Jost', sans-serif; font-size: 0.7rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 6px 14px; border: 1px solid var(--sand);
+      background: none; color: var(--text-light);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: var(--umber); color: var(--cream);
+      border-color: var(--umber);
+    }
+    .lang-content { display: none; }
+    .lang-content.active { display: block; }
+    .blog-post-footer {
+      margin-top: 64px; padding-top: 40px;
+      border-top: 1px solid var(--sand);
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+    .blog-post-footer a {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Jost', sans-serif; font-size: 0.72rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--umber); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .blog-post-footer a:hover { color: var(--terracotta); }
+    @media (max-width: 768px) {
+      .blog-post-hero { height: 280px; }
+      .blog-post-wrap { padding: 40px 24px 80px; }
+      .event-dates { grid-template-columns: 1fr; gap: 10px; }
+      .event-card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">Color <span>Art</span></a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../gallery.html">Gallery</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../blog.html" class="active">Blog</a></li>
+      <li><a href="../contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="blog-post-hero">
+    <img src="../images/paintings/0087.jpg" alt="GRENZENLOS — Farbe trifft Form" />
+    <div class="blog-post-hero-overlay">
+      <div class="event-title">GRENZENLOS</div>
+      <div class="event-sub">Farbe trifft Form · Oktober 2026 · Weßling</div>
+    </div>
+  </div>
+
+  <main>
+    <div class="blog-post-wrap fade-in">
+
+      <a href="../blog.html" class="blog-post-back">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Zurück zum Blog
+      </a>
+
+      <div class="blog-post-meta">Oktober 2026 · Ausstellung</div>
+      <h1 class="blog-post-title">GRENZENLOS — Farbe trifft Form</h1>
+      <div class="blog-post-divider"></div>
+
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="de" onclick="setLang('de')">DE</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      </div>
+
+      <!-- Event info card (language-independent) -->
+      <div class="event-card">
+        <div class="event-card-title">Ausstellungszeiten</div>
+        <div class="event-dates">
+          <div class="event-date-block">
+            <div class="event-date-label">★ Vernissage</div>
+            <div class="event-date-day">Freitag<br>30. Oktober 2026</div>
+            <div class="event-date-time">18:30 – 22:00 Uhr</div>
+          </div>
+          <div class="event-date-block">
+            <div class="event-date-label">Samstag</div>
+            <div class="event-date-day">31. Oktober 2026</div>
+            <div class="event-date-time">10:00 – 18:00 Uhr</div>
+          </div>
+          <div class="event-date-block">
+            <div class="event-date-label">Sonntag</div>
+            <div class="event-date-day">1. November 2026</div>
+            <div class="event-date-time">10:00 – 17:00 Uhr</div>
+          </div>
+        </div>
+        <div class="event-location">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--terracotta)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+          <span>
+            <strong>Pfarrstadl Weßling</strong><br>
+            Am Kreuzberg 3 · 82234 Weßling<br>
+            S-Bahn S8 bis Weßling · fußläufig ca. 8 Minuten<br>
+            <a href="https://maps.google.com/?q=Am+Kreuzberg+3,+82234+Weßling" target="_blank" rel="noopener">In Google Maps öffnen ↗</a>
+          </span>
+        </div>
+      </div>
+
+      <!-- DEUTSCH -->
+      <div class="lang-content active" id="content-de">
+        <div class="blog-post-body">
+          <p>Wenn Farben Geschichten erzählen und Formen sie lebendig werden lassen — dann entsteht etwas, das größer ist als die Summe seiner Teile.</p>
+
+          <p>Im Oktober 2026 zeige ich gemeinsam mit dem Bildhauer Andreas Heinrich (ARTty) eine Ausstellung im Pfarrstadl Weßling. Der Titel ist Programm: <em>GRENZENLOS</em>. Malerei und Skulptur im Dialog — zwei verschiedene Ausdrucksweisen, eine gemeinsame Leidenschaft.</p>
+
+          <h2>Zwei Künstler, ein Gespräch</h2>
+          <p>Andreas Heinrich erschafft kraftvolle Skulpturen aus Holz und Bronze, die Gesichter tragen — mal archaisch, mal zart. Seine Formen haben Gewicht, Verwurzelung, Stille. Meine Bilder hingegen suchen die Bewegung, das Offene, das Flüchtige. Was passiert, wenn diese beiden Welten aufeinandertreffen? Das ist die Frage, die uns beide antreibt.</p>
+
+          <blockquote>„Zwei Künstler. Zwei Ausdrucksformen. Eine gemeinsame Leidenschaft."</blockquote>
+
+          <p>Ausdrucksstarke Kunstwerke treffen auf kraftvolle Formen und schaffen einen spannenden Dialog zwischen Emotion, Fantasie und Wirklichkeit. Lassen Sie sich von der Vielfalt der Kunst begeistern, entdecken Sie neue Perspektiven — und kommen Sie mit uns persönlich ins Gespräch.</p>
+
+          <h2>Kommen Sie vorbei</h2>
+          <p>Ich freue mich besonders auf die Vernissage am Freitagabend, den 30. Oktober 2026. Ein Abend mit Kunst, Wein und Begegnung. Der Pfarrstadl Weßling ist mit der S-Bahn S8 bequem erreichbar — vom Bahnhof Weßling sind es nur wenige Gehminuten.</p>
+
+          <p>Ich freue mich, Sie dort zu treffen.</p>
+        </div>
+      </div>
+
+      <!-- ENGLISH -->
+      <div class="lang-content" id="content-en">
+        <div class="blog-post-body">
+          <p>When colours tell stories and forms bring them to life — something emerges that is greater than the sum of its parts.</p>
+
+          <p>In October 2026, I will be showing work alongside sculptor Andreas Heinrich (ARTty) at the Pfarrstadl Weßling. The title says it all: <em>GRENZENLOS</em> — Boundless. Painting and sculpture in dialogue — two different forms of expression, one shared passion.</p>
+
+          <h2>Two artists, one conversation</h2>
+          <p>Andreas Heinrich creates powerful sculptures from wood and bronze that carry faces — sometimes archaic, sometimes delicate. His forms have weight, rootedness, stillness. My paintings, by contrast, seek movement, openness, the fleeting moment. What happens when these two worlds meet? That is the question driving us both.</p>
+
+          <blockquote>"Two artists. Two forms of expression. One shared passion."</blockquote>
+
+          <p>Expressive artworks meet powerful forms, creating a captivating dialogue between emotion, fantasy and reality. Let yourself be inspired by the diversity of art, discover new perspectives — and come and talk with us in person.</p>
+
+          <h2>Come and visit</h2>
+          <p>I am especially looking forward to the vernissage on Friday evening, 30 October 2026. An evening of art, wine and conversation. The Pfarrstadl Weßling is easily accessible by S-Bahn S8 — just a short walk from Weßling station.</p>
+
+          <p>I look forward to meeting you there.</p>
+        </div>
+      </div>
+
+      <div class="blog-post-footer">
+        <a href="../blog.html">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Alle Beiträge
+        </a>
+        <a href="../gallery.html">
+          Zur Galerie
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="nav-logo">Color <span>Art</span></a>
+        <p>Abstrakte Acrylmalerei aus München. Handgemachte Unikate mit Charakter und Tiefe.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../gallery.html">Gallery</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../blog.html">Blog</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Rechtliches</h4>
+        <ul>
+          <li><a href="../impressum.html">Impressum</a></li>
+          <li><a href="../datenschutz.html">Datenschutz</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Color Art Munich. Alle Rechte vorbehalten.</span>
+      <span>Made with ♥ in München</span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('.lang-content').forEach(function(el) { el.classList.remove('active'); });
+      document.querySelectorAll('.lang-btn').forEach(function(el) { el.classList.remove('active'); });
+      document.getElementById('content-' + lang).classList.add('active');
+      document.querySelector('[data-lang="' + lang + '"]').classList.add('active');
+      localStorage.setItem('blog_lang', lang);
+    }
+    (function() {
+      var saved = localStorage.getItem('blog_lang');
+      if (saved && saved !== 'de') setLang(saved);
+    })();
+  </script>
+
+  <a href="https://www.instagram.com/color_artmuc/" target="_blank" rel="noopener noreferrer" class="instagram-fab" aria-label="Instagram">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <circle cx="12" cy="12" r="4"/>
+      <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+    </svg>
+  </a>
+
+  <!-- Google Analytics (only loads after cookie consent) -->
+  <script>
+    function loadGA() {
+      if (document.getElementById("ga-script")) return;
+      var s = document.createElement("script");
+      s.id = "ga-script"; s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=G-1E3LKK0V5W";
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag; gtag("js", new Date()); gtag("config", "G-1E3LKK0V5W");
+    }
+    (function() {
+      var consent = localStorage.getItem("cookie_consent");
+      if (consent === "accepted") loadGA();
+      window.addEventListener("DOMContentLoaded", function() {
+        var banner = document.getElementById("cookie-banner");
+        if (!banner) return;
+        if (!consent) setTimeout(function() { banner.classList.add("visible"); }, 800);
+        document.getElementById("cookie-accept").addEventListener("click", function() {
+          localStorage.setItem("cookie_consent", "accepted");
+          banner.classList.remove("visible"); loadGA();
+        });
+        document.getElementById("cookie-decline").addEventListener("click", function() {
+          localStorage.setItem("cookie_consent", "declined");
+          banner.classList.remove("visible");
+        });
+      });
+    })();
+  </script>
+  <div class="cookie-banner" id="cookie-banner">
+    <p>Diese Website verwendet Cookies von Google Analytics, um die Nutzung zu analysieren. Mehr dazu in unserer <a href="../datenschutz.html">Datenschutzerklärung</a>.</p>
+    <div class="cookie-actions">
+      <button class="cookie-btn cookie-btn-decline" id="cookie-decline">Ablehnen</button>
+      <button class="cookie-btn cookie-btn-accept" id="cookie-accept">Akzeptieren</button>
+    </div>
+  </div>
+
+</body>
+</html>
