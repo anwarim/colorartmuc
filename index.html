@@ -84,30 +84,39 @@
     </section>
 
     <!-- Event announcement: GRENZENLOS -->
-    <section class="fade-in" style="background: var(--umber); max-width: 100%; padding: 0;">
-      <div style="max-width: 960px; margin: 0 auto; padding: 48px 32px; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap;">
-        <div>
-          <span style="font-family:'Jost',sans-serif; font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.55);">Kommende Ausstellung</span>
-          <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3rem); font-weight:300; color:#fff; line-height:1.1; margin: 8px 0 4px;">GRENZENLOS</h2>
-          <p style="font-family:'Jost',sans-serif; font-size:0.85rem; color:rgba(255,255,255,0.7); letter-spacing:0.05em; margin-bottom:16px;">Farbe trifft Form · Malerei &amp; Skulptur im Dialog</p>
-          <div style="display:flex; flex-wrap:wrap; gap:20px; font-family:'Jost',sans-serif; font-size:0.78rem; color:rgba(255,255,255,0.6); margin-bottom:28px;">
-            <span>★ Vernissage: Fr. 30.10.2026 · 18:30 Uhr</span>
+    <section class="event-banner fade-in">
+      <div class="event-banner-inner">
+        <div class="event-content">
+          <span class="event-label">Kommende Ausstellung</span>
+
+          <h2 class="event-title">GRENZENLOS</h2>
+
+          <p class="event-subtitle">
+            Farbe trifft Form · Malerei &amp; Skulptur im Dialog
+          </p>
+
+          <div class="event-dates">
+            <span class="vernissage">★ Vernissage: Fr. 30.10.2026 · 18:30 Uhr</span>
             <span>Sa. 31.10. · 10–18 Uhr</span>
             <span>So. 01.11. · 10–17 Uhr</span>
           </div>
-          <div style="font-family:'Jost',sans-serif; font-size:0.8rem; color:rgba(255,255,255,0.5); margin-bottom:28px;">
-            📍 Pfarrstadl Weßling · Am Kreuzberg 3 · S-Bahn S8
+
+          <div class="event-location">
+            <span>●</span>
+            Pfarrstadl Weßling · Am Kreuzberg 3 · S-Bahn S8
           </div>
-          <a href="blog/blog-post-4.html" style="display:inline-flex; align-items:center; gap:8px; font-family:'Jost',sans-serif; font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:#fff; text-decoration:none; border:1px solid rgba(255,255,255,0.35); padding:10px 20px; transition:all 0.2s;" onmouseover="this.style.borderColor='#fff';this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.35)';this.style.background='transparent'">
+
+          <a href="blog/blog-post-4.html" class="event-cta">
             Mehr erfahren
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </a>
         </div>
-        <div style="flex-shrink:0; text-align:right;">
-          <div style="font-family:'Cormorant Garamond',serif; font-size:0.85rem; font-style:italic; color:rgba(255,255,255,0.45); line-height:2;">
-            Alexandra Wedl (ColorArtMuc)<br>
-            &amp; Andreas Heinrich (ARTty)
-          </div>
+
+        <div class="event-artists">
+          Alexandra Wedl (ColorArtMuc)<br>
+          &amp; Andreas Heinrich (ARTty)
         </div>
       </div>
     </section>

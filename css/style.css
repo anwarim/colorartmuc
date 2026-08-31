@@ -12,6 +12,7 @@
   --text:       #3A2E28;
   --text-light: #7A6A60;
   --accent:     #C17F5A;
+  --petrol:     #1F5553;
 
   --nav-height: 72px;
   --max-width:  1200px;
@@ -245,6 +246,140 @@ main { padding-top: var(--nav-height); min-height: 100vh; }
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, rgba(193,127,90,0.15) 0%, transparent 60%);
+}
+
+/* Exhibition Banner ------------------------------------------------ */
+.event-banner {
+  position: relative;
+  background: var(--petrol);
+  max-width: 100%;
+  padding: 0;
+  overflow: hidden;
+}
+
+.event-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--terracotta);
+}
+
+.event-banner-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 52px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+
+.event-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.event-label {
+  display: block;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #D8B6A1;
+  margin-bottom: 10px;
+}
+
+.event-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.6rem, 4.5vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: 0.025em;
+  color: var(--warm-white);
+  margin: 0 0 12px;
+}
+
+.event-subtitle {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: rgba(250, 247, 242, 0.82);
+  margin-bottom: 22px;
+}
+
+.event-dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 300;
+  color: rgba(250, 247, 242, 0.70);
+  margin-bottom: 18px;
+}
+
+.event-dates .vernissage {
+  color: var(--warm-white);
+  font-weight: 400;
+}
+
+.event-location {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: rgba(250, 247, 242, 0.70);
+  margin-bottom: 28px;
+}
+
+.event-location span {
+  color: var(--terracotta);
+  margin-right: 4px;
+}
+
+.event-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--warm-white);
+  color: var(--petrol);
+  border: 1px solid var(--warm-white);
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.event-cta:hover {
+  background: var(--terracotta);
+  border-color: var(--terracotta);
+  color: var(--warm-white);
+}
+
+.event-cta svg {
+  transition: transform 0.25s ease;
+}
+
+.event-cta:hover svg {
+  transform: translateX(4px);
+}
+
+.event-artists {
+  flex-shrink: 0;
+  text-align: right;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.8;
+  color: rgba(250, 247, 242, 0.55);
 }
 
 /* ─── Section styles ─────────────────────────────────────── */
@@ -818,6 +953,21 @@ footer {
   .hero-text { padding: 60px 24px; order: 2; }
   .hero-image { height: 60vw; order: 1; }
 
+  /* Exhibition banner */
+  .event-banner-inner {
+    padding: 44px 24px;
+    gap: 30px;
+  }
+
+  .event-title {
+    font-size: clamp(2.5rem, 12vw, 3.2rem);
+  }
+
+  .event-artists {
+    width: 100%;
+    text-align: left;
+  }
+
   .section-header {
     flex-direction: column;
     align-items: flex-start;
@@ -897,6 +1047,34 @@ footer {
   section { padding: 60px 24px; }
 }
 
+
+@media (max-width: 600px) {
+  .event-banner-inner {
+    display: block;
+    padding: 42px 24px;
+  }
+
+  .event-title {
+    font-size: 2.5rem;
+  }
+
+  .event-subtitle {
+    font-size: 0.84rem;
+  }
+
+  .event-dates {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .event-artists {
+    margin-top: 32px;
+  }
+
+  .event-cta {
+    padding: 12px 20px;
+  }
+}
 
 /* ─── AR Modal ───────────────────────────────────────────── */
 #ar-modal {
