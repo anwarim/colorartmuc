@@ -94,7 +94,7 @@ const paintings = [
   { img: "0087.jpg", title: "Beneath the Surface",       price: 1000, sold: false,  material: "Acryl, Leinwand", size: "100x100x1,5 cm",colors: ["gold", "green"] },
   { img: "0088.jpg", title: "Ship of the Lost",          price: 900,  sold: false, material: "Acryl, Leinwand", size: "100x100x1,5 cm", colors: ["gold", "dark"] },
   { img: "0089.jpg", title: "Balance",        		     price: 950,  sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm", colors: ["blue", "gold", "dark"] },  
-  { img: "0090.jpg", title: "A Thousand Blooms",         price: 950,  sold: false,  material: "Acryl, Leinwand", size: "80x120x1,5 cm", colors: ["bright", "red", "green", "gold"] },  
+  { img: "0090.jpg", title: "A Thousand Blooms",         price: 950,  sold: true,  material: "Acryl, Leinwand", size: "80x120x1,5 cm",  colors: ["bright", "red", "green", "gold"] },  
   { img: "0091.jpg", title: "The Hidden Light",          price: 900,  sold: false,  material: "Acryl, Leinwand", size: "80x120x1,5 cm", colors: ["dark", "gold"] },  
   { img: "0092.jpg", title: "Moon of Falling Blossoms",  price: 900,  sold: false,  material: "Acryl, Leinwand", size: "80x120x1,5 cm", colors: ["red", "gold", "dark"] },  
 ];
