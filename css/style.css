@@ -48,6 +48,7 @@ img { display: block; max-width: 100%; }
 .event-cta,
 .btn-submit,
 .detail-ar-btn,
+.detail-contact,
 .filter-btn,
 .color-btn,
 .lang-btn {
@@ -765,6 +766,27 @@ section { padding: 100px 40px; max-width: var(--max-width); margin: 0 auto; }
 }
 
 .contact-form { display: flex; flex-direction: column; gap: 20px; }
+
+.reservation-notice {
+  padding: 18px 20px;
+  border-left: 3px solid var(--terracotta-text);
+  background: var(--cream);
+}
+
+.reservation-notice strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--umber);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.reservation-notice p {
+  color: var(--text);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
 
 .form-group { display: flex; flex-direction: column; gap: 8px; }
 

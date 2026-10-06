@@ -59,10 +59,17 @@
     .overlay-title { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-style: italic; color: #fff; line-height: 1.2; }
     .overlay-price { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; color: var(--terracotta); }
     .overlay-price.sold { color: #e8a0a0; }
+    .overlay-price.reserved { color: #f0c49f; }
     .overlay-meta { font-size: 0.7rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
     .sold-badge {
       position: absolute; top: 12px; right: 12px;
       background: rgba(180,60,60,0.85); color: white;
+      font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 4px 8px; backdrop-filter: blur(4px); z-index: 4;
+    }
+    .reserved-badge {
+      position: absolute; top: 12px; right: 12px;
+      background: rgb(220 124 90 / 0.9); color: white;
       font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
       padding: 4px 8px; backdrop-filter: blur(4px); z-index: 4;
     }
@@ -234,6 +241,7 @@
     .detail-divider { width: 48px; height: 1px; background: var(--terracotta); margin-bottom: 22px; }
     .detail-price { font-size: 1.25rem; font-weight: 400; color: var(--terracotta); margin-bottom: 10px; }
     .detail-price.sold { color: #b44040; }
+    .detail-price.reserved { color: var(--terracotta-text); }
     .detail-material { font-size: 0.82rem; color: var(--text-light); line-height: 2; letter-spacing: 0.04em; }
     .detail-contact {
       margin-top: 32px;
@@ -429,7 +437,7 @@
         Auf Wand ansehen
       </button>
       <a href="contact.html" class="detail-contact">
-        Anfrage senden
+        <span id="detail-contact-label">Unverbindlich reservieren</span>
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
           <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -495,9 +503,11 @@ function openArModal(painting) {
 
   var priceText = painting.sold
     ? 'Verkauft'
-    : painting.price > 0
-      ? painting.price.toLocaleString('de-DE') + ' \u20AC'
-      : 'Preis auf Anfrage';
+    : painting.reserved
+      ? 'Reserviert'
+      : painting.price > 0
+        ? painting.price.toLocaleString('de-DE') + ' \u20AC'
+        : 'Preis auf Anfrage';
 
   var modal = document.createElement('div');
   modal.id = 'ar-modal';
@@ -659,6 +669,7 @@ window.openArModal = openArModal;
       detailTitle.textContent = p.title;
       detailCount.textContent = (index+1) + ' / ' + currentList.length;
       if (p.sold) { detailPrice.textContent = 'Verkauft'; detailPrice.className = 'detail-price sold'; }
+      else if (p.reserved) { detailPrice.textContent = 'Reserviert'; detailPrice.className = 'detail-price reserved'; }
       else if (p.price > 0) { detailPrice.textContent = p.price.toLocaleString('de-DE') + ' €'; detailPrice.className = 'detail-price'; }
       else { detailPrice.textContent = 'Preis auf Anfrage'; detailPrice.className = 'detail-price'; }
       let matText = p.material; if (p.size) matText += '\n' + p.size;
@@ -666,7 +677,12 @@ window.openArModal = openArModal;
       const arBtn = document.getElementById('detail-ar-btn');
       if (arBtn) arBtn.onclick = () => openArModal(currentList[currentIndex]);
       const contactBtn = document.querySelector('.detail-contact');
-      if (contactBtn) contactBtn.href = 'contact.html?painting=' + encodeURIComponent(p.title);
+      const contactLabel = document.getElementById('detail-contact-label');
+      if (contactBtn) {
+        const canReserve = !p.sold && !p.reserved;
+        contactBtn.href = 'contact.html?' + (canReserve ? 'type=reservation&' : '') + 'painting=' + encodeURIComponent(p.title);
+        if (contactLabel) contactLabel.textContent = canReserve ? 'Unverbindlich reservieren' : 'Anfrage senden';
+      }
       currentPhotos = ['images/paintings/' + p.img];
       buildStack(currentPhotos);
       getWallPhotos(p).then(function(photos) { currentPhotos = photos; buildStack(photos); });
@@ -818,7 +834,8 @@ window.openArModal = openArModal;
     }, {threshold:0.05});
 
     // ── Gallery: build ONCE, filter by show/hide (instant) ────
-    var orderedPaintings = shuffle(paintings.filter(function(p) { return !p.sold; }))
+    var orderedPaintings = shuffle(paintings.filter(function(p) { return !p.sold && !p.reserved; }))
+      .concat(shuffle(paintings.filter(function(p) { return !p.sold && p.reserved; })))
       .concat(shuffle(paintings.filter(function(p) { return p.sold; })));
 
     function buildGallery() {
@@ -827,14 +844,16 @@ window.openArModal = openArModal;
         var item = document.createElement('div');
         item.className = 'gallery-item fade-in';
         item.dataset.sold   = p.sold ? 'true' : 'false';
+        item.dataset.reserved = p.reserved ? 'true' : 'false';
         item.dataset.colors = (p.colors||[]).join(',');
         item.dataset.price  = p.price;
         item.dataset.index  = paintings.indexOf(p);
         var priceHTML = p.sold ? '<div class="overlay-price sold">Verkauft</div>'
+          : p.reserved ? '<div class="overlay-price reserved">Reserviert</div>'
           : p.price > 0 ? '<div class="overlay-price">'+p.price.toLocaleString('de-DE')+' €</div>'
           : '<div class="overlay-price">Preis auf Anfrage</div>';
         var sizeHTML = '<div class="overlay-meta">'+p.material+(p.size?' · '+p.size:'')+' </div>';
-        item.innerHTML = (p.sold?'<div class="sold-badge">Verkauft</div>':'')
+        item.innerHTML = (p.sold ? '<div class="sold-badge">Verkauft</div>' : p.reserved ? '<div class="reserved-badge">Reserviert</div>' : '')
           +'<img src="images/paintings/'+p.img+'" alt="'+p.title+'" loading="lazy" />'
           +'<div class="painting-overlay"><div class="overlay-title">'+p.title+'</div>'+priceHTML+sizeHTML+'</div>';
         item.addEventListener('click', function() { openDetail(orderedPaintings, i); });
@@ -863,9 +882,10 @@ window.openArModal = openArModal;
         items.forEach(function(item) { grid.appendChild(item); });
         items.forEach(function(item) {
           var sold   = item.dataset.sold === 'true';
+          var reserved = item.dataset.reserved === 'true';
           var price  = parseInt(item.dataset.price)||0;
           var colors = item.dataset.colors ? item.dataset.colors.split(',') : [];
-          var show   = !sold;
+          var show   = !sold && !reserved;
           if (activeColor!=='all' && !colors.includes(activeColor)) show=false;
           if (price>0 && (price<minPrice||price>maxPrice)) show=false;
           item.style.display = show ? '' : 'none';
@@ -881,10 +901,11 @@ window.openArModal = openArModal;
         items.forEach(function(item) { grid.appendChild(item); });
         items.forEach(function(item) {
           var sold   = item.dataset.sold === 'true';
+          var reserved = item.dataset.reserved === 'true';
           var price  = parseInt(item.dataset.price)||0;
           var colors = item.dataset.colors ? item.dataset.colors.split(',') : [];
           var show   = true;
-          if (activeStatus==='available' && sold)  show=false;
+          if (activeStatus==='available' && (sold || reserved)) show=false;
           if (activeStatus==='sold'      && !sold) show=false;
           if (activeColor!=='all' && !colors.includes(activeColor)) show=false;
           if (!sold && price>0 && (price<minPrice||price>maxPrice)) show=false;

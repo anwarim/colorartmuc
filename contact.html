@@ -70,6 +70,14 @@
               action="https://formspree.io/f/xwvynjpa"
               method="POST">
 
+          <input type="hidden" id="request-type" name="request_type" value="Allgemeine Anfrage" />
+          <input type="hidden" id="painting-field" name="painting" value="" />
+
+          <div class="reservation-notice" id="reservation-notice" hidden>
+            <strong>Reservierungsanfrage für „<span id="reservation-painting"></span>“</strong>
+            <p>Die Anfrage ist unverbindlich. Die Reservierung gilt erst, nachdem ich die Verfügbarkeit persönlich per E-Mail bestätigt habe.</p>
+          </div>
+
           <div class="form-group">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" placeholder="Ihr Name" required />
@@ -133,9 +141,26 @@
     (function() {
       var params = new URLSearchParams(window.location.search);
       var painting = params.get('painting');
+      var isReservation = params.get('type') === 'reservation' && painting;
       if (painting) {
         var subjectField = document.getElementById('subject');
-        if (subjectField) subjectField.value = 'Anfrage: ' + painting;
+        var paintingField = document.getElementById('painting-field');
+        if (paintingField) paintingField.value = painting;
+        if (subjectField) subjectField.value = (isReservation ? 'Reservierungsanfrage: ' : 'Anfrage: ') + painting;
+      }
+      if (isReservation) {
+        var notice = document.getElementById('reservation-notice');
+        var noticePainting = document.getElementById('reservation-painting');
+        var requestType = document.getElementById('request-type');
+        var messageField = document.getElementById('message');
+        var submitButton = document.querySelector('#contact-form .btn-submit');
+        var successMessage = document.getElementById('form-success');
+        if (notice) notice.hidden = false;
+        if (noticePainting) noticePainting.textContent = painting;
+        if (requestType) requestType.value = 'Reservierungsanfrage';
+        if (messageField) messageField.value = 'Ich möchte das Werk „' + painting + '“ unverbindlich reservieren.';
+        if (submitButton) submitButton.textContent = 'Reservierung anfragen';
+        if (successMessage) successMessage.textContent = 'Vielen Dank! Ihre Reservierungsanfrage wurde gesendet. Ich bestätige die Verfügbarkeit persönlich per E-Mail.';
       }
     })();
   </script>

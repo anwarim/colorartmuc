@@ -1,6 +1,6 @@
 // ============================================================
 // Color Art Munich — Paintings Data
-// sold: true = shows "Verkauft", price: 0 = "Preis auf Anfrage"
+// sold: true = shows "Verkauft", reserved: true = shows "Reserviert", price: 0 = "Preis auf Anfrage"
 // colors: array of color tags for filtering
 // ============================================================
 
@@ -29,8 +29,8 @@ const paintings = [
   { img: "0022.jpg", title: "Blue-Green Mirage",         price: 800,  sold: true,  material: "Acryl, Leinwand", size: "80x100x2 cm",    colors: ["blue", "green", "dark"] },
   { img: "0023.jpg", title: "Bronze Serenity",           price: 750,  sold: false, material: "Acryl, Leinwand", size: "80x120x1,5 cm",  colors: ["gold", "dark"] },
   { img: "0024.jpg", title: "Silver Eclipse",            price: 550,  sold: false, material: "Acryl, Leinwand", size: "60x80x2 cm",     colors: ["dark"] },
-  { img: "0025.jpg", title: "Verdant Reflections",       price: 550,  sold: false, material: "Acryl, Leinwand", size: "80x60x2 cm",     colors: ["dark", "gold"] },
-  { img: "0026.jpg", title: "Bronze Ripple",             price: 550,  sold: false, material: "Acryl, Leinwand", size: "80x60x2 cm",     colors: ["gold", "dark"] },
+  { img: "0025.jpg", title: "Verdant Reflections",       price: 550,  sold: false, reserved: true, material: "Acryl, Leinwand", size: "80x60x2 cm",     colors: ["dark", "gold"] },
+  { img: "0026.jpg", title: "Bronze Ripple",             price: 550,  sold: false, reserved: true, material: "Acryl, Leinwand", size: "80x60x2 cm",     colors: ["gold", "dark"] },
   { img: "0027.jpg", title: "Violet Vines",              price: 750,  sold: false, material: "Acryl, Leinwand", size: "80x100x2 cm",    colors: ["bright", "green", "red"] },
   { img: "0028.jpg", title: "B Mim: The Fire of Nature", price: 750,  sold: false, material: "Acryl, Leinwand", size: "80x100x2 cm",    colors: ["green", "red", "bright"] },
   { img: "0029.jpg", title: "Woodland Shades",           price: 750,  sold: false, material: "Acryl, Leinwand", size: "100x100x4 cm",   colors: ["dark", "gold"] },
