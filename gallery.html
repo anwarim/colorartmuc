@@ -74,7 +74,16 @@
     }
     .filter-btn:hover, .filter-btn.active { background: var(--umber); color: var(--cream); border-color: var(--umber); }
     @media (max-width: 600px) {
-      .filter-btn { font-size: 0.65rem; letter-spacing: 0.1em; padding: 6px 10px; }
+      .filter-row {
+        display: grid !important;
+        grid-template-columns: 48px minmax(0, 1fr);
+        column-gap: 8px !important;
+      }
+      .filter-label { width: auto !important; flex-shrink: initial !important; }
+      .status-filter-row { align-items: start !important; flex-wrap: nowrap !important; }
+      .status-filter-row .filter-label { padding-top: 6px; }
+      .status-filter-buttons { gap: 4px !important; flex-wrap: nowrap !important; min-width: 0; }
+      .filter-btn { font-size: 0.65rem; letter-spacing: 0.08em; padding: 6px 5px; white-space: nowrap; }
     }
     .color-btn {
       display: inline-flex; align-items: center; gap: 7px;
@@ -334,18 +343,18 @@
     <!-- ── Filter Panel ── -->
     <div style="padding:0 15px 32px; max-width:var(--max-width); margin:0 auto;">
 
-      <div style="display:flex; align-items:center; gap:15px; flex-wrap:wrap; margin-bottom:14px;">
-        <span style="font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--text-light); width:40px; flex-shrink:0;">Status</span>
-        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <div class="filter-row status-filter-row" style="display:flex; align-items:center; gap:15px; flex-wrap:wrap; margin-bottom:14px;">
+        <span class="filter-label" style="font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--text-light); width:40px; flex-shrink:0;">Status</span>
+        <div class="status-filter-buttons" style="display:flex; gap:8px; flex-wrap:wrap;">
           <button class="filter-btn active" data-filter="all">Alle</button>
+          <button class="filter-btn" data-filter="new">✦ Neu</button>
           <button class="filter-btn" data-filter="available">Verfügbar</button>
           <button class="filter-btn" data-filter="sold">Verkauft</button>
-          <button class="filter-btn" data-filter="new">✦ Neu</button>
         </div>
       </div>
 
-      <div style="display:flex;align-items:flex-start;gap:15px;margin-bottom:14px;">
-        <span style="font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-light);padding-top:10px;white-space:nowrap;">Farbe</span>
+      <div class="filter-row" style="display:flex;align-items:flex-start;gap:15px;margin-bottom:14px;">
+        <span class="filter-label" style="font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-light);padding-top:10px;white-space:nowrap;">Farbe</span>
 
         <div style="display:flex;gap:8px;flex-wrap:wrap;flex:1;">
           <button class="color-btn active" data-color="all"><span class="color-swatch" style="background:linear-gradient(135deg,#e8a06a,#4a90b8,#6b8f5e,#2c2420)"></span>Alle</button>
@@ -358,8 +367,8 @@
         </div>
       </div>
 
-      <div style="display:flex; align-items:center; gap:15px; flex-wrap:wrap; margin-bottom:8px;">
-        <span style="font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--text-light); width:40px; flex-shrink:0;">Preis</span>
+      <div class="filter-row" style="display:flex; align-items:center; gap:15px; flex-wrap:wrap; margin-bottom:8px;">
+        <span class="filter-label" style="font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--text-light); width:40px; flex-shrink:0;">Preis</span>
         <div class="filter-price">
           <div class="price-range-wrap">
             <div class="price-range-track-bg"></div>
@@ -581,7 +590,10 @@ window.openArModal = openArModal;
 
     function shuffle(arr) {
       var a = arr.slice();
-      for (var i = a.length-1; i > 0; i--) { var j = Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = a[i]; a[i] = a[j]; a[j] = temp;
+      }
       return a;
     }
 
@@ -806,11 +818,12 @@ window.openArModal = openArModal;
     }, {threshold:0.05});
 
     // ── Gallery: build ONCE, filter by show/hide (instant) ────
-    var shuffledPaintings = shuffle(paintings);
+    var orderedPaintings = shuffle(paintings.filter(function(p) { return !p.sold; }))
+      .concat(shuffle(paintings.filter(function(p) { return p.sold; })));
 
     function buildGallery() {
       grid.innerHTML = '';
-      shuffledPaintings.forEach(function(p, i) {
+      orderedPaintings.forEach(function(p, i) {
         var item = document.createElement('div');
         item.className = 'gallery-item fade-in';
         item.dataset.sold   = p.sold ? 'true' : 'false';
@@ -824,11 +837,11 @@ window.openArModal = openArModal;
         item.innerHTML = (p.sold?'<div class="sold-badge">Verkauft</div>':'')
           +'<img src="images/paintings/'+p.img+'" alt="'+p.title+'" loading="lazy" />'
           +'<div class="painting-overlay"><div class="overlay-title">'+p.title+'</div>'+priceHTML+sizeHTML+'</div>';
-        item.addEventListener('click', function() { openDetail(shuffledPaintings, i); });
+        item.addEventListener('click', function() { openDetail(orderedPaintings, i); });
         item.addEventListener('touchstart', function() {
           var already = item.classList.contains('touched');
           document.querySelectorAll('.gallery-item.touched').forEach(function(el){el.classList.remove('touched');});
-          if (!already) item.classList.add('touched'); else openDetail(shuffledPaintings, i);
+          if (!already) item.classList.add('touched'); else openDetail(orderedPaintings, i);
         }, {passive:true});
         grid.appendChild(item);
         fadeObserver.observe(item);
@@ -859,10 +872,10 @@ window.openArModal = openArModal;
           if (show) visible++;
         });
       } else {
-        // Restore original shuffled order
+        // Restore the page-load shuffle: available works first, sold works second
         items.sort(function(a, b) {
-          var ai = shuffledPaintings.findIndex(function(p) { return paintings.indexOf(p) === parseInt(a.dataset.index); });
-          var bi = shuffledPaintings.findIndex(function(p) { return paintings.indexOf(p) === parseInt(b.dataset.index); });
+          var ai = orderedPaintings.findIndex(function(p) { return paintings.indexOf(p) === parseInt(a.dataset.index); });
+          var bi = orderedPaintings.findIndex(function(p) { return paintings.indexOf(p) === parseInt(b.dataset.index); });
           return ai - bi;
         });
         items.forEach(function(item) { grid.appendChild(item); });
