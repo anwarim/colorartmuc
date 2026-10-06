@@ -270,7 +270,7 @@ main { padding-top: var(--nav-height); min-height: 100vh; }
 .event-banner-inner {
   max-width: 960px;
   margin: 0 auto;
-  padding: 52px 32px;
+  padding: 38px 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -955,7 +955,7 @@ footer {
 
   /* Exhibition banner */
   .event-banner-inner {
-    padding: 44px 24px;
+    padding: 32px 24px;
     gap: 30px;
   }
 
@@ -1051,7 +1051,7 @@ footer {
 @media (max-width: 600px) {
   .event-banner-inner {
     display: block;
-    padding: 42px 24px;
+    padding: 30px 24px;
   }
 
   .event-title {
@@ -1068,7 +1068,7 @@ footer {
   }
 
   .event-artists {
-    margin-top: 32px;
+    margin-top: 24px;
   }
 
   .event-cta {
