@@ -385,7 +385,7 @@
             <input type="range" id="price-max" min="350" max="2200" value="2200" step="50" />
           </div>
           <span class="price-value">
-            <strong id="price-min-display">350 €</strong>&nbsp;–&nbsp;<strong id="price-max-display">1.500 €</strong>
+            <strong id="price-min-display">350 €</strong>&nbsp;–&nbsp;<strong id="price-max-display">2.200 €</strong>
           </span>
         </div>
       </div>
@@ -943,7 +943,9 @@ window.openArModal = openArModal;
       var vMin=parseInt(sliderMin.value), vMax=parseInt(sliderMax.value);
       if (vMin>vMax-50) { if (changed==='min'){vMin=vMax-50;sliderMin.value=vMin;}else{vMax=vMin+50;sliderMax.value=vMax;} }
       minPrice=vMin; maxPrice=vMax;
-      var pMin=((vMin-350)/1150)*100, pMax=((vMax-350)/1150)*100;
+      var rangeMin=parseInt(sliderMin.min), rangeMax=parseInt(sliderMax.max);
+      var rangeSpan=rangeMax-rangeMin;
+      var pMin=((vMin-rangeMin)/rangeSpan)*100, pMax=((vMax-rangeMin)/rangeSpan)*100;
       rangeTrack.style.left=pMin+'%'; rangeTrack.style.width=(pMax-pMin)+'%';
       dispMin.textContent=vMin.toLocaleString('de-DE')+' €';
       dispMax.textContent=vMax.toLocaleString('de-DE')+' €';
