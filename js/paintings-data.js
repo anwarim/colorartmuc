@@ -62,7 +62,7 @@ const paintings = [
   { img: "0055.jpg", title: "Golden Bloom Inferno",      price: 850,  sold: true,  material: "Acryl, Leinwand", size: "120x80x1,5 cm",  colors: ["blue", "green", "gold"] },
   { img: "0056.jpg", title: "Esgh",                      price: 800,  sold: true,  material: "Acryl, Leinwand", size: "80x120x1,5 cm",  colors: ["green", "dark"] },
   { img: "0057.jpg", title: "Flight of Freedom",         price: 870,  sold: true,  material: "Acryl, Leinwand", size: "70x100x1,5 cm",  colors: ["dark", "red"] },
-  { img: "0058.jpg", title: "Mind's Mirage",             price: 859,  sold: false,  material: "Acryl, Leinwand", size: "80x120x1,5 cm",  colors: ["red", "dark"] },
+  { img: "0058.jpg", title: "Mind's Mirage",             price: 850,  sold: false,  material: "Acryl, Leinwand", size: "80x120x1,5 cm",  colors: ["red", "dark"] },
   { img: "0059.jpg", title: "Zara Golden",               price: 760,  sold: false, material: "Acryl, Leinwand", size: "80x120x1,5 cm",  colors: ["gold", "bright", "red"] },
   { img: "0060.jpg", title: "Rainbow Dream",             price: 650,  sold: true,  material: "Acryl, Leinwand", size: "60x80x2 cm",     colors: ["bright", "red"] },
   { img: "0061.jpg", title: "Mistress of the Grey",      price: 850,  sold: true,  material: "Acryl, Leinwand", size: "80x120x1,5 cm",  colors: ["dark"] },
