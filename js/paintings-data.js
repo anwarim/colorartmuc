@@ -99,5 +99,5 @@ const paintings = [
   { img: "0092.jpg", title: "Moon of Falling Blossoms",  price: 900,  sold: false,  material: "Acryl, Leinwand", size: "80x120x1,5 cm", colors: ["red", "gold", "dark"] },  
   { img: "0093.jpg", title: "Ocean of Dreams",  	 price: 1500, sold: false,  material: "Acryl, Leinwand", size: "100x100x1,5 cm", colors: ["blue", "green", "bright"] },  
   { img: "0094.jpg", title: "Autumn in Flames",  	 price: 1000, sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm", colors: ["red", "blue", "bright"] },  
-  { img: "0095.jpg", title: "The Shape of Love",  	 price: 800, sold: false,  material: "Acryl, Leinwand", size: "100x150x1,5 cm", colors: ["gold", "dark"] },  
+  { img: "0095.jpg", title: "The Shape of Love",  	 price: 1100, sold: false,  material: "Acryl, Leinwand", size: "100x150x1,5 cm", colors: ["gold", "dark"] },  
 ];
