@@ -100,6 +100,6 @@ const paintings = [
   { img: "0093.jpg", title: "Ocean of Dreams",  	 price: 1500, sold: false,  material: "Acryl, Leinwand", size: "100x100x1,5 cm", colors: ["blue", "green", "bright"] },  
   { img: "0094.jpg", title: "Autumn in Flames",  	 price: 1000, sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm", colors: ["red", "blue", "bright"] },  
   { img: "0095.jpg", title: "The Shape of Love",  	 price: 1100, sold: false,  material: "Acryl, Leinwand", size: "100x150x1,5 cm", colors: ["gold", "dark"] },  
-  { img: "0096.jpg", title: "Beyond the Horizon",  	 price: 700,  sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm", colors: ["blue", "green", "bright" },  
+  { img: "0096.jpg", title: "Beyond the Horizon",  	 price: 700,  sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm", colors: ["blue", "green", "bright"] },  
   { img: "0097.jpg", title: "The Garden Between Worlds",  	 price: 1150, sold: false,  material: "Acryl, Leinwand", size: "100x150x1,5 cm", colors: ["blue", "green", "red", "gold", "bright"] },  
 ];
