@@ -103,8 +103,8 @@ const paintings = [
   { img: "0096.jpg", title: "Beyond the Horizon",  	 price: 700,  sold: false,  material: "Acryl, Leinwand", size: "120x80x1,5 cm", colors: ["blue", "green", "bright"] },  
   { img: "0097.jpg", title: "The Garden Between Worlds",  	 price: 1150, sold: false,  material: "Acryl, Leinwand", size: "100x150x1,5 cm", colors: ["blue", "green", "red", "gold", "bright"] },  
   { img: "0098.jpg", title: "The Dance of Hich",  	 price: 1150, sold: false,  material: "Acryl, Leinwand", size: "80x120x1,5 cm", colors: ["green", "gold", "dark"] },  
-  { img: "0099.jpg", title: "Dreams of Violet",  	 price: 750, sold: false,  material: "Acryl, Leinwand", size: "80x120x1,5 cm", colors: ["red", "gold", "dark", "bright"] },  
+  { img: "0099.jpg", title: "Dreams of Violet",  	 price: 850, sold: false,  material: "Acryl, Leinwand", size: "80x120x1,5 cm", colors: ["red", "gold", "dark", "bright"] },  
   { img: "0100.jpg", title: "Crwoned in Gold",  	 price: 1050, sold: false,  material: "Acryl, Leinwand", size: "80x120x1,5 cm", colors: ["gold", "blue", "green"] },  
   { img: "0101.jpg", title: "A Universe of One",  	 price: 750, sold: false,  material: "Acryl, Leinwand", size: "80x100x1,5 cm", colors: ["gold", "blue", "green"] }, 
-  { img: "0102.jpg", title: "The Silence Between Us",  	 price: 650, sold: false,  material: "Acryl, Leinwand", size: "80x60x1,5 cm", colors: ["red", "bright"] },
+  { img: "0102.jpg", title: "The Silence Between Us",  	 price: 500, sold: false,  material: "Acryl, Leinwand", size: "80x60x1,5 cm", colors: ["red", "bright"] },
   { img: "0103.jpg", title: "The Golden Passage",  	 price: 1050, sold: false,  material: "Acryl, Leinwand", size: "80x120x1,5 cm", colors: ["gold", "dark"] },  ];
