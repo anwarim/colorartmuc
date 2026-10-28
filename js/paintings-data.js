@@ -107,4 +107,6 @@ const paintings = [
   { img: "0100.jpg", title: "Crwoned in Gold",  	 price: 1050, sold: false,  material: "Acryl, Leinwand", size: "80x120x1,5 cm", colors: ["gold", "blue", "green"] },  
   { img: "0101.jpg", title: "A Universe of One",  	 price: 750, sold: false,  material: "Acryl, Leinwand", size: "80x100x1,5 cm", colors: ["gold", "blue", "green"] }, 
   { img: "0102.jpg", title: "The Silence Between Us",  	 price: 500, sold: false,  material: "Acryl, Leinwand", size: "80x60x1,5 cm", colors: ["red", "bright"] },
-  { img: "0103.jpg", title: "The Golden Passage",  	 price: 1050, sold: false,  material: "Acryl, Leinwand", size: "80x120x1,5 cm", colors: ["gold", "dark"] },  ];
+  { img: "0103.jpg", title: "The Golden Passage",  	 price: 1050, sold: false,  material: "Acryl, Leinwand", size: "80x120x1,5 cm", colors: ["gold", "dark"] },
+  { img: "0104.jpg", title: "Portrait of Gold",  	 price: 900, sold: false,  material: "Acryl, Leinwand", size: "100x100x1,5 cm", colors: ["gold", "dark"] },
+  ];
