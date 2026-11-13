@@ -43,7 +43,7 @@ const paintings = [
   { img: "0036.jpg", title: "Steel Green Radiance",      price: 1500, sold: false, material: "Acryl, Leinwand", size: "120x80x2,5 cm",  colors: ["green", "bright"] },
   { img: "0037.jpg", title: "Lavender Skies",            price: 550,  sold: false, material: "Acryl, Leinwand", size: "50x70x2 cm",     colors: ["red", "dark"] },
   { img: "0038.jpg", title: "Polished Walnut",           price: 750,  sold: true, material: "Acryl, Leinwand", size: "80x100x2 cm",    colors: ["dark", "gold"] },
-  { img: "0039.jpg", title: "Leafy Gold",                price: 750,  sold: false, material: "Acryl, Leinwand", size: "100x100x2 cm",   colors: ["green", "gold"] },
+  { img: "0039.jpg", title: "Leafy Gold",                price: 750,  sold: false, reserved: true, material: "Acryl, Leinwand", size: "100x100x2 cm",   colors: ["green", "gold"] },
   { img: "0040.jpg", title: "Blue Noir Blaze",           price: 800,  sold: false, material: "Acryl, Leinwand", size: "80x120x1,5 cm",  colors: ["blue", "red", "dark"] },
   { img: "0041.jpg", title: "Pink Wave",                 price: 600,  sold: false, material: "Acryl, Leinwand", size: "80x60x2 cm",     colors: ["gold", "dark"] },
   { img: "0042.jpg", title: "Rainbow Eclipse",           price: 750,  sold: false, material: "Acryl, Leinwand", size: "80x100x2 cm",    colors: ["bright", "gold", "dark"] },
