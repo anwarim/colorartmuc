@@ -36,7 +36,7 @@ const paintings = [
   { img: "0029.jpg", title: "Woodland Shades",           price: 750,  sold: false, material: "Acryl, Leinwand", size: "100x100x4 cm",   colors: ["dark", "gold"] },
   { img: "0030.jpg", title: "Rosy Radiance",             price: 900,  sold: false, material: "Acryl, Leinwand", size: "120x80x2,5 cm",  colors: ["red", "bright"] },
   { img: "0031.jpg", title: "Rainbow Sweep",             price: 550,  sold: false, material: "Acryl, Leinwand", size: "60x80x2 cm",     colors: ["dark", "gold"] },
-  { img: "0032.jpg", title: "Goldfire Strokes",          price: 600,  sold: false, material: "Acryl, Leinwand", size: "80x100x2 cm",    colors: ["gold", "red"] },
+  { img: "0032.jpg", title: "Goldfire Strokes",          price: 600,  sold: false, reserved: true, material: "Acryl, Leinwand", size: "80x100x2 cm",    colors: ["gold", "red"] },
   { img: "0033.jpg", title: "Gold Flecked Shadow",       price: 550,  sold: false, material: "Acryl, Leinwand", size: "60x80x2 cm",     colors: ["gold", "dark"] },
   { img: "0034.jpg", title: "Seafoam Brilliance",        price: 1500, sold: false, material: "Acryl, Leinwand", size: "120x80x2,5 cm",  colors: ["blue", "green", "bright"] },
   { img: "0035.jpg", title: "Black Cherry Shine",        price: 1500, sold: false, material: "Acryl, Leinwand", size: "120x80x2,5 cm",  colors: ["red", "dark"] },
